@@ -3,21 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TV da ECT</title>
+    <title>TV da Disciplina</title>
     <link rel="stylesheet" href="style.css">
-    <!-- Carrega as APIs do YouTube e Vimeo -->
     <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://player.vimeo.com/api/player.js"></script>
 </head>
 <body>
     <div id="tv-container">
         <div id="video-wrapper">
-            <!-- O player será injetado aqui pelo Javascript -->
             <div id="player"></div>
         </div>
         <div id="info-bar">
             <h1 id="video-title">Carregando programação...</h1>
             <p id="status-text">Aguarde, iniciando o fluxo...</p>
+        </div>
+        <div id="volume-control">
+            <label for="volume-slider">🔊 Volume:</label>
+            <input type="range" id="volume-slider" min="0" max="100" value="100">
+            <span id="volume-value">100%</span>
         </div>
     </div>
 
