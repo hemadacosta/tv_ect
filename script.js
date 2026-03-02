@@ -1,9 +1,28 @@
-// script.js
 let currentIndex = 0;
-let player = null; // Pode ser um player YT ou Vimeo
-let currentType = null; // 'youtube' ou 'vimeo'
+let player = null;
+let currentType = null;
+let currentVolume = 100; // Volume padrão 100%
 
-// Função principal para iniciar o fluxo
+// Controle de volume
+const volumeSlider = document.getElementById('volume-slider');
+const volumeValue = document.getElementById('volume-value');
+
+volumeSlider.addEventListener('input', function() {
+    currentVolume = this.value;
+    volumeValue.textContent = currentVolume + '%';
+    updateVolume();
+});
+
+function updateVolume() {
+    if (player) {
+        if (currentType === 'youtube') {
+            player.setVolume(currentVolume);
+        } else if (currentType === 'vimeo') {
+            player.setVolume(currentVolume / 100); // Vimeo usa 0-1
+        }
+    }
+}
+
 function startTV() {
     if (schedule.length === 0) {
         document.getElementById('video-title').innerText = "Nenhum vídeo na programação.";
@@ -12,16 +31,14 @@ function startTV() {
     loadVideo(currentIndex);
 }
 
-// Função que decide qual player usar e carrega o vídeo
 function loadVideo(index) {
     const videoData = schedule[index];
     document.getElementById('video-title').innerText = videoData.title;
     document.getElementById('status-text').innerText = `Reproduzindo vídeo ${index + 1} de ${schedule.length}`;
 
     const container = document.getElementById('player');
-    container.innerHTML = ''; // Limpa o player anterior
+    container.innerHTML = '';
 
-    // Detectar tipo de vídeo
     if (videoData.url.includes('youtube.com') || videoData.url.includes('youtu.be')) {
         currentType = 'youtube';
         loadYouTube(videoData.url);
@@ -33,9 +50,7 @@ function loadVideo(index) {
     }
 }
 
-// --- Lógica do YouTube ---
 function loadYouTube(url) {
-    // Extrair ID do YouTube
     const videoId = extractYouTubeID(url);
     
     player = new YT.Player('player', {
@@ -44,34 +59,38 @@ function loadYouTube(url) {
         videoId: videoId,
         playerVars: {
             'autoplay': 1,
-            'controls': 0, // Esconde controles para parecer TV
-            'rel': 0,      // Não mostra vídeos relacionados de outros canais
+            'controls': 0,
+            'rel': 0,
             'modestbranding': 1
         },
         events: {
+            'onReady': onYouTubeReady,
             'onStateChange': onYouTubeStateChange
         }
     });
 }
 
+function onYouTubeReady(event) {
+    // Aplica o volume quando o player estiver pronto
+    event.target.setVolume(currentVolume);
+}
+
 function onYouTubeStateChange(event) {
-    // 0 significa que o vídeo terminou
     if (event.data === YT.PlayerState.ENDED) {
         playNext();
     }
 }
 
-// --- Lógica do Vimeo ---
 function loadVimeo(url) {
-    // Extrair ID do Vimeo
     const videoId = extractVimeoID(url);
     
     player = new Vimeo.Player('player', {
         id: videoId,
         autoplay: true,
         controls: false,
-        background: true, // Modo cinema
-        loop: false
+        background: true,
+        loop: false,
+        volume: currentVolume / 100
     });
 
     player.on('ended', () => {
@@ -79,19 +98,16 @@ function loadVimeo(url) {
     });
 }
 
-// --- Controle de Fluxo ---
 function playNext() {
     currentIndex++;
     if (currentIndex >= schedule.length) {
-        currentIndex = 0; // Volta para o início (Loop infinito)
+        currentIndex = 0;
     }
-    // Pequeno delay para evitar conflitos de API
     setTimeout(() => {
         loadVideo(currentIndex);
     }, 1000);
 }
 
-// --- Utilitários de Extração de ID ---
 function extractYouTubeID(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
     const match = url.match(regExp);
@@ -104,12 +120,10 @@ function extractVimeoID(url) {
     return match ? match[1] : null;
 }
 
-// Inicia quando a API do YouTube estiver pronta
 function onYouTubeIframeAPIReady() {
     startTV();
 }
-// Se o Vimeo carregar antes, o startTV já roda, mas a lógica do Vimeo é assíncrona dentro do loadVimeo.
-// Para garantir, chamamos o startTV logo se o YT não estiver presente (caso só tenha Vimeo).
+
 if (!window.onYouTubeIframeAPIReady) {
     startTV();
 }
