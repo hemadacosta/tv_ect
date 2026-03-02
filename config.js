@@ -4,7 +4,7 @@
 const schedule = [
     {
         title: "1ª Aula - ECT1 - O que é Ciência?",
-        url: "https://youtu.be/BCb6WyrFSmM?si=TzwrayGeW0Xo3Nd7" // Exemplo YouTube
+        url: "https://youtu.be/QT1hrrMcf4A?si=SNz2w7mDbW0nixbw" // Exemplo YouTube
     },
     {
         title: "Gênios da Ciência da Antiga Grécia",
@@ -31,4 +31,5 @@ const schedule = [
         url: "hhttps://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview" // Google
     },
     // Adicione quantos vídeos quiser...
+
 ];
