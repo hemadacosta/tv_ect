@@ -1,35 +1,27 @@
 // config.js
-// Adicione os links dos seus vídeos aqui. A ordem define a programação.
+// Lista de vídeos da programação
+// Tipos suportados: 'youtube', 'vimeo', 'googledrive'
 
 const schedule = [
     {
-        title: "1ª Aula - ECT1 - O que é Ciência?",
-        url: "https://youtu.be/QT1hrrMcf4A?si=SNz2w7mDbW0nixbw" // Exemplo YouTube
+        title: "Documentário - Introdução",
+        url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        type: "youtube"
     },
     {
-        title: "Gênios da Ciência da Antiga Grécia",
-        url: "https://youtu.be/abMcYvRj1nc?si=zKpMW5rKlprOaygW" // Exemplo Vimeo
+        title: "Aula Magna - Vimeo",
+        url: "https://vimeo.com/148751763",
+        type: "vimeo"
     },
     {
-        title: "Toda a História das Civilizações Antigas",
-        url: "https://youtu.be/GFSoRGgdAfQ?si=nTWXhAt4bcertV6O" // Exemplo YouTube
+        title: "Material Complementar - Drive",
+        url: "https://drive.google.com/file/d/SEU_ID_DO_ARQUIVO_AQUI/view",
+        type: "googledrive"
     },
-	{
-        title: "History Channel A História do Mundo em Duas Horas",
-        url: "https://youtu.be/X-N0nPb_iw4?si=ByBzdGjFv8_krAZl" // Exemplo Vimeo
-    },
-	{
-        title: "Isaac Newton Gênios da Ciência",
-        url: "https://youtu.be/uac7S7Nyae8?si=ANFM4i-RqwqmQB1h" // Youtube
-    },
-	{
-        title: "Biografia de John Locke 1632: como um filósofo reescreveu a ideia de liberdade",
-        url: "https://youtu.be/nKRO6-lmqE8?si=tnV3oFf5aoCla8UE" // Youtube
-    },
-	{
-        title: "Contato (1997)",
-        url: "hhttps://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview" // Google
-    },
-    // Adicione quantos vídeos quiser...
-
+    {
+        title: "Outro Vídeo YouTube",
+        url: "https://youtu.be/jfKfPfyJRdk",
+        type: "youtube"
+    }
+    // Para adicionar mais vídeos, copie um bloco {...}, coloque uma vírgula após o anterior e cole abaixo.
 ];
