@@ -125,7 +125,7 @@ body, html {
     justify-content: space-between;
     padding: 0 20px;
     pointer-events: none;
-    z-index: 10;
+    z-index: 9999;
 }
 
 #nav-controls button {
@@ -138,7 +138,7 @@ body, html {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s;
-    opacity: 0;
+    opacity: 1;
 }
 
 #video-wrapper:hover #nav-controls button {
@@ -158,24 +158,4 @@ body, html {
 iframe {
     border: none;
     display: block;
-}
-
-/* ===== Fix: garantir que os botões fiquem acima dos iframes/players ===== */
-#video-wrapper { position: relative; }
-
-#player {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-}
-
-#nav-controls {
-    z-index: 5;
-}
-
-/* Evita que algum iframe “passe por cima” da camada de botões */
-#player iframe {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
 }
