@@ -1,49 +1,16 @@
-// script.js (v3) — navegação robusta para GitHub Pages + Moodle popup
+// script.js (v4) - navegação robusta + controles discretos
 let currentIndex = 0;
-let player = null;
-let currentType = null;
+
+let player = null;          // instância atual (YT.Player ou Vimeo.Player)
+let currentType = null;     // 'youtube' | 'vimeo' | 'googledrive'
 let currentVolume = 100;
 let autoplayEnabled = true;
-let manualControl = false;
 
-// ====== Helpers de DOM ======
-const $ = (id) => document.getElementById(id);
+// ====== UI: volume (se existir) ======
+const volumeSlider = document.getElementById('volume-slider');
+const volumeValue  = document.getElementById('volume-value');
 
-// ====== Bind de controles (clique/pointer) ======
-function bindControls() {
-  const btnPrev = $('btn-prev');
-  const btnNext = $('btn-next');
-
-  if (btnPrev) {
-    const handlerPrev = (ev) => {
-      try { ev.preventDefault(); ev.stopPropagation(); } catch (_) {}
-      playPrevious();
-    };
-    btnPrev.addEventListener('pointerdown', handlerPrev, { capture: true });
-    btnPrev.addEventListener('click', handlerPrev, { capture: true });
-  }
-
-  if (btnNext) {
-    const handlerNext = (ev) => {
-      try { ev.preventDefault(); ev.stopPropagation(); } catch (_) {}
-      playNextManual();
-    };
-    btnNext.addEventListener('pointerdown', handlerNext, { capture: true });
-    btnNext.addEventListener('click', handlerNext, { capture: true });
-  }
-}
-
-// expõe no global (para onclick inline, se existir)
-window.playPrevious = () => playPrevious();
-window.playNextManual = () => playNextManual();
-
-// ====== Volume ======
-function bindVolume() {
-  const volumeSlider = $('volume-slider');
-  const volumeValue  = $('volume-value');
-
-  if (!volumeSlider) return;
-
+if (volumeSlider) {
   volumeSlider.addEventListener('input', function () {
     currentVolume = Number(this.value);
     if (volumeValue) volumeValue.textContent = currentVolume + '%';
@@ -51,83 +18,87 @@ function bindVolume() {
   });
 }
 
-function updateVolume() {
-  if (!player) return;
+function setStatus(text) {
+  const el = document.getElementById('status-text');
+  if (el) el.innerText = text;
+}
 
+function setTitle(text) {
+  const el = document.getElementById('video-title');
+  if (el) el.innerText = text;
+}
+
+function updateVolume() {
   try {
+    if (!player) return;
     if (currentType === 'youtube' && typeof player.setVolume === 'function') {
       player.setVolume(currentVolume);
     } else if (currentType === 'vimeo' && typeof player.setVolume === 'function') {
       player.setVolume(currentVolume / 100);
     }
-    // Google Drive: sem API de volume no embed /preview
   } catch (e) {
-    console.warn('Falha ao atualizar volume:', e);
+    console.warn('updateVolume falhou:', e);
   }
 }
 
-// ====== Inicialização ======
-function init() {
-  bindControls();
-  bindVolume();
-
-  // Se schedule não carregou, mostre erro claro
-  if (typeof schedule === 'undefined' || !Array.isArray(schedule)) {
-    const title = $('video-title');
-    const status = $('status-text');
-    if (title) title.innerText = "Nenhum vídeo na programação.";
-    if (status) status.innerText = "Erro: config.js não carregou (ou está com erro).";
-    console.error('schedule indefinido — verifique config.js');
+// ====== Boot ======
+function startTV() {
+  if (typeof schedule === 'undefined' || !Array.isArray(schedule) || schedule.length === 0) {
+    setTitle("Nenhum vídeo na programação.");
+    setStatus("Aguarde, iniciando o fluxo...");
     return;
   }
-
-  if (schedule.length === 0) {
-    const title = $('video-title');
-    if (title) title.innerText = "Nenhum vídeo na programação.";
-    return;
-  }
-
   loadVideo(currentIndex);
 }
 
-// GitHub Pages + Moodle: garante init mesmo se API do YouTube demorar
-window.onYouTubeIframeAPIReady = function () {
-  // Não inicia duas vezes
-  if (!window.__tv_started__) {
-    window.__tv_started__ = true;
-    init();
-  }
-};
+// ====== Player cleanup (ESSENCIAL) ======
+function cleanupPlayer() {
+  try {
+    if (!player) return;
 
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    if (typeof YT !== 'undefined' && YT.Player) {
-      if (!window.__tv_started__) { window.__tv_started__ = true; init(); }
-    } else {
-      // inicia para Vimeo/Drive enquanto o YT carrega
-      if (!window.__tv_started__) { window.__tv_started__ = true; init(); }
+    // YouTube
+    if (currentType === 'youtube') {
+      if (typeof player.stopVideo === 'function') player.stopVideo();
+      if (typeof player.destroy === 'function') player.destroy(); // importante!
     }
-  });
-} else {
-  if (!window.__tv_started__) { window.__tv_started__ = true; init(); }
+
+    // Vimeo
+    if (currentType === 'vimeo') {
+      if (typeof player.unload === 'function') player.unload();
+      if (typeof player.destroy === 'function') player.destroy();
+    }
+  } catch (e) {
+    console.warn('cleanupPlayer falhou:', e);
+  } finally {
+    player = null;
+    currentType = null;
+    const container = document.getElementById('player');
+    if (container) container.innerHTML = '';
+  }
 }
 
-// ====== Core ======
+// ====== Carregar vídeo ======
 function loadVideo(index) {
   const videoData = schedule[index];
-  const title = $('video-title');
-  const status = $('status-text');
+  if (!videoData) return;
 
-  if (title) title.innerText = videoData?.title || 'Sem título';
-  if (status) status.innerText = `Vídeo ${index + 1} de ${schedule.length}`;
+  setTitle(videoData.title || `Vídeo ${index + 1}`);
+  setStatus(`Vídeo ${index + 1} de ${schedule.length}`);
 
-  destroyCurrentPlayer();
+  // tipo
+  let type = videoData.type;
+  if (!type) {
+    const u = (videoData.url || '').toLowerCase();
+    if (u.includes('youtube.com') || u.includes('youtu.be')) type = 'youtube';
+    else if (u.includes('vimeo.com')) type = 'vimeo';
+    else if (u.includes('drive.google.com')) type = 'googledrive';
+  }
 
-  const container = $('player');
-  if (!container) return;
-  container.innerHTML = '';
+  // Se mudou de tipo, destrói player anterior para evitar travar a troca
+  if (currentType && currentType !== type) {
+    cleanupPlayer();
+  }
 
-  const type = detectType(videoData);
   currentType = type;
 
   if (type === 'youtube') loadYouTube(videoData.url);
@@ -135,63 +106,49 @@ function loadVideo(index) {
   else if (type === 'googledrive') loadGoogleDrive(videoData.url);
   else {
     console.error("Tipo de vídeo não suportado:", type, videoData);
-    if (status) status.innerText = "Tipo de vídeo não suportado.";
-  }
-}
-
-function detectType(videoData) {
-  let type = videoData?.type;
-  const url = videoData?.url || '';
-  if (!type) {
-    if (url.includes('youtube.com') || url.includes('youtu.be')) type = 'youtube';
-    else if (url.includes('vimeo.com')) type = 'vimeo';
-    else if (url.includes('drive.google.com')) type = 'googledrive';
-  }
-  return type;
-}
-
-function destroyCurrentPlayer() {
-  if (!player) return;
-
-  try {
-    if (currentType === 'youtube') {
-      if (typeof player.stopVideo === 'function') player.stopVideo();
-      if (typeof player.destroy === 'function') player.destroy();
-    } else if (currentType === 'vimeo') {
-      if (typeof player.unload === 'function') player.unload().catch(() => {});
-      if (typeof player.destroy === 'function') player.destroy().catch(() => {});
-    }
-  } catch (e) {
-    console.warn('Falha ao destruir player anterior:', e);
-  } finally {
-    player = null;
+    setStatus("Tipo de vídeo não suportado.");
   }
 }
 
 // ====== YouTube ======
 function loadYouTube(url) {
   const videoId = extractYouTubeID(url);
-  const status = $('status-text');
-
   if (!videoId) {
-    console.error("ID do YouTube não encontrado em:", url);
-    if (status) status.innerText = "Erro: vídeo do YouTube inválido.";
+    console.error("ID do YouTube não encontrado:", url);
+    setStatus("Erro: link do YouTube inválido.");
     return;
   }
 
+  // Se API ainda não carregou
   if (typeof YT === 'undefined' || !YT.Player) {
-    // aguarda API carregar
-    setTimeout(() => loadYouTube(url), 250);
+    setStatus("Carregando player do YouTube...");
+    setTimeout(() => loadYouTube(url), 400);
     return;
   }
+
+  // Se já existe player YouTube, use loadVideoById (sem recriar)
+  if (player && currentType === 'youtube' && typeof player.loadVideoById === 'function') {
+    try {
+      player.loadVideoById(videoId);
+      player.setVolume(currentVolume);
+      return;
+    } catch (e) {
+      console.warn('Falha ao reutilizar player YouTube, recriando...', e);
+      cleanupPlayer();
+    }
+  }
+
+  // Cria do zero
+  const container = document.getElementById('player');
+  if (container) container.innerHTML = '';
 
   player = new YT.Player('player', {
     height: '100%',
     width: '100%',
     videoId,
     playerVars: {
-      autoplay: (autoplayEnabled && !manualControl) ? 1 : 0,
-      controls: 0,
+      autoplay: autoplayEnabled ? 1 : 0,
+      controls: 0,           // sem barra
       rel: 0,
       modestbranding: 1,
       playsinline: 1
@@ -201,12 +158,14 @@ function loadYouTube(url) {
         try {
           event.target.setVolume(currentVolume);
           if (autoplayEnabled) event.target.playVideo();
-        } catch (_) {}
+        } catch {}
       },
       onStateChange: (event) => {
-        if (event.data === YT.PlayerState.ENDED && !manualControl) {
-          setTimeout(playNext, 800);
-        }
+        try {
+          if (event.data === YT.PlayerState.ENDED) {
+            setTimeout(playNext, 700);
+          }
+        } catch {}
       }
     }
   });
@@ -215,116 +174,118 @@ function loadYouTube(url) {
 // ====== Vimeo ======
 function loadVimeo(url) {
   const videoId = extractVimeoID(url);
-  const status = $('status-text');
-
   if (!videoId) {
-    console.error("ID do Vimeo não encontrado em:", url);
-    if (status) status.innerText = "Erro: vídeo do Vimeo inválido.";
+    console.error("ID do Vimeo não encontrado:", url);
+    setStatus("Erro: link do Vimeo inválido.");
     return;
   }
 
+  // Se já existe player Vimeo, use loadVideo (sem recriar)
+  if (player && currentType === 'vimeo' && typeof player.loadVideo === 'function') {
+    player.loadVideo(videoId).then(() => {
+      player.setVolume(currentVolume / 100);
+    }).catch((e) => {
+      console.warn('Falha ao reutilizar player Vimeo, recriando...', e);
+      cleanupPlayer();
+      loadVimeo(url);
+    });
+    return;
+  }
+
+  const container = document.getElementById('player');
+  if (container) container.innerHTML = '';
+
   player = new Vimeo.Player('player', {
     id: videoId,
-    autoplay: autoplayEnabled && !manualControl,
+    autoplay: autoplayEnabled,
     controls: 0,
-    background: true,
+    background: 1,
     loop: false,
-    volume: currentVolume / 100,
-    transparent: false
+    volume: currentVolume / 100
   });
 
-  player.on('ended', () => {
-    if (!manualControl) setTimeout(playNext, 800);
-  });
-
-  player.on('loaded', () => {
-    player.setVolume(currentVolume / 100).catch(() => {});
-  });
+  player.on('ended', () => setTimeout(playNext, 700));
+  player.on('loaded', () => updateVolume());
 }
 
 // ====== Google Drive ======
 function loadGoogleDrive(url) {
   const fileId = extractGoogleDriveID(url);
-  const container = $('player');
-  const status = $('status-text');
-
   if (!fileId) {
-    console.error("ID do Google Drive não encontrado em:", url);
-    if (container) container.innerHTML = '<p style="color:white; text-align:center;">Erro ao carregar vídeo do Google Drive</p>';
-    if (status) status.innerText = "Erro: vídeo do Google Drive inválido.";
+    console.error("ID do Google Drive não encontrado:", url);
+    document.getElementById('player').innerHTML =
+      '<p style="color:white;text-align:center;padding:16px;">Erro ao carregar vídeo do Google Drive</p>';
+    setStatus("Erro: link do Drive inválido.");
     return;
   }
 
   const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-
+  const container = document.getElementById('player');
   if (container) {
     container.innerHTML = `
       <iframe
         src="${embedUrl}"
         width="100%"
         height="100%"
+        style="border:none;"
         allow="autoplay; fullscreen; picture-in-picture"
-        allowfullscreen
-        referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
-    `;
+        allowfullscreen>
+      </iframe>`;
   }
-
-  if (status) status.innerText = "Google Drive — use Anterior/Próximo para navegar.";
-  player = null;
+  setStatus("Google Drive — use os botões para navegar");
 }
 
 // ====== Navegação ======
 function playNextManual() {
-  manualControl = true;
-  // feedback imediato (para você “ver” que clicou)
-  const status = $('status-text');
-  if (status) status.innerText = "Indo para o próximo vídeo…";
+  setStatus("Indo para o próximo vídeo...");
   playNext();
 }
 
 function playNext() {
-  destroyCurrentPlayer();
-  currentIndex++;
-  if (currentIndex >= schedule.length) currentIndex = 0;
+  // IMPORTANTE: se estiver em YouTube/Vimeo, não precisa destruir pra trocar dentro do mesmo tipo.
+  currentIndex = (currentIndex + 1) % schedule.length;
   loadVideo(currentIndex);
 }
 
 function playPrevious() {
-  manualControl = true;
-  const status = $('status-text');
-  if (status) status.innerText = "Voltando para o vídeo anterior…";
-
-  destroyCurrentPlayer();
-  currentIndex--;
-  if (currentIndex < 0) currentIndex = schedule.length - 1;
+  setStatus("Voltando para o vídeo anterior...");
+  currentIndex = (currentIndex - 1 + schedule.length) % schedule.length;
   loadVideo(currentIndex);
 }
+
+// Expor para onclick do HTML (blindagem)
+window.playNextManual = playNextManual;
+window.playNext = playNext;
+window.playPrevious = playPrevious;
 
 // ====== Utilitários ======
 function extractYouTubeID(url) {
   if (!url) return null;
+  url = url.trim();
 
-  try {
-    const u = new URL(url.trim());
-    if (u.hostname.includes('youtu.be')) {
-      const id = u.pathname.replace('/', '').trim();
-      return id || null;
-    }
-    if (u.hostname.includes('youtube.com')) {
-      if (u.pathname.startsWith('/watch')) return u.searchParams.get('v');
-      if (u.pathname.startsWith('/embed/')) return u.pathname.split('/embed/')[1]?.split('/')[0] || null;
-      if (u.pathname.startsWith('/v/')) return u.pathname.split('/v/')[1]?.split('/')[0] || null;
-    }
-  } catch (_) {}
+  // youtu.be/<id>
+  let m = url.match(/youtu\.be\/([^?\s]+)/);
+  if (m && m[1]) return m[1];
 
-  const m = String(url).match(/(?:youtu\.be\/|v=|embed\/)([\w-]{6,})/);
-  return m ? m[1] : null;
+  // watch?v=<id>
+  m = url.match(/[?&]v=([^&\s]+)/);
+  if (m && m[1]) return m[1];
+
+  // /embed/<id>
+  m = url.match(/youtube\.com\/embed\/([^?\s]+)/);
+  if (m && m[1]) return m[1];
+
+  // /v/<id>
+  m = url.match(/youtube\.com\/v\/([^?\s]+)/);
+  if (m && m[1]) return m[1];
+
+  return null;
 }
 
 function extractVimeoID(url) {
   if (!url) return null;
-  const m = url.trim().match(/vimeo\.com\/(?:.*\/)?(\d+)/);
+  url = url.trim();
+  const m = url.match(/vimeo\.com\/(?:.*\/)?(\d+)/);
   return m ? m[1] : null;
 }
 
@@ -333,3 +294,33 @@ function extractGoogleDriveID(url) {
   const m = url.match(/\/file\/d\/([^\/\?]+)/);
   return m ? m[1] : null;
 }
+
+// ====== Controles discretos (hover + toque) ======
+(function initOverlayControls() {
+  const wrapper = document.getElementById('video-wrapper');
+  if (!wrapper) return;
+
+  let hideTimer = null;
+  const show = () => {
+    wrapper.classList.add('show-controls');
+    if (hideTimer) clearTimeout(hideTimer);
+    hideTimer = setTimeout(() => wrapper.classList.remove('show-controls'), 2500);
+  };
+
+  // toque/clique no vídeo mostra botões por 2.5s (não fixa)
+  wrapper.addEventListener('pointerdown', (e) => {
+    // se clicou em botão, não mexe
+    if (e.target && (e.target.id === 'btn-prev' || e.target.id === 'btn-next')) return;
+    show();
+  }, { passive: true });
+})();
+
+// ====== Inicialização ======
+window.onYouTubeIframeAPIReady = function () {
+  startTV();
+};
+
+// Fallback: se por algum motivo o callback não vier, tenta iniciar depois
+setTimeout(() => {
+  if (!player && (typeof schedule !== 'undefined')) startTV();
+}, 1200);
