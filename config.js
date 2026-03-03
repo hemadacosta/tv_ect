@@ -15,7 +15,7 @@ const schedule = [
   },
   {
     title: "Contato (1997)",
-    url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/view",
+    url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview",
     type: "googledrive",
     duration: 9000  // Exemplo: 2h30m = 9000 segundos. Meça a duração real no Drive e ajuste.
   },
@@ -65,4 +65,5 @@ const schedule = [
     type: "googledrive"
   }
 ];
+
 
