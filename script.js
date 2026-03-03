@@ -1,4 +1,6 @@
 // script.js (v5) — navegação confiável (YouTube/Vimeo) + controles discretos
+let driveIframe = null;  // Referência ao iframe do Drive
+let watchdogTimer = null;  // Para detectar travamentos
 let currentIndex = 0;
 let ytPlayer = null;      // instância YT.Player
 let vimeoPlayer = null;   // instância Vimeo.Player
@@ -393,37 +395,54 @@ function loadGoogleDrive(url) {
 
     const container = document.getElementById('player');
     container.innerHTML = `
-        <iframe
-            src="https://drive.google.com/file/d/${fileId}/preview?autoplay=1&hl=pt-BR"
+        <iframe id="drive-iframe"
+            src=""  // Src vazio inicialmente
             width="100%" height="100%"
             allow="autoplay; fullscreen"
             allowfullscreen
             style="border:0; background:#000;"
         ></iframe>
     `;
+    driveIframe = document.getElementById('drive-iframe');
+
+    // Adiciona o botão de Play no info-bar
+    const playContainer = document.getElementById('drive-play-container');
+    if (playContainer) {
+        playContainer.innerHTML = `
+            <button id="drive-play-btn">▶ Iniciar Vídeo</button>
+        `;
+        const playBtn = document.getElementById('drive-play-btn');
+        playBtn.addEventListener('click', () => {
+            // Define src com autoplay durante o clique (user gesture)
+            driveIframe.src = `https://drive.google.com/file/d/${fileId}/preview?autoplay=1&hl=pt-BR`;
+            // Opcional: esconde o botão após clique
+            playBtn.style.display = 'none';
+            // Aplica volume (mas no Drive, é interno)
+            console.log("Iniciando Drive com user gesture.");
+        });
+    }
 
     updateInfo(
         document.getElementById('video-title')?.innerText || "Vídeo",
-        "Drive: clique no play se não iniciar automaticamente. Volume ajustável no player."
+        "Drive: clique em 'Iniciar Vídeo' para começar."
     );
 
-    // Timer para auto-avançar (se duration estiver definido no config)
+    // Timer para auto-avançar (se duration estiver definido)
     const videoData = safeSchedule()[currentIndex];
     if (videoData && videoData.duration && typeof videoData.duration === 'number') {
         setTimeout(() => {
-            if (!manualControl) {  // Só avança se não for controle manual
+            if (!manualControl) {
                 playNext(true);
             }
-        }, (videoData.duration * 1000) + 5000);  // +5s buffer para loading/delay
+        }, (videoData.duration * 1000) + 5000);  // +5s buffer
     } else {
         console.warn("Duração não definida para auto-avançar no Drive:", videoData);
         updateInfo(
             document.getElementById('video-title')?.innerText || "Vídeo",
-            "Drive: sem duração definida — use botões para navegar."
+            "Drive: sem duração — use botões para navegar."
         );
     }
 }
-
 
 // ====== Inicialização ======
 (function init() {
@@ -453,4 +472,5 @@ function startWatchdog() {
 // (adicione na função loadVideo, logo após updateInfo)
 startWatchdog();
 })();
+
 
