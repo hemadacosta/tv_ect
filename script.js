@@ -71,19 +71,28 @@ function updateInfo(title, status) {
 }
 
 // ====== Navegação (expostas no window para onclick do index.html) ======
+let _advanceLock = false;  // evita pulo duplo (YouTube às vezes dispara ENDED mais de uma vez)
+
 function playNextManual() {
   manualControl = true;
-  playNext();
+  playNext(/*fromAuto*/ false);
 }
 
-function playNext() {
+function playNext(fromAuto = false) {
+  if (_advanceLock) return;
+  if (fromAuto) _advanceLock = true;
+
   const sch = safeSchedule();
   if (sch.length === 0) {
     updateInfo("Nenhum vídeo na programação.", "Verifique o config.js.");
+    _advanceLock = false;
     return;
   }
   currentIndex = (currentIndex + 1) % sch.length;
-  loadVideo(currentIndex, /*fromUser*/ true);
+  loadVideo(currentIndex, /*fromUser*/ !fromAuto);
+
+  // libera o lock após iniciar o carregamento
+  if (fromAuto) setTimeout(() => { _advanceLock = false; }, 1200);
 }
 
 function playPrevious() {
@@ -245,7 +254,7 @@ function loadYouTube(url, allowAutoplay) {
             // Autoavança sempre que o vídeo acabar
             setTimeout(() => {
               manualControl = false;
-              playNext();
+              playNext(true);
             }, 800);
           }
         }
@@ -319,7 +328,7 @@ function createVimeoPlayer(videoId, allowAutoplay) {
   vimeoPlayer.on('ended', () => {
     setTimeout(() => {
       manualControl = false;
-      playNext();
+              playNext(true);
     }, 800);
   });
 
