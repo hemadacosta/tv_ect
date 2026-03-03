@@ -13,6 +13,11 @@ const schedule = [
     url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
     type: "youtube"
   },
+   {
+    title: "O Dólar furado",
+    url: "https://rumble.com/v2qu3ma-tv-nordeste-o-dlar-furado-faroest.html",
+    type: "youtube"
+  },
   {
     title: "Contato (1997)",
     url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview",
@@ -65,5 +70,6 @@ const schedule = [
     type: "googledrive"
   }
 ];
+
 
 
