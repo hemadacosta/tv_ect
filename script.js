@@ -376,74 +376,52 @@ function extractDriveFileId(url) {
 }
 
 function loadGoogleDrive(url) {
-  const fileId = extractDriveFileId(url);
-  if (!fileId) {
-    console.error("ID Drive não encontrado:", url);
-    updateInfo("Erro no Drive", "Não encontrei o ID do arquivo.");
-    return;
-  }
+    const fileId = extractDriveFileId(url);
+    if (!fileId) {
+        console.error("ID Drive não encontrado:", url);
+        updateInfo("Erro no Drive", "Não encontrei o ID do arquivo.");
+        return;
+    }
 
-  // Para players externos
-  if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-    try { ytPlayer.pauseVideo(); } catch (_) {}
-  }
-  if (vimeoPlayer) {
-    try { vimeoPlayer.pause(); } catch (_) {}
-  }
+    // Pausa players anteriores
+    if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
+        try { ytPlayer.pauseVideo(); } catch (_) {}
+    }
+    if (vimeoPlayer) {
+        try { vimeoPlayer.pause(); } catch (_) {}
+    }
 
-  const container = document.getElementById('player');
-
-  // Tentativa 1: tocar como MP4 direto via endpoint 'uc' + <video> (permite ended -> auto-sequência)
-  const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-
-  container.innerHTML = `
-    <video id="drive-video" width="100%" height="100%" playsinline
-      ${autoplayEnabled ? "autoplay" : ""} muted controls
-      style="background:#000; width:100%; height:100%; object-fit:contain;"
-    >
-      <source src="${directUrl}" type="video/mp4">
-      Seu navegador não suporta vídeo HTML5.
-    </video>
-  `;
-
-  const vid = document.getElementById('drive-video');
-  if (!vid) return;
-
-  try { vid.volume = Math.max(0, Math.min(1, currentVolume / 100)); } catch(_) {}
-
-  // Autoplay com som costuma ser bloqueado -> iniciamos muted
-  vid.muted = true;
-
-  vid.addEventListener('ended', () => {
-    setTimeout(() => {
-      manualControl = false;
-      playNext(true);
-    }, 800);
-  });
-
-  vid.addEventListener('error', () => {
-    // Fallback: preview do Drive (sem ended confiável)
+    const container = document.getElementById('player');
     container.innerHTML = `
-      <iframe
-        src="https://drive.google.com/file/d/${fileId}/preview"
-        width="100%" height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:0;"
-      ></iframe>
+        <iframe
+            src="https://drive.google.com/file/d/${fileId}/preview?autoplay=1&hl=pt-BR"
+            width="100%" height="100%"
+            allow="autoplay; fullscreen"
+            allowfullscreen
+            style="border:0; background:#000;"
+        ></iframe>
     `;
-    updateInfo(
-      document.getElementById('video-title')?.innerText || "Vídeo",
-      "Drive: este vídeo pode exigir clique no play (limitação do Drive)."
-    );
-  });
 
-  updateInfo(
-    document.getElementById('video-title')?.innerText || "Vídeo",
-    autoplayEnabled
-      ? "Drive: iniciando (silencioso). Ajuste o volume para ativar som."
-      : "Drive: pronto. Clique em play para iniciar."
-  );
+    updateInfo(
+        document.getElementById('video-title')?.innerText || "Vídeo",
+        "Drive: clique no play se não iniciar automaticamente. Volume ajustável no player."
+    );
+
+    // Timer para auto-avançar (se duration estiver definido no config)
+    const videoData = safeSchedule()[currentIndex];
+    if (videoData && videoData.duration && typeof videoData.duration === 'number') {
+        setTimeout(() => {
+            if (!manualControl) {  // Só avança se não for controle manual
+                playNext(true);
+            }
+        }, (videoData.duration * 1000) + 5000);  // +5s buffer para loading/delay
+    } else {
+        console.warn("Duração não definida para auto-avançar no Drive:", videoData);
+        updateInfo(
+            document.getElementById('video-title')?.innerText || "Vídeo",
+            "Drive: sem duração definida — use botões para navegar."
+        );
+    }
 }
 
 
@@ -459,4 +437,20 @@ function loadGoogleDrive(url) {
   // Carrega o primeiro vídeo com autoplay
   manualControl = false;
   loadVideo(0, false);
+  // Watchdog: se travar (ex.: Drive não carrega), pule após 30s
+let watchdogTimer;
+function startWatchdog() {
+    if (watchdogTimer) clearTimeout(watchdogTimer);
+    watchdogTimer = setTimeout(() => {
+        if (!manualControl) {
+            console.warn("Watchdog: possível travamento — avançando.");
+            playNext(true);
+        }
+    }, 30000);  // 30s
+}
+
+// Chame startWatchdog() no início de loadVideo()
+// (adicione na função loadVideo, logo após updateInfo)
+startWatchdog();
 })();
+
