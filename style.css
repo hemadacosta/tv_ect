@@ -159,3 +159,23 @@ iframe {
     border: none;
     display: block;
 }
+
+/* ===== Fix: garantir que os botões fiquem acima dos iframes/players ===== */
+#video-wrapper { position: relative; }
+
+#player {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+#nav-controls {
+    z-index: 5;
+}
+
+/* Evita que algum iframe “passe por cima” da camada de botões */
+#player iframe {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
