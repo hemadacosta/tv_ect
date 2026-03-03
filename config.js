@@ -44,8 +44,23 @@ const schedule = [
         type: "youtube"
     }, 
     {
-        title: "Ciência da Resistência",
-        url: "https://vimeo.com/421541483",
-        type: "vimeo"
+        title: "3ª Aula - EUPPC - Por que devemos desinstalar a escola?",
+        url: "https://youtu.be/_Jj7tUgrFbA?si=FpbpRUnrSzk48n3f",
+        type: "youtube"
+    }
+{
+        title: "4ª Aula - EUPPC - Introdução ao documentário Schooling the World",
+        url: "https://youtu.be/wgpRePgjJUA?si=c9ZFsb4LvbhKmezc",
+        type: "youtube"
+    }
+{
+        title: "Filme recomendado: Capitão Fantásticos (2016)",
+        url: "https://drive.google.com/file/d/1rD6t3Iowex73KegNxye1vjA9OziCMvmc/view?usp=sharing",
+        type: "googledrive"
+    }
+{
+        title: "Escolarizando o Mundo [Schooling the World]",
+        url: "https://drive.google.com/file/d/1h2cBYrPyDV2BbcNfpSUrnpWwsmhoJccr/view?usp=sharing",
+        type: "googledrive"
     }
 ];
