@@ -1,116 +1,185 @@
 body, html {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  color: #fff;
-  font-family: Arial, sans-serif;
-  overflow: hidden;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
 #tv-container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 100vw;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
 }
 
 #video-wrapper {
-  flex: 1;
-  position: relative;
-  background: #000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    flex: 1;
+    position: relative;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #player {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
 }
 
-/* Barra inferior */
 #info-bar {
-  height: 60px;
-  background-color: #1a1a1a;
-  display: flex;
-  align-items: center;
-  padding: 0 14px;
-  border-top: 2px solid #333;
-  gap: 10px;
+    height: 60px;
+    background-color: #1a1a1a;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-top: 2px solid #333;
 }
 
 #video-title {
-  font-size: 1rem;
-  margin: 0;
-  flex-grow: 1;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+    font-size: 1.2rem;
+    margin: 0;
+    flex-grow: 1;
 }
 
 #status-text {
-  font-size: 0.85rem;
-  color: #aaa;
-  white-space: nowrap;
+    font-size: 0.9rem;
+    color: #888;
 }
 
-/* ========== Controles Anterior/Próximo (discretos) ========== */
-#nav-controls {
-  position: absolute;
-  top: 50%;
-  left: 8px;
-  right: 8px;
-  transform: translateY(-50%);
-  display: flex;
-  justify-content: space-between;
-  z-index: 50;
-  pointer-events: none; /* só os botões clicam */
+/* Controle de Volume */
+#volume-control {
+    height: 50px;
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 0 20px;
+    border-top: 1px solid #444;
 }
 
-#nav-controls button {
-  pointer-events: auto;
-  background: rgba(0,0,0,0.55);
-  color: #fff;
-  border: 1px solid rgba(255,255,255,0.35);
-  padding: 8px 12px;
-  border-radius: 8px;
-  cursor: pointer;
-
-  /* tamanho amigável para pop-up pequeno */
-  font-size: clamp(12px, 2.2vw, 14px);
-  line-height: 1.1;
-
-  opacity: 0;
-  transform: scale(0.98);
-  transition: opacity 160ms ease, transform 160ms ease, background 160ms ease;
+#volume-control label {
+    font-size: 1rem;
+    font-weight: bold;
 }
 
-#video-wrapper:hover #nav-controls button,
-#video-wrapper:focus-within #nav-controls button,
-#video-wrapper.show-controls #nav-controls button {
-  opacity: 1;
-  transform: scale(1);
+#volume-slider {
+    width: 200px;
+    height: 8px;
+    -webkit-appearance: none;
+    appearance: none;
+    background: #444;
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+}
+
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#volume-slider::-webkit-slider-thumb:hover {
+    background: #45a049;
+}
+
+#volume-slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    background: #4CAF50;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s;
+}
+
+#volume-slider::-moz-range-thumb:hover {
+    background: #45a049;
+}
+
+#volume-value {
+    font-size: 1rem;
+    font-weight: bold;
+    min-width: 40px;
+    text-align: center;
+}
+
+/* Controles de Navegação */
+#video-wrapper:hover #nav-controls button {
+    opacity: 1;
 }
 
 #nav-controls button:hover {
-  background: rgba(0,0,0,0.78);
-  border-color: rgba(255,255,255,0.55);
+    background-color: rgba(76, 175, 80, 0.9);
+    border-color: #4CAF50;
+    transform: scale(1.1);
 }
 
 #nav-controls button:active {
-  transform: scale(0.96);
-}
-
-/* Em janelas muito pequenas, reduz ainda mais */
-@media (max-width: 520px) {
-  #info-bar { height: 54px; }
-  #nav-controls { left: 6px; right: 6px; }
-  #nav-controls button { padding: 7px 10px; border-radius: 7px; }
+    transform: scale(0.95);
 }
 
 iframe {
+    border: none;
+    display: block;
+}
+
+/* v5 — controles discretos (não fixos) + responsivo para pop-up pequeno */
+#nav-controls {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Mostra em hover (desktop) */
+#video-wrapper:hover #nav-controls,
+#video-wrapper:focus-within #nav-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Mostra temporariamente em touch quando JS adiciona .show */
+#nav-controls.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+#nav-controls button {
+  font-size: clamp(12px, 2.2vw, 16px);
+  padding: 8px 10px;
+  border-radius: 10px;
   border: none;
-  display: block;
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+  cursor: pointer;
+  max-width: 48%;
+  white-space: nowrap;
+}
+
+#nav-controls button:active {
+  transform: scale(0.98);
+}
+
+/* garante que o player fique abaixo dos botões */
+#player, #video-wrapper iframe {
+  position: relative;
+  z-index: 1;
 }
