@@ -377,21 +377,18 @@ function createVimeoPlayer(videoId, allowAutoplay) {
 
 // ====== Google Drive ======
 function extractDriveFileId(url) {
-    if (!url) return null;
-    const u = String(url).trim();
-    
-    // Padrão correto para extrair ID: /file/d/ID_DO_ARQUIVO/
-    const m1 = u.match(/\/file\/d\/([^\/\?]+)/);
-    if (m1 && m1[1]) return m1[1];
-    
-    // Fallback para links com ?id=
-    try {
-        const parsed = new URL(u, window.location.href);
-        const id = parsed.searchParams.get('id');
-        if (id) return id;
-    } catch (_) {}
-    
-    return null;
+  if (!url) return null;
+  const u = String(url);
+  // /file/d/<id>/view
+  const m1 = u.match(/\/file\/d\/([^\/]+)\//);
+  if (m1) return m1[1];
+  // open?id=<id>
+  try {
+    const parsed = new URL(u, window.location.href);
+    const id = parsed.searchParams.get('id');
+    if (id) return id;
+  } catch (_) {}
+  return null;
 }
 
 function loadGoogleDrive(url) {
@@ -402,7 +399,7 @@ function loadGoogleDrive(url) {
     return;
   }
 
-  // Pausa outros players
+  // Para players externos
   if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
     try { ytPlayer.pauseVideo(); } catch (_) {}
   }
@@ -410,23 +407,11 @@ function loadGoogleDrive(url) {
     try { vimeoPlayer.pause(); } catch (_) {}
   }
 
- const container = document.getElementById('player');
-    container.innerHTML = `
-        <iframe 
-            src="https://drive.google.com/file/d/${fileId}/preview" 
-            width="100%" 
-            height="100%" 
-            allow="autoplay; fullscreen; picture-in-picture" 
-            allowfullscreen 
-            style="border:none; background:#000;">
-        </iframe>
-    `;
+  const container = document.getElementById('player');
 
-  updateInfo(
-        document.getElementById('video-title')?.innerText || "Vídeo",
-        "Google Drive: clique no play para iniciar (limitação da plataforma)."
-    );
-}
+  // Tentativa 1: tocar como MP4 direto via endpoint 'uc' + <video> (permite ended -> auto-sequência)
+  const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
   container.innerHTML = `
     <video id="drive-video" width="100%" height="100%" playsinline
       ${autoplayEnabled ? "autoplay" : ""} muted controls
@@ -491,5 +476,3 @@ function loadGoogleDrive(url) {
   manualControl = false;
   loadVideo(0, false);
 })();
-
-
