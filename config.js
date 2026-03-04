@@ -14,7 +14,7 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "Planeta Seilvagem - Os Animais Mais Icônicos de Cada Continente",
+        title: "Planeta Selvagem - Os Animais Mais Icônicos de Cada Continente",
         url: "https://youtu.be/NXE9u8GErk0?si=IojTClWwaoXFtXlz",
         type: "youtube"
     },
@@ -54,3 +54,4 @@ const schedule = [
     type: "youtube"
     }
 ];
+
