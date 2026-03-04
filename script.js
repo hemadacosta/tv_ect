@@ -127,11 +127,20 @@ window.playNext = playNext;
 window.playPrevious = playPrevious;
 
 // Também adiciona listeners (caso o onclick seja bloqueado por algum motivo)
+let _lastNavClickAt = 0;
+function _navGuard() {
+  const now = Date.now();
+  if (now - _lastNavClickAt < 350) return false; // ignora duplo disparo
+  _lastNavClickAt = now;
+  return true;
+}
+
 const btnPrev = document.getElementById('btn-prev');
 const btnNext = document.getElementById('btn-next');
 function bindNavButton(btn, fn) {
   if (!btn) return;
   const handler = (ev) => {
+    if (!_navGuard()) return;
     ev.preventDefault();
     ev.stopPropagation();
     fn();
@@ -170,6 +179,13 @@ function loadVideo(index, fromUser = false) {
     else if (u.includes('drive.google.com')) type = 'googledrive';
   }
   currentType = type;
+
+  // Se a entrada trouxer um HTML de incorporação (embedHtml), usamos diretamente
+  if (videoData.embedHtml) {
+    const container = document.getElementById('player');
+    if (container) container.innerHTML = videoData.embedHtml;
+    return;
+  }
 
   // Carrega conforme tipo
   if (type === 'youtube') {
