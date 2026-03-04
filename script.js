@@ -377,18 +377,21 @@ function createVimeoPlayer(videoId, allowAutoplay) {
 
 // ====== Google Drive ======
 function extractDriveFileId(url) {
-  if (!url) return null;
-  const u = String(url);
-  // /file/d/<id>/view
-  const m1 = u.match(/\/file\/d\/([^\/]+)\//);
-  if (m1) return m1[1];
-  // open?id=<id>
-  try {
-    const parsed = new URL(u, window.location.href);
-    const id = parsed.searchParams.get('id');
-    if (id) return id;
-  } catch (_) {}
-  return null;
+    if (!url) return null;
+    const u = String(url).trim();
+    
+    // Padrão correto para extrair ID: /file/d/ID_DO_ARQUIVO/
+    const m1 = u.match(/\/file\/d\/([^\/\?]+)/);
+    if (m1 && m1[1]) return m1[1];
+    
+    // Fallback para links com ?id=
+    try {
+        const parsed = new URL(u, window.location.href);
+        const id = parsed.searchParams.get('id');
+        if (id) return id;
+    } catch (_) {}
+    
+    return null;
 }
 
 function loadGoogleDrive(url) {
@@ -488,4 +491,5 @@ function loadGoogleDrive(url) {
   manualControl = false;
   loadVideo(0, false);
 })();
+
 
