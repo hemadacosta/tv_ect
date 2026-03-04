@@ -16,7 +16,7 @@ const schedule = [
     {
   title: "Contato (1997)",
   type: "googledrive",
-  url: "https://drive.google.com/uc?export=download&id=1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/view"
+  url: "https://drive.google.com/uc?export=download&id=1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/view?usp=sharing"
 },
     {
         title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
@@ -54,6 +54,7 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
 
