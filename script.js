@@ -399,7 +399,7 @@ function loadGoogleDrive(url) {
     return;
   }
 
-  // Para players externos
+  // Pausa outros players
   if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
     try { ytPlayer.pauseVideo(); } catch (_) {}
   }
@@ -407,11 +407,23 @@ function loadGoogleDrive(url) {
     try { vimeoPlayer.pause(); } catch (_) {}
   }
 
-  const container = document.getElementById('player');
+ const container = document.getElementById('player');
+    container.innerHTML = `
+        <iframe 
+            src="https://drive.google.com/file/d/${fileId}/preview" 
+            width="100%" 
+            height="100%" 
+            allow="autoplay; fullscreen; picture-in-picture" 
+            allowfullscreen 
+            style="border:none; background:#000;">
+        </iframe>
+    `;
 
-  // Tentativa 1: tocar como MP4 direto via endpoint 'uc' + <video> (permite ended -> auto-sequência)
-  const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-
+  updateInfo(
+        document.getElementById('video-title')?.innerText || "Vídeo",
+        "Google Drive: clique no play para iniciar (limitação da plataforma)."
+    );
+}
   container.innerHTML = `
     <video id="drive-video" width="100%" height="100%" playsinline
       ${autoplayEnabled ? "autoplay" : ""} muted controls
@@ -476,3 +488,4 @@ function loadGoogleDrive(url) {
   manualControl = false;
   loadVideo(0, false);
 })();
+
