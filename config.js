@@ -14,20 +14,6 @@ const schedule = [
         type: "youtube"
     },
     {
-    title: "Contato (1997)",
-    type: "embed",
-    embedHtml: `
-      <iframe 
-        src="https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview"
-        width="100%" 
-        height="100%" 
-        allow="autoplay"
-        allowfullscreen
-        style="border:0;">
-      </iframe>
-    `
-  },
-    {
         title: "Planeta Selvagem - Os Animais Mais Icônicos de Cada Continente",
         url: "https://youtu.be/NXE9u8GErk0?si=IojTClWwaoXFtXlz",
         type: "youtube"
@@ -68,6 +54,7 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
 
