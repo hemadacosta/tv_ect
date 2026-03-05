@@ -13,13 +13,7 @@ const schedule = [
         url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
         type: "youtube"
     },
-    {
-    "title": "Contato (1997)",
-    "type": "googledrive",
-    "url": "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview",
-    "duration": 8980 // Duração em segundos (ex: 30 minutos )
-  },
-       {
+      {
         title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
         url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
         type: "youtube"
@@ -38,23 +32,39 @@ const schedule = [
         title: "A Incrível METAMORFOSE | O Mistério da Transformação na Natureza",
         url: "https://youtu.be/0BSvnesnNdk?si=fycrwI-dkhBNSwgw",
         type: "youtube"
-    }, 
+    },
     {
-        title: "3ª Aula - EUPPC - Por que devemos desinstalar a escola?",
-    url: "https://youtu.be/_Jj7tUgrFbA?si=FpbpRUnrSzk48n3f",
+        title: "Nicolau Copérnico Gênios da Ciência",
+    url: "https://youtu.be/o3pVDA2WPY4?si=bDf0_QF2_Q07wm8E",
+    type: "youtube"
+    },
+    {
+        title: "Johannes Kepler Gênios da Ciência",
+    url: "https://youtu.be/K1AWf_sRy-8?si=TDVAndMLt21oepGw",
     type: "youtube"
     }, 
     {
-        title: "4ª Aula - EUPPC - Introdução ao documentário Schooling the World",
-    url: "https://youtu.be/wgpRePgjJUA?si=c9ZFsb4LvbhKmezc",
+        title: "Galileu e sua batalha pelo céu!",
+    url: "https://youtu.be/psAwszDxLvc?si=QZs0yl77TlidDQfw",
+    type: "youtube"
+    },
+    {
+        title: "Descartes Cartesius (1974)",
+    url: "https://youtu.be/fMUQZHRco-g?si=lt01_Jkq_u3pVj2A",
+    type: "youtube"
+    },
+    {
+        title: "O Legado de Pitágoras!",
+    url: "https://youtu.be/_LFygNg5lnk?si=UunK1wEZpe-APWTF",
     type: "youtube"
     },
 {
-        title: "Escolarizando o Mundo [Schooling the World]",
-    url: "https://youtu.be/6t_HN95-Urs?si=vMepQ1Xq1hy7XRai",
+        title: "Construindo o Planeta Terra!",
+    url: "https://youtu.be/RavBvn1BFj0?si=ZLQSjr1vaOcRHnpP",
     type: "youtube"
     }
 ];
+
 
 
 
