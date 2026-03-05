@@ -375,14 +375,15 @@ function createVimeoPlayer(videoId, allowAutoplay) {
   }
 }
 
-// ====== Google Drive ======
+// ====== Google Drive (VERSÃO CORRIGIDA) ======
+
 function extractDriveFileId(url) {
   if (!url) return null;
   const u = String(url);
-  // /file/d/<id>/view
-  const m1 = u.match(/\/file\/d\/([^\/]+)\//);
+  // /file/d/<id>/view  ou  /file/d/<id>/preview
+  const m1 = u.match(/\/file\/d\/([^\/\?]+)/);
   if (m1) return m1[1];
-  // open?id=<id>
+  // open?id=<id>  ou  uc?id=<id>
   try {
     const parsed = new URL(u, window.location.href);
     const id = parsed.searchParams.get('id');
@@ -391,7 +392,13 @@ function extractDriveFileId(url) {
   return null;
 }
 
-function loadGoogleDrive(url) {
+let _driveAutoTimer = null; // timer para avançar automaticamente
+
+function loadGoogleDrive(videoData) {
+  // ─── Recebe o objeto completo para acessar 'duration' se disponível ───
+  const url      = videoData.url;
+  const duration = videoData.duration || null; // duração em segundos (opcional no config.js)
+
   const fileId = extractDriveFileId(url);
   if (!fileId) {
     console.error("ID Drive não encontrado:", url);
@@ -399,7 +406,7 @@ function loadGoogleDrive(url) {
     return;
   }
 
-  // Para players externos
+  // Para outros players ativos
   if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
     try { ytPlayer.pauseVideo(); } catch (_) {}
   }
@@ -407,59 +414,66 @@ function loadGoogleDrive(url) {
     try { vimeoPlayer.pause(); } catch (_) {}
   }
 
-  const container = document.getElementById('player');
+  // Cancela timer anterior se existir
+  if (_driveAutoTimer) {
+    clearTimeout(_driveAutoTimer);
+    _driveAutoTimer = null;
+  }
 
-  // Tentativa 1: tocar como MP4 direto via endpoint 'uc' + <video> (permite ended -> auto-sequência)
-  const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+  const container = document.getElementById('player');
+  if (!container) return;
+
+  // ── MÉTODO PRINCIPAL: iframe /preview (único suportado pelo Drive) ──
+  // O parâmetro ?rm=minimal remove a barra de ferramentas do Drive
+  const previewUrl = `https://drive.google.com/file/d/${fileId}/preview?rm=minimal`;
 
   container.innerHTML = `
-    <video id="drive-video" width="100%" height="100%" playsinline
-      ${autoplayEnabled ? "autoplay" : ""} muted controls
-      style="background:#000; width:100%; height:100%; object-fit:contain;"
-    >
-      <source src="${directUrl}" type="video/mp4">
-      Seu navegador não suporta vídeo HTML5.
-    </video>
+    <iframe
+      id="drive-iframe"
+      src="${previewUrl}"
+      width="100%"
+      height="100%"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      style="border:0; background:#000; width:100%; height:100%;"
+    ></iframe>
   `;
 
-  const vid = document.getElementById('drive-video');
-  if (!vid) return;
+  // ── Aviso ao usuário ──
+  updateInfo(
+    videoData.title || "Vídeo",
+    duration
+      ? `Drive: reproduzindo (${Math.round(duration / 60)} min). Próximo vídeo em breve.`
+      : "Drive: reproduzindo. Use ▶ Próximo para avançar manualmente."
+  );
 
-  try { vid.volume = Math.max(0, Math.min(1, currentVolume / 100)); } catch(_) {}
-
-  // Autoplay com som costuma ser bloqueado -> iniciamos muted
-  vid.muted = true;
-
-  vid.addEventListener('ended', () => {
-    setTimeout(() => {
+  // ── Avanço automático via timer (já que iframe não dispara 'ended') ──
+  if (duration && duration > 0) {
+    // Avança 3 segundos após o fim estimado
+    _driveAutoTimer = setTimeout(() => {
       manualControl = false;
       playNext(true);
-    }, 800);
-  });
+    }, (duration + 3) * 1000);
 
-  vid.addEventListener('error', () => {
-    // Fallback: preview do Drive (sem ended confiável)
-    container.innerHTML = `
-      <iframe
-        src="https://drive.google.com/file/d/${fileId}/preview"
-        width="100%" height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:0;"
-      ></iframe>
-    `;
-    updateInfo(
-      document.getElementById('video-title')?.innerText || "Vídeo",
-      "Drive: este vídeo pode exigir clique no play (limitação do Drive)."
-    );
-  });
+    console.info(`[Drive] Timer de avanço automático: ${duration + 3}s`);
+  } else {
+    // Sem duração definida: mostra botão "Próximo" em destaque
+    _showDriveNextHint();
+  }
+}
 
-  updateInfo(
-    document.getElementById('video-title')?.innerText || "Vídeo",
-    autoplayEnabled
-      ? "Drive: iniciando (silencioso). Ajuste o volume para ativar som."
-      : "Drive: pronto. Clique em play para iniciar."
-  );
+// Destaca o botão "Próximo" quando não há duração definida
+function _showDriveNextHint() {
+  const btn = document.getElementById('btn-next');
+  if (!btn) return;
+  btn.style.opacity = '1';
+  btn.style.transform = 'scale(1.15)';
+  btn.title = 'Clique para avançar após o vídeo do Drive terminar';
+  // Remove o destaque quando o usuário clicar
+  btn.addEventListener('pointerdown', () => {
+    btn.style.opacity = '';
+    btn.style.transform = '';
+  }, { once: true });
 }
 
 
@@ -476,3 +490,4 @@ function loadGoogleDrive(url) {
   manualControl = false;
   loadVideo(0, false);
 })();
+
