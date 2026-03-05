@@ -16,7 +16,7 @@ const schedule = [
     {
     "title": "Contato (1997)",
     "type": "googledrive",
-    "url": "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/view",
+    "url": "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview",
     "duration": 8980 // Duração em segundos (ex: 30 minutos )
   },
        {
@@ -55,6 +55,7 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
 
