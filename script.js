@@ -447,97 +447,21 @@ function loadGoogleDrive(url) {
         allowfullscreen
         style="border:0;"
       ></iframe>
-    `// ====== Google Drive ======
-function extractDriveFileId(url) {
-  if (!url) return null;
-  const u = String(url);
-  // Formatos de URL comuns do Google Drive:
-  // /file/d/<ID>/view
-  // /file/d/<ID>/edit
-  // ?id=<ID>
-  // /uc?id=<ID>
-  // /embed?id=<ID>
-  const m1 = u.match(/\/file\/d\/([^\/\?&]+)/);
-  if (m1 && m1[1]) return m1[1];
+    `;
+    updateInfo(
+      document.getElementById('video-title')?.innerText || "Vídeo",
+      "Drive: este vídeo pode exigir clique no play (limitação do Drive)."
+    );
+  });
 
-  try {
-    const parsed = new URL(u, window.location.href);
-    const id = parsed.searchParams.get('id');
-    if (id) return id;
-  } catch (_) {}
-
-  return null;
+  updateInfo(
+    document.getElementById('video-title')?.innerText || "Vídeo",
+    autoplayEnabled
+      ? "Drive: iniciando (silencioso). Ajuste o volume para ativar som."
+      : "Drive: pronto. Clique em play para iniciar."
+  );
 }
 
-function loadGoogleDrive(url) {
-  const fileId = extractDriveFileId(url);
-  if (!fileId) {
-    console.error("ID do Google Drive não encontrado na URL:", url);
-    updateInfo("Erro no Drive", "Não foi possível extrair o ID do arquivo.");
-    // Tenta avançar para o próximo para não travar o fluxo
-    setTimeout(() => playNext(true), 1500);
-    return;
-  }
-
-  // Pausa outros players
-  if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-    try { ytPlayer.pauseVideo(); } catch (_) {}
-  }
-  if (vimeoPlayer) {
-    try { vimeoPlayer.pause(); } catch (_) {}
-  }
-
-  const container = document.getElementById('player');
-  if (!container) return;
-
-  // A abordagem mais confiável para exibição é o iframe de preview/embed.
-  // A URL de /preview é mais segura, pois não depende de configurações de compartilhamento "qualquer pessoa com o link pode editar".
-  const embedUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-
-  container.innerHTML = `
-    <iframe
-      src="${embedUrl}"
-      width="100%" height="100%"
-      allow="autoplay"
-      allowfullscreen
-      style="border:0;"
-      id="drive-iframe"
-    ></iframe>
-  `;
-
-  // **PROBLEMA CENTRAL E SOLUÇÃO DE CONTORNO:**
-  // Não há um evento 'ended' confiável para iframes de cross-origin como o do Google Drive.
-  // O script não pode saber quando o vídeo termina para avançar automaticamente.
-  //
-  // **Solução de Contorno:**
-  // 1. Informar o usuário que a navegação é manual para este tipo de vídeo.
-  // 2. Se houver uma duração definida no `schedule`, podemos usar um `setTimeout` para simular o fim.
-
-  const videoData = safeSchedule( )[currentIndex];
-  if (videoData && videoData.duration) {
-    // Se a programação inclui a duração do vídeo (em segundos)
-    const durationInMs = (parseInt(videoData.duration, 10) * 1000) + 2000; // Adiciona 2s de margem
-    updateInfo(
-      videoData.title || "Vídeo do Drive",
-      `Este vídeo avançará automaticamente em aprox. ${Math.round(durationInMs / 60000)} min.`
-    );
-
-    setTimeout(() => {
-      // Verifica se o usuário não navegou manualmente antes
-      if (currentIndex === (currentIndex + 1) % safeSchedule().length - 1) {
-          manualControl = false;
-          playNext(true);
-      }
-    }, durationInMs);
-
-  } else {
-    // Se não há duração, a única opção é a navegação manual.
-    updateInfo(
-      videoData.title || "Vídeo do Drive",
-      "Avanço automático indisponível. Use os botões para navegar."
-    );
-  }
-}
 
 // ====== Inicialização ======
 (function init() {
@@ -552,4 +476,3 @@ function loadGoogleDrive(url) {
   manualControl = false;
   loadVideo(0, false);
 })();
-
