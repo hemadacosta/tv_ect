@@ -14,7 +14,7 @@ const schedule = [
         type: "youtube"
     },
       {
-    title: "Aula 01 — Introdução",
+    title: "Contato (1997)",
     url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/view",
     type: "googledrive",
     duration: 8981   // ← 149 minutos em segundos (OBRIGATÓRIO para autoavanço)
@@ -70,6 +70,7 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
 
