@@ -24,6 +24,11 @@ const schedule = [
         type: "youtube"
     },
     {
+        title: "Cosmos (Carl Sagan) | Episódio 01 - Os Limites do Oceano Cósmico",
+        url: "https://youtu.be/N1CQQLSJfwQ?si=J3Cs2wxipVCeTzSc",
+        type: "youtube"
+    },  
+    {
         title: "Toda a História das Civilizações Antigas",
         url: "https://youtu.be/X-N0nPb_iw4?si=ByBzdGjFv8_krAZl",
         type: "youtube"
@@ -58,12 +63,18 @@ const schedule = [
     url: "https://youtu.be/_LFygNg5lnk?si=UunK1wEZpe-APWTF",
     type: "youtube"
     },
+    {
+        title: "Isaac Newton Gênios da Ciência",
+        url: "https://youtu.be/uac7S7Nyae8?si=H_sUEdSsFiN-xXFU",
+        type: "youtube"
+    }, 
 {
         title: "Construindo o Planeta Terra!",
     url: "https://youtu.be/RavBvn1BFj0?si=ZLQSjr1vaOcRHnpP",
     type: "youtube"
     }
 ];
+
 
 
 
