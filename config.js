@@ -13,12 +13,6 @@ const schedule = [
         url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
         type: "youtube"
     },
-      {
-    title: "Contato (1997)",
-    url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview",
-    type: "googledrive",
-    duration: 8981   // ← 149 minutos em segundos (OBRIGATÓRIO para autoavanço)
-  },
     {
         title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
         url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
@@ -70,6 +64,7 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
 
