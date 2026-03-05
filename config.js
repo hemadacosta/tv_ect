@@ -14,6 +14,12 @@ const schedule = [
         type: "youtube"
     },
       {
+    title: "Aula 01 — Introdução",
+    url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/view",
+    type: "googledrive",
+    duration: 8981   // ← 149 minutos em segundos (OBRIGATÓRIO para autoavanço)
+  },
+    {
         title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
         url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
         type: "youtube"
@@ -64,6 +70,7 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
 
