@@ -70,10 +70,3 @@ const schedule = [
 
 
 
-
-
-
-
-
-
-
