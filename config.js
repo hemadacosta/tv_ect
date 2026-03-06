@@ -79,6 +79,3 @@ const schedule = [
     type: "googledrive"
     }
 ];
-
-
-
