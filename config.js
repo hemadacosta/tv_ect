@@ -72,11 +72,12 @@ const schedule = [
         title: "Construindo o Planeta Terra!",
     url: "https://youtu.be/RavBvn1BFj0?si=ZLQSjr1vaOcRHnpP",
     type: "youtube"
-    }
+    },
     {
         title: "O óleo de lorenzo (lorenzo's oil)(1992)",
     url: "https://vimeo.com/646212903?fl=pl&fe=cm",
     type: "vimeo"
     }
 ];
+
 
