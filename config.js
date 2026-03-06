@@ -75,7 +75,8 @@ const schedule = [
     },
     {
         title: "O óleo de lorenzo lorenzo's oil 1992",
-    url: "https://vimeo.com/646212903?fl=pl&fe=sh",
-    type: "vimeo"
+    url: "https://drive.google.com/file/d/10_ps5BlJZQN5VVpqgplOEAIc3t11XXp5/preview",
+    type: "googledrive"
     }
 ];
+
