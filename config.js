@@ -74,14 +74,3 @@ const schedule = [
     type: "youtube"
     }
 ];
-
-
-
-
-
-
-
-
-
-
-
