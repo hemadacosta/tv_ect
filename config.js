@@ -45,7 +45,7 @@ const schedule = [
     },
     {
         title: "Conexão Professor - O ensino de Ciências por investigação nos Anos Iniciais",
-    url: "https://www.youtube.com/live/Wbyyx4Rud54?si=-E1PBEGBhW2ltQfT",
+    url: "https://www.youtube.com/live/Wbyyx4Rud54?si=-vk0YHGvT1HGzcJ1",
     type: "youtube"
     }, 
     {
@@ -74,3 +74,4 @@ const schedule = [
     type: "youtube"
     }
 ];
+
