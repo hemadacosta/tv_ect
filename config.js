@@ -13,6 +13,7 @@ const schedule = [
         url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
         type: "youtube"
     },
+    {
         title: "Memória Paranaense: Newton Freire-Maia Parte 1",
         url: "https://youtu.be/_1omhivT5zc?si=V4BEwrsKXTi3Nsoe",
         type: "youtube"
@@ -83,5 +84,6 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
