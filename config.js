@@ -4,97 +4,73 @@
 
 const schedule = [
     {
-        title: "2ª Aula - ECT1 - O que é Ciência?",
-        url: "https://youtu.be/QT1hrrMcf4A?si=Ho7I41Gg7lM_2qw-",
+        title: "1ª Aula - ECT1 - Apresentação da disciplina",
+        url: "https://youtu.be/PJ_LYbFyX5w?si=YTWt7sTGsvjfxjpc",
         type: "youtube"
     },
     {
-        title: "3ª Aula - ECT1 - Filosofia e História da Ciência",
-        url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
+        title: "A Ciência em Foco",
+        url: "https://youtu.be/HfBwsEbjrKo?si=7NdHqkHLsYmE8_Mm",
         type: "youtube"
     },
     {
-        title: "Memória Paranaense: Newton Freire-Maia Parte 1",
-        url: "https://youtu.be/_1omhivT5zc?si=V4BEwrsKXTi3Nsoe",
-        type: "youtube"
-    },
-    {       
-        title: "Memória Paranaense: Newton Freire-Maia Parte 2",
-        url: "https://youtu.be/amlWGuwMZxc?si=rdHrxNgDO5glUWYu",
+        title: "Leonardo Da Vinci - O homem que inventou o futuro",
+        url: "https://youtu.be/3iGPclknn_8?si=v9MIOxosUIXX3Bra",
         type: "youtube"
     },
     {
-        title: "Contato (1997) - 👀 Assista ao filme completo nos slides do Aprender3 da 2ª Aula - ECT1",
-        url: "https://youtu.be/CVm-dewknqs?si=-YNHSe8idsq16MWm",
+        title: "UNIVESP - Ensino de Ciências: métodos e técnicas",
+        url: "https://youtu.be/qynHlQkj93Y?si=7COrQtS8mxgFipDf",
         type: "youtube"
     },
     {
-        title: "Soylent Green (1973) Official Trailer - Charlton Heston, Edward G Robinson - 👀 Assista ao filme completo nos slides do Aprender3 da 2ª Aula - ECT1",
-        url: "https://youtu.be/N_jGOKYHxaQ?si=Ng3VNawHr54Gy0Uv",
-        type: "youtube"
-    },
-    {
-        title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
-        url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
-        type: "youtube"
-    },
-    {
-        title: "As 100 Maiores Descobertas da História - Química",
-        url: "https://youtu.be/L5Y5kybGPOs?si=NcaFKbn-DIPeT_Nx",
-        type: "youtube"
-    },
-    {
-        title: "Cosmos (Carl Sagan) | Episódio 01 - Os Limites do Oceano Cósmico",
-        url: "https://youtu.be/N1CQQLSJfwQ?si=J3Cs2wxipVCeTzSc",
+        title: "Ensino de Ciências: história e situação atual",
+        url: "https://youtu.be/nh1ruCC0yA4?si=yQJ5SZYFdcNc-Rtg",
         type: "youtube"
     },  
     {
-        title: "Toda a História das Civilizações Antigas",
-        url: "https://youtu.be/X-N0nPb_iw4?si=ByBzdGjFv8_krAZl",
+        title: "A Impactante Origem da Vida e o Nascimento da Terra",
+        url: "https://youtu.be/6JZVUe_hiPA?si=oB_WYLk7rvdKQKkU",
         type: "youtube"
     },  
     {
-        title: "A Incrível METAMORFOSE | O Mistério da Transformação na Natureza",
-        url: "https://youtu.be/0BSvnesnNdk?si=fycrwI-dkhBNSwgw",
+        title: "Formação de professores de Ciências - Ana Maria Pessoa de Carvalho",
+        url: "https://youtu.be/IMyfqxACezE?si=BvJSo2d2smj0ZUFL",
         type: "youtube"
     },
     {
-        title: "Nicolau Copérnico Gênios da Ciência",
-    url: "https://youtu.be/o3pVDA2WPY4?si=bDf0_QF2_Q07wm8E",
+        title: "Ary Mergulhão - A importância do Ensino de Ciências na educação infantil",
+    url: "https://youtu.be/FbY6kx2P-xk?si=RIYIABLXnOSemWNp",
     type: "youtube"
     },
     {
-        title: "Johannes Kepler Gênios da Ciência",
-    url: "https://youtu.be/K1AWf_sRy-8?si=TDVAndMLt21oepGw",
+        title: "Conexão Professor - O ensino de Ciências por investigação nos Anos Iniciais",
+    url: "https://www.youtube.com/live/Wbyyx4Rud54?si=-E1PBEGBhW2ltQfT",
     type: "youtube"
     }, 
     {
-        title: "Galileu e sua batalha pelo céu!",
-    url: "https://youtu.be/psAwszDxLvc?si=QZs0yl77TlidDQfw",
+        title: "O filme que fez com que os americanos se importassem com a educação em 1957",
+        url: "https://youtu.be/uzsXIA3Rf4Q?si=0UScoWo5TkUYz4rx",
+        type: "youtube"
+    },
+    {
+        title: "Inherit The Wind (1999) - O Vento Será Tua Herança",
+    url: "https://youtu.be/NYCfo4hVolQ?si=YEwzO1uk_31NeTbx",
     type: "youtube"
     },
     {
-        title: "Descartes Cartesius (1974)",
-    url: "https://youtu.be/fMUQZHRco-g?si=lt01_Jkq_u3pVj2A",
+        title: "Never Cry Wolf (1983)",
+    url: "https://youtu.be/6QubWEM7mKg?si=gZmk9FhGFrwxdKpl",
     type: "youtube"
     },
     {
-        title: "O Legado de Pitágoras!",
-    url: "https://youtu.be/_LFygNg5lnk?si=UunK1wEZpe-APWTF",
-    type: "youtube"
-    },
-    {
-        title: "Isaac Newton Gênios da Ciência",
-        url: "https://youtu.be/uac7S7Nyae8?si=H_sUEdSsFiN-xXFU",
+        title: "A evolução dos humanos: quando nós estávamos sozinhos",
+        url: "https://youtu.be/VS-kn7N6N8M?si=w6VzyOdPmACSyEXS",
         type: "youtube"
     }, 
-    {
-        title: "Construindo o Planeta Terra!",
-    url: "https://youtu.be/RavBvn1BFj0?si=ZLQSjr1vaOcRHnpP",
+{
+        title: "Algo estranho acontece quando E = -mc²",
+    url: "https://youtu.be/vX6C6zh43ho?si=_be1btTOXXxkY9vg",
     type: "youtube"
     }
 ];
-
-
-
-
