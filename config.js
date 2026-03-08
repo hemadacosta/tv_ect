@@ -13,6 +13,15 @@ const schedule = [
         url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
         type: "youtube"
     },
+        title: "Memória Paranaense: Newton Freire-Maia Parte 1",
+        url: "https://youtu.be/_1omhivT5zc?si=V4BEwrsKXTi3Nsoe",
+        type: "youtube"
+    },
+{
+        title: "Memória Paranaense: Newton Freire-Maia Parte 2",
+        url: "https://youtu.be/amlWGuwMZxc?si=rdHrxNgDO5glUWYu",
+        type: "youtube"
+    },
     {
         title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
         url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
@@ -74,4 +83,5 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
