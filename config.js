@@ -24,8 +24,14 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "Contato (1997) - 👀 Assista ao filme copleto nos slides do Aprender3 da 2ª Aula - ECT1",
+        title: "Contato (1997) - 👀 Assista ao filme completo nos slides do Aprender3 da 2ª Aula - ECT1",
         url: "https://youtu.be/CVm-dewknqs?si=-YNHSe8idsq16MWm",
+        type: "youtube"
+    },
+    {
+        title: "Soylent Green (1973) Official Trailer - Charlton Heston, Edward G Robinson - 👀 Assista ao filme completo nos slides do Aprender3 da 2ª Aula - ECT1"
+ - ECT1",
+        url: "https://youtu.be/N_jGOKYHxaQ?si=Ng3VNawHr54Gy0Uv",
         type: "youtube"
     },
     {
@@ -89,5 +95,6 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
