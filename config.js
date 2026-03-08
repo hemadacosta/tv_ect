@@ -18,7 +18,7 @@ const schedule = [
         url: "https://youtu.be/_1omhivT5zc?si=V4BEwrsKXTi3Nsoe",
         type: "youtube"
     },
-{
+    {       
         title: "Memória Paranaense: Newton Freire-Maia Parte 2",
         url: "https://youtu.be/amlWGuwMZxc?si=rdHrxNgDO5glUWYu",
         type: "youtube"
@@ -78,12 +78,9 @@ const schedule = [
         url: "https://youtu.be/uac7S7Nyae8?si=H_sUEdSsFiN-xXFU",
         type: "youtube"
     }, 
-{
+    {
         title: "Construindo o Planeta Terra!",
     url: "https://youtu.be/RavBvn1BFj0?si=ZLQSjr1vaOcRHnpP",
     type: "youtube"
     }
 ];
-
-
-
