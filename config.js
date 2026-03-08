@@ -24,6 +24,11 @@ const schedule = [
         type: "youtube"
     },
     {
+        title: "Contato (1997) - 👀 Assista o filme copleto nos slides do Aprender3 da 2ª Aula - ECT1",
+        url: "https://youtu.be/CVm-dewknqs?si=-YNHSe8idsq16MWm",
+        type: "youtube"
+    },
+    {
         title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
         url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
         type: "youtube"
@@ -84,3 +89,4 @@ const schedule = [
     type: "youtube"
     }
 ];
+
