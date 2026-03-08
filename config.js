@@ -24,7 +24,7 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "Contato (1997) - 👀 Assista o filme copleto nos slides do Aprender3 da 2ª Aula - ECT1",
+        title: "Contato (1997) - 👀 Assista ao filme copleto nos slides do Aprender3 da 2ª Aula - ECT1",
         url: "https://youtu.be/CVm-dewknqs?si=-YNHSe8idsq16MWm",
         type: "youtube"
     },
@@ -89,4 +89,5 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
