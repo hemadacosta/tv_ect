@@ -5,7 +5,7 @@
 const schedule = [
     {
         title: "1ª Aula - ECT1 - Apresentação da disciplina",
-        url: "https://youtu.be/PJ_LYbFyX5w?si=YTWt7sTGsvjfxjpc",
+        url: "https://youtu.be/T-FeG_CdTF0?si=sAPKRXS8Uc-6YToD",
         type: "youtube"
     },
     {
@@ -74,5 +74,6 @@ const schedule = [
     type: "youtube"
     }
 ];
+
 
 
