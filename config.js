@@ -72,8 +72,10 @@ const schedule = [
         title: "Algo estranho acontece quando E = -mc²",
     url: "https://youtu.be/vX6C6zh43ho?si=_be1btTOXXxkY9vg",
     type: "youtube"
+    },
+    {
+        title: "Grandes Mitos Gregos: Medeia",
+    url: "https://youtu.be/zqfhJDvuzDE?si=AeLuF6-EXNP39_GA",
+    type: "youtube"
     }
 ];
-
-
-
