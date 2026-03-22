@@ -92,5 +92,10 @@ const schedule = [
         title: "Construindo o Planeta Terra!",
     url: "https://youtu.be/RavBvn1BFj0?si=ZLQSjr1vaOcRHnpP",
     type: "youtube"
+    },
+    {
+        title: "Ágora (2011)",
+    url: "https://youtu.be/s5n37dWnB-Y?si=LBuepqjhzstY48Z_",
+    type: "youtube"
     }
 ];
