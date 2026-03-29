@@ -4,98 +4,78 @@
 
 const schedule = [
     {
-        title: "2ª Aula - ECT1 - O que é Ciência?",
-        url: "https://youtu.be/QT1hrrMcf4A?si=Ho7I41Gg7lM_2qw-",
+        title: "4ª Aula - ECT1 - O ensino de ciências para os primeiros anos da Educação Básica",
+        url: "https://youtu.be/4Dc2lEfnir4?si=PvVNwdAdSnRsU2Lh",
         type: "youtube"
     },
     {
-        title: "3ª Aula - ECT1 - Filosofia e História da Ciência",
-        url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
+        title: "5ª Aula - ECT1 - Revoluções Científicas e Ciência Normal na Sala de Aula",
+        url: "https://youtu.be/EFMtk5qex80?si=9QkYezdtgF4Q1hLc",
+        type: "youtube"
+    },
+{
+        title: "BNCC: Ciência da Natureza",
+      url: "https://youtu.be/7fp_-_bJWro"
+      type: "youtube"
+      },
+{
+        title: "Como a BNCC organizou o Ensino Fundamental",
+    url: "https://youtu.be/W4U4qd2JejQ?si=biZLZEu78H7O_ulQ",
+    type: "youtube"
+    },
+{
+        title: "BNCC: Competências e Habilidades: Educação Infantil e Ensino Fundamental",
+    url: "https://youtu.be/8t0QtyAXvWc?si=gt-1jWWUyal6Q3ws",
+    type: "youtube"
+    }, 
+{
+        title: "Muito Além do Peso",
+        url: "https://youtu.be/8UGe5GiHCT4?si=kVyf3WgdFVDKd056",
+        type: "youtube"
+    },
+{
+        title: "A Queda - as últimas horas de Hitler",
+        url: "https://youtu.be/kVzCBX2AToc?si=ACN9PX6LHL4BA0be",
+        type: "youtube"
+    },
+      {
+        title: "O Óleo de Lorenzo (1992) - Trailer (Assista ao filme completo na apresentação da 5ª Aula - ECT1",
+        url: "https://youtu.be/GLcx7xMMBoM?si=_PYLdmDZ16RLwuYz",
+        type: "youtube"
+    },
+      {
+        title: "Mudança de Paradigma - Thomas Kuhn",
+        url: "https://youtu.be/3i0jEzV_JC8",
         type: "youtube"
     },
     {
-        title: "Memória Paranaense: Newton Freire-Maia Parte 1",
-        url: "https://youtu.be/_1omhivT5zc?si=V4BEwrsKXTi3Nsoe",
-        type: "youtube"
-    },
-    {       
-        title: "Memória Paranaense: Newton Freire-Maia Parte 2",
-        url: "https://youtu.be/amlWGuwMZxc?si=rdHrxNgDO5glUWYu",
-        type: "youtube"
-    },
-    {
-        title: "Contato (1997) - Trailer - 👀 Assista ao filme completo nos slides do Aprender3 da 2ª Aula - ECT1",
-        url: "https://youtu.be/CVm-dewknqs?si=-YNHSe8idsq16MWm",
-        type: "youtube"
-    },
-    {
-        title: "Soylent Green (1973) - Trailer - 👀 Assista ao filme completo nos slides do Aprender3 da 2ª Aula - ECT1",
-        url: "https://youtu.be/N_jGOKYHxaQ?si=Ng3VNawHr54Gy0Uv",
-        type: "youtube"
-    },
-    {
-        title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
-        url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
-        type: "youtube"
-    },
-    {
-        title: "Discovery Science As 100 Maiores Descobertas da História - Química",
-        url: "https://youtu.be/L5Y5kybGPOs?si=NcaFKbn-DIPeT_Nx",
-        type: "youtube"
-    },
-    {
-        title: "Cosmos (Carl Sagan) | Episódio 01 - Os Limites do Oceano Cósmico",
-        url: "https://youtu.be/N1CQQLSJfwQ?si=J3Cs2wxipVCeTzSc",
+        title: "Resumo PCN Ciências Naturais - Anos Iniciais",
+        url: "https://youtu.be/sqp08D2J_K4?si=AZh_qcNo0czOn68O",
         type: "youtube"
     },  
     {
-        title: "Toda a História das Civilizações Antigas",
-        url: "https://youtu.be/X-N0nPb_iw4?si=ByBzdGjFv8_krAZl",
-        type: "youtube"
-    },  
-    {
-        title: "A Incrível METAMORFOSE | O Mistério da Transformação na Natureza",
-        url: "https://youtu.be/0BSvnesnNdk?si=fycrwI-dkhBNSwgw",
+        title: "O Matemático - Adventures of a Mathematician - (2020)",
+        url: "https://youtu.be/978BUOV5Swc?si=CskLm-8fUX847Ueg",
         type: "youtube"
     },
-    {
-        title: "Nicolau Copérnico Gênios da Ciência",
-    url: "https://youtu.be/o3pVDA2WPY4?si=bDf0_QF2_Q07wm8E",
+      {
+        title: "Novos Paradigmas na Ciência",
+    url: "https://youtu.be/XG_O8gW-vCg?si=UnFPTT1AGeJbK6pc",
     type: "youtube"
     },
     {
-        title: "Johannes Kepler Gênios da Ciência",
-    url: "https://youtu.be/K1AWf_sRy-8?si=TDVAndMLt21oepGw",
-    type: "youtube"
-    }, 
-    {
-        title: "Galileu e sua batalha pelo céu!",
-    url: "https://youtu.be/psAwszDxLvc?si=QZs0yl77TlidDQfw",
+        title: "Cosmos Carl Sagan Ep.2 - Uma Voz na Sinfonia Cósmica",
+    url: "https://youtu.be/nEax6pI4nMc?si=Tv9PU_lR60J8GHtj",
     type: "youtube"
     },
     {
-        title: "Descartes Cartesius (1974)",
-    url: "https://youtu.be/fMUQZHRco-g?si=lt01_Jkq_u3pVj2A",
+        title: "Enigma: O Jogo da Imitação",
+    url: "https://youtu.be/lRid96uWpqo?si=1YAC_vbGGxapG8Oq",
     type: "youtube"
     },
-    {
-        title: "O Legado de Pitágoras!",
-    url: "https://youtu.be/_LFygNg5lnk?si=UunK1wEZpe-APWTF",
-    type: "youtube"
-    },
-    {
-        title: "Isaac Newton Gênios da Ciência",
-        url: "https://youtu.be/uac7S7Nyae8?si=H_sUEdSsFiN-xXFU",
-        type: "youtube"
-    }, 
-    {
-        title: "Construindo o Planeta Terra!",
-    url: "https://youtu.be/RavBvn1BFj0?si=ZLQSjr1vaOcRHnpP",
-    type: "youtube"
-    },
-    {
-        title: "Ágora (2011)",
-    url: "https://youtu.be/s5n37dWnB-Y?si=LBuepqjhzstY48Z_",
+{
+        title: "Albert Einstein",
+    url: "https://youtu.be/UnSA27a00To?si=DBZtBKbVAmtOHVeF",
     type: "youtube"
     }
 ];
