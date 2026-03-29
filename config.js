@@ -14,7 +14,7 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "BNCC: Ciência da Natureza",
+        title: "BNCC, Ciência da Natureza",
         url: "https://youtu.be/7fp_-_bJWro",
         type: "youtube"
     },
@@ -24,7 +24,7 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "BNCC: Competências e Habilidades, Educação Infantil e Ensino Fundamental",
+        title: "BNCC, Competências e Habilidades, Educação Infantil e Ensino Fundamental",
         url: "https://youtu.be/8t0QtyAXvWc?si=gt-1jWWUyal6Q3ws",
         type: "youtube"
     },
@@ -71,11 +71,6 @@ const schedule = [
     {
         title: "Enigma, O Jogo da Imitação",
     url: "https://youtu.be/lRid96uWpqo?si=1YAC_vbGGxapG8Oq",
-    type: "youtube"
-    },
-    {
-        title: "Descartes Cartesius (1974)",
-    url: "https://youtu.be/fMUQZHRco-g?si=lt01_Jkq_u3pVj2A",
     type: "youtube"
     },
     {
