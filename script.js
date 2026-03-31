@@ -1,4 +1,6 @@
-// script.js (v5) — navegação confiável (YouTube/Vimeo) + controles discretos
+// script.js (v6) — navegação confiável (YouTube/Vimeo) + controles discretos
+// CORREÇÃO: API do Vimeo carregada dinamicamente + gerenciamento correto de players
+
 let currentIndex = 0;
 let ytPlayer = null;      // instância YT.Player
 let vimeoPlayer = null;   // instância Vimeo.Player
@@ -6,6 +8,7 @@ let currentType = null;
 let currentVolume = 100;
 let autoplayEnabled = true;
 let manualControl = false;
+let vimeoAPILoaded = false;
 
 // ====== Controles de volume ======
 const volumeSlider = document.getElementById('volume-slider');
@@ -240,6 +243,35 @@ function ensureYouTubeAPIReady(cb) {
   setTimeout(() => ensureYouTubeAPIReady(cb), 300);
 }
 
+// NOVO: Limpa completamente o container e destroi players antigos
+function clearPlayerContainer() {
+  const container = document.getElementById('player');
+  if (!container) return;
+
+  // Destroi player do YouTube se existir
+  if (ytPlayer) {
+    try {
+      ytPlayer.destroy();
+    } catch (e) {
+      console.warn("Erro ao destruir YouTube player:", e);
+    }
+    ytPlayer = null;
+  }
+
+  // Destroi player do Vimeo se existir
+  if (vimeoPlayer) {
+    try {
+      vimeoPlayer.destroy();
+    } catch (e) {
+      console.warn("Erro ao destruir Vimeo player:", e);
+    }
+    vimeoPlayer = null;
+  }
+
+  // Limpa o HTML do container
+  container.innerHTML = '';
+}
+
 function loadYouTube(url, allowAutoplay) {
   const videoId = extractYouTubeID(url);
   if (!videoId) {
@@ -249,20 +281,24 @@ function loadYouTube(url, allowAutoplay) {
   }
 
   ensureYouTubeAPIReady(() => {
-    // Se já existe player, REUTILIZA (isso resolve “só o vídeo 1 carrega”)
+    // Se já existe player YouTube, REUTILIZA (isso resolve "só o vídeo 1 carrega")
     if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
       try {
         ytPlayer.loadVideoById(videoId);
         applyVolumeToPlayer();
-    maybeUnmuteIfUserChangedVolume();
+        maybeUnmuteIfUserChangedVolume();
         if (!allowAutoplay && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
         // Se for controle manual do estudante, esconda controles após clicar
         return;
       } catch (e) {
         console.warn("Falha no loadVideoById; recriando player…", e);
-        try { ytPlayer.destroy(); } catch (_) {}
-        ytPlayer = null;
+        clearPlayerContainer(); // Usa a nova função de limpeza
       }
+    }
+
+    // Limpa container se não estava usando YouTube antes (veio do Vimeo ou Drive)
+    if (vimeoPlayer) {
+      clearPlayerContainer();
     }
 
     // Cria player se não existe
@@ -305,119 +341,155 @@ function loadYouTube(url, allowAutoplay) {
 }
 
 // ====== Vimeo ======
-function normalizeVimeoUrl(url) {
-  if (!url) return null;
-  let u = String(url).trim();
 
-  // Se vier um iframe inteiro colado por engano, tenta extrair o src=""
-  const iframeSrcMatch = u.match(/src=["']([^"']+)["']/i);
-  if (iframeSrcMatch && iframeSrcMatch[1]) {
-    u = iframeSrcMatch[1];
-  }
-
-  // Se for link comum do Vimeo, tenta converter para player URL preservando parâmetros úteis
-  try {
-    const parsed = new URL(u, window.location.href);
-
-    // Caso já seja player.vimeo.com/video/...
-    if (parsed.hostname.includes('player.vimeo.com')) {
-      return parsed.toString();
-    }
-
-    // Caso seja vimeo.com/123456789...
-    if (parsed.hostname.includes('vimeo.com')) {
-      const parts = parsed.pathname.split('/').filter(Boolean);
-      const id = parts.find(p => /^\d+$/.test(p));
-      if (id) {
-        const h = parsed.searchParams.get('h');
-        let playerUrl = `https://player.vimeo.com/video/${id}`;
-        if (h) playerUrl += `?h=${h}`;
-        return playerUrl;
-      }
-    }
-  } catch (_) {}
-
-  // fallback por regex
-  const m = u.match(/(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)/i);
-  if (m) {
-    const id = m[1];
-    const hMatch = u.match(/[?&]h=([a-zA-Z0-9]+)/);
-    return `https://player.vimeo.com/video/${id}${hMatch ? `?h=${hMatch[1]}` : ''}`;
-  }
-
-  return null;
-}
-
-function loadVimeo(url, allowAutoplay) {
-  const playerUrl = normalizeVimeoUrl(url);
-
-  if (!playerUrl) {
-    console.error("URL Vimeo inválida:", url);
-    updateInfo("Erro no Vimeo", "Não consegui interpretar a URL do Vimeo.");
+// NOVO: Carrega a API do Vimeo dinamicamente se não estiver presente
+function loadVimeoAPI(callback) {
+  if (typeof Vimeo !== 'undefined' && Vimeo.Player) {
+    vimeoAPILoaded = true;
+    callback();
     return;
   }
 
-  // destrói player anterior
-  if (vimeoPlayer) {
-    try { vimeoPlayer.destroy(); } catch (_) {}
-    vimeoPlayer = null;
+  // Verifica se o script já está sendo carregado
+  if (document.querySelector('script[src*="player.vimeo.com/api/player.js"]')) {
+    // Aguarda o carregamento
+    const checkInterval = setInterval(() => {
+      if (typeof Vimeo !== 'undefined' && Vimeo.Player) {
+        vimeoAPILoaded = true;
+        clearInterval(checkInterval);
+        callback();
+      }
+    }, 100);
+    return;
   }
 
-  createVimeoPlayer(playerUrl, allowAutoplay);
+  console.log("Carregando API do Vimeo...");
+
+  // Cria o script para carregar a API
+  const script = document.createElement('script');
+  script.src = 'https://player.vimeo.com/api/player.js';
+  script.async = true;
+  script.onload = () => {
+    console.log("API do Vimeo carregada com sucesso!");
+    vimeoAPILoaded = true;
+    callback();
+  };
+  script.onerror = () => {
+    console.error("Falha ao carregar API do Vimeo");
+    updateInfo("Erro", "Não foi possível carregar o player do Vimeo. Verifique sua conexão.");
+  };
+  document.head.appendChild(script);
 }
 
-function createVimeoPlayer(playerUrl, allowAutoplay) {
-  const container = document.getElementById('player');
-  if (!container) return;
+function extractVimeoID(url) {
+  if (!url) return null;
+  const u = String(url).trim();
 
-  container.innerHTML = '<div id="vimeo-player" style="width:100%;height:100%;"></div>';
+  // Padrões suportados:
+  // https://vimeo.com/12345678
+  // https://player.vimeo.com/video/12345678
+  // https://vimeo.com/12345678?param=value
+  // https://vimeo.com/channels/staffpicks/12345678
 
-  vimeoPlayer = new Vimeo.Player('vimeo-player', {
-    url: playerUrl,
-    autoplay: !!allowAutoplay,
-    muted: !!autoplayMuted,
-    title: false,
-    byline: false,
-    portrait: false,
-    controls: true,
-    responsive: true
+  const patterns = [
+    /vimeo\.com\/(?:video\/)?(\d+)(?:[?\/]|$)/,
+    /vimeo\.com\/channels\/[^\/]+\/(\d+)/,
+    /player\.vimeo\.com\/video\/(\d+)/
+  ];
+
+  for (const pattern of patterns) {
+    const m = u.match(pattern);
+    if (m) return m[1];
+  }
+
+  // Fallback: regex original mais simples
+  const m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+  return m ? m[1] : null;
+}
+
+function loadVimeo(url, allowAutoplay) {
+  const videoId = extractVimeoID(url);
+  if (!videoId) {
+    console.error("ID Vimeo não encontrado:", url);
+    updateInfo("Erro no Vimeo", "Não encontrei o ID do vídeo. Verifique a URL.");
+    return;
+  }
+
+  // Carrega a API primeiro, depois cria o player
+  loadVimeoAPI(() => {
+    // Limpa container e players antigos antes de criar novo
+    clearPlayerContainer();
+
+    // Cria novo container para o Vimeo
+    const container = document.getElementById('player');
+    const vimeoDiv = document.createElement('div');
+    vimeoDiv.id = 'vimeo-player';
+    container.appendChild(vimeoDiv);
+
+    // Cria o player do Vimeo
+    createVimeoPlayer(videoId, allowAutoplay);
   });
+}
 
-  vimeoPlayer.ready().then(() => {
-    applyVolumeToPlayer();
+function createVimeoPlayer(videoId, allowAutoplay) {
+  try {
+    console.log("Criando player Vimeo para ID:", videoId);
 
-    if (allowAutoplay) {
-      vimeoPlayer.play().catch((err) => {
-        console.warn("Autoplay do Vimeo bloqueado:", err);
-        updateInfo(
-          document.getElementById('video-title')?.innerText || "Vídeo",
-          "Vimeo carregado, mas o autoplay foi bloqueado pelo navegador. Clique no vídeo ou ajuste o volume."
-        );
-      });
-    }
-  }).catch((err) => {
-    console.error("Erro ao inicializar Vimeo:", err);
-    updateInfo(
-      "Erro no Vimeo",
-      "O vídeo não pôde ser incorporado. Verifique se a URL está completa e se o Vimeo permite embed."
-    );
-  });
+    vimeoPlayer = new Vimeo.Player('vimeo-player', {
+      id: Number(videoId),
+      autoplay: !!allowAutoplay,
+      muted: autoplayMuted, // Importante para autoplay funcionar
+      title: false,
+      byline: false,
+      portrait: false,
+      controls: true
+    });
 
-  vimeoPlayer.on('ended', () => {
-    setTimeout(() => {
-      manualControl = false;
-      playNext(true);
-    }, 800);
-  });
+    vimeoPlayer.ready().then(() => {
+      console.log("Vimeo player pronto!");
 
-  vimeoPlayer.on('error', (err) => {
-    console.error("Erro no player Vimeo:", err);
-    updateInfo("Erro no Vimeo", "Falha no streaming deste vídeo do Vimeo.");
-  });
+      // Aplica volume atual
+      applyVolumeToPlayer();
 
-  // pausa YouTube se estiver ativo
-  if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-    try { ytPlayer.pauseVideo(); } catch (_) {}
+      // Se usuário já ajustou volume, desmuta
+      maybeUnmuteIfUserChangedVolume();
+
+      // Tenta dar play se permitido
+      if (allowAutoplay) {
+        vimeoPlayer.play().catch((err) => {
+          console.warn("Autoplay bloqueado pelo navegador:", err);
+          // Autoplay foi bloqueado, usuário precisa interagir
+          updateInfo(
+            document.getElementById('video-title')?.innerText || "Vídeo",
+            "Clique no vídeo para iniciar (bloqueio do navegador)"
+          );
+        });
+      }
+    });
+
+    // Evento quando o vídeo termina
+    vimeoPlayer.on('ended', () => {
+      console.log("Vimeo: vídeo terminou, avançando...");
+      setTimeout(() => {
+        manualControl = false;
+        playNext(true);
+      }, 800);
+    });
+
+    // Evento de erro
+    vimeoPlayer.on('error', (err) => {
+      console.error("Erro no player Vimeo:", err);
+      updateInfo("Erro no Vimeo", "Não foi possível reproduzir o vídeo");
+    });
+
+    // Evento de carregamento
+    vimeoPlayer.on('loaded', () => {
+      console.log("Vimeo: vídeo carregado");
+    });
+
+  } catch (err) {
+    console.error("Falha ao criar player Vimeo:", err);
+    updateInfo("Erro", "Falha ao inicializar player do Vimeo");
   }
 }
 
@@ -445,13 +517,8 @@ function loadGoogleDrive(url) {
     return;
   }
 
-  // Para players externos
-  if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-    try { ytPlayer.pauseVideo(); } catch (_) {}
-  }
-  if (vimeoPlayer) {
-    try { vimeoPlayer.pause(); } catch (_) {}
-  }
+  // Limpa players anteriores
+  clearPlayerContainer();
 
   const container = document.getElementById('player');
 
