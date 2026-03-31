@@ -47,7 +47,12 @@ const schedule = [
         title: "Mudança de Paradigma - Thomas Kuhn",
         url: "https://youtu.be/3i0jEzV_JC8",
         type: "youtube"
-    },  
+    }, 
+    {
+  title: "Uma mente brilhante (2001)",
+  type: "vimeo",
+  url: "https://player.vimeo.com/video/382446611?h=65d4fbb945"
+},
     {
         title: "Resumo PCN Ciências Naturais - Anos Iniciais",
         url: "https://youtu.be/sqp08D2J_K4?si=AZh_qcNo0czOn68O",
