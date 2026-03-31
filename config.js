@@ -77,5 +77,10 @@ const schedule = [
         title: "Albert Einstein",
     url: "https://youtu.be/UnSA27a00To?si=DBZtBKbVAmtOHVeF",
     type: "youtube"
-    }
- ];
+    },
+    {
+    title: "Uma mente brilhante (2001)",
+    url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",  // substitua pelo ID real
+    type: "vimeo"
+  }
+];
