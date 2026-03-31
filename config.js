@@ -51,7 +51,7 @@ const schedule = [
     {
   title: "Uma mente brilhante (2001)",
   url: "https://player.vimeo.com/video/382446611?h=65d4fbb945"
-  type: "vimeo"
+  type: "vimeo",
   }
     {
         title: "Resumo PCN Ciências Naturais - Anos Iniciais",
