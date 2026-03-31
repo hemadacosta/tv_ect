@@ -305,73 +305,117 @@ function loadYouTube(url, allowAutoplay) {
 }
 
 // ====== Vimeo ======
-function extractVimeoID(url) {
+function normalizeVimeoUrl(url) {
   if (!url) return null;
-  const u = String(url).trim();
-  // Ex: https://vimeo.com/12345678 ou https://player.vimeo.com/video/12345678
-  const m = u.match(/vimeo\.com\/(?:video\/)?(\d+)/);
-  return m ? m[1] : null;
+  let u = String(url).trim();
+
+  // Se vier um iframe inteiro colado por engano, tenta extrair o src=""
+  const iframeSrcMatch = u.match(/src=["']([^"']+)["']/i);
+  if (iframeSrcMatch && iframeSrcMatch[1]) {
+    u = iframeSrcMatch[1];
+  }
+
+  // Se for link comum do Vimeo, tenta converter para player URL preservando parâmetros úteis
+  try {
+    const parsed = new URL(u, window.location.href);
+
+    // Caso já seja player.vimeo.com/video/...
+    if (parsed.hostname.includes('player.vimeo.com')) {
+      return parsed.toString();
+    }
+
+    // Caso seja vimeo.com/123456789...
+    if (parsed.hostname.includes('vimeo.com')) {
+      const parts = parsed.pathname.split('/').filter(Boolean);
+      const id = parts.find(p => /^\d+$/.test(p));
+      if (id) {
+        const h = parsed.searchParams.get('h');
+        let playerUrl = `https://player.vimeo.com/video/${id}`;
+        if (h) playerUrl += `?h=${h}`;
+        return playerUrl;
+      }
+    }
+  } catch (_) {}
+
+  // fallback por regex
+  const m = u.match(/(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)/i);
+  if (m) {
+    const id = m[1];
+    const hMatch = u.match(/[?&]h=([a-zA-Z0-9]+)/);
+    return `https://player.vimeo.com/video/${id}${hMatch ? `?h=${hMatch[1]}` : ''}`;
+  }
+
+  return null;
 }
 
 function loadVimeo(url, allowAutoplay) {
-  const videoId = extractVimeoID(url);
-  if (!videoId) {
-    console.error("ID Vimeo não encontrado:", url);
-    updateInfo("Erro no Vimeo", "Não encontrei o ID do vídeo.");
+  const playerUrl = normalizeVimeoUrl(url);
+
+  if (!playerUrl) {
+    console.error("URL Vimeo inválida:", url);
+    updateInfo("Erro no Vimeo", "Não consegui interpretar a URL do Vimeo.");
     return;
   }
 
-  // Se já existe player, reutiliza
-  if (vimeoPlayer && typeof vimeoPlayer.loadVideo === 'function') {
-    vimeoPlayer.loadVideo(Number(videoId)).then(() => {
-      applyVolumeToPlayer();
-    maybeUnmuteIfUserChangedVolume();
-      if (allowAutoplay) vimeoPlayer.play().catch(()=>{});
-      else vimeoPlayer.pause().catch(()=>{});
-    }).catch((e) => {
-      console.warn("Falha no loadVideo do Vimeo; recriando player…", e);
-      try { vimeoPlayer.destroy(); } catch (_) {}
-      vimeoPlayer = null;
-      createVimeoPlayer(videoId, allowAutoplay);
-    });
-    // Pausa YouTube se estiver ativo
-    if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
-      try { ytPlayer.pauseVideo(); } catch (_) {}
-    }
-    return;
+  // destrói player anterior
+  if (vimeoPlayer) {
+    try { vimeoPlayer.destroy(); } catch (_) {}
+    vimeoPlayer = null;
   }
 
-  createVimeoPlayer(videoId, allowAutoplay);
+  createVimeoPlayer(playerUrl, allowAutoplay);
 }
 
-function createVimeoPlayer(videoId, allowAutoplay) {
+function createVimeoPlayer(playerUrl, allowAutoplay) {
   const container = document.getElementById('player');
   if (!container) return;
-  container.innerHTML = '<div id="vimeo-player"></div>';
+
+  container.innerHTML = '<div id="vimeo-player" style="width:100%;height:100%;"></div>';
 
   vimeoPlayer = new Vimeo.Player('vimeo-player', {
-    id: Number(videoId),
+    url: playerUrl,
     autoplay: !!allowAutoplay,
+    muted: !!autoplayMuted,
     title: false,
     byline: false,
-    portrait: false
+    portrait: false,
+    controls: true,
+    responsive: true
   });
 
   vimeoPlayer.ready().then(() => {
-    try { if (autoplayMuted && typeof vimeoPlayer.setMuted==='function') vimeoPlayer.setMuted(true); } catch(_) {}
     applyVolumeToPlayer();
-    maybeUnmuteIfUserChangedVolume();
-    if (allowAutoplay) vimeoPlayer.play().catch(()=>{});
+
+    if (allowAutoplay) {
+      vimeoPlayer.play().catch((err) => {
+        console.warn("Autoplay do Vimeo bloqueado:", err);
+        updateInfo(
+          document.getElementById('video-title')?.innerText || "Vídeo",
+          "Vimeo carregado, mas o autoplay foi bloqueado pelo navegador. Clique no vídeo ou ajuste o volume."
+        );
+      });
+    }
+  }).catch((err) => {
+    console.error("Erro ao inicializar Vimeo:", err);
+    updateInfo(
+      "Erro no Vimeo",
+      "O vídeo não pôde ser incorporado. Verifique se a URL está completa e se o Vimeo permite embed."
+    );
   });
 
   vimeoPlayer.on('ended', () => {
     setTimeout(() => {
       manualControl = false;
-              playNext(true);
+      playNext(true);
     }, 800);
   });
 
-  // Pausa YouTube se estiver ativo
+  vimeoPlayer.on('error', (err) => {
+    console.error("Erro no player Vimeo:", err);
+    updateInfo("Erro no Vimeo", "Falha no streaming deste vídeo do Vimeo.");
+  });
+
+  // pausa YouTube se estiver ativo
   if (ytPlayer && typeof ytPlayer.pauseVideo === 'function') {
     try { ytPlayer.pauseVideo(); } catch (_) {}
   }
