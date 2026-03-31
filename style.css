@@ -23,11 +23,36 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 #player {
     width: 100%;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* CORREÇÃO: Força o player do Vimeo a preencher todo o container */
+#vimeo-player,
+#vimeo-player iframe,
+#player iframe {
+    width: 100% !important;
+    height: 100% !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+}
+
+/* CORREÇÃO: Container do Vimeo Player API */
+#player > div {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #info-bar {
@@ -183,4 +208,3 @@ iframe {
   position: relative;
   z-index: 1;
 }
-
