@@ -39,9 +39,9 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "O Óleo de Lorenzo (1992) - Trailer (Assista ao filme completo na apresentação da 5ª Aula - ECT1",
-        url: "https://youtu.be/GLcx7xMMBoM?si=_PYLdmDZ16RLwuYz",
-        type: "youtube"
+    title: "O Óleo de Lorenzo (1992)",
+    url: "https://player.vimeo.com/video/646212903?h=17c25e1796",
+    type: "vimeo"
     },
     {
         title: "Mudança de Paradigma - Thomas Kuhn",
