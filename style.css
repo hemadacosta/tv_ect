@@ -32,11 +32,14 @@ body, html {
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
 }
 
-/* CORREÇÃO: Força o player do Vimeo a preencher todo o container */
+/* Players - YouTube, Vimeo, Dailymotion */
 #vimeo-player,
 #vimeo-player iframe,
+#dailymotion-player,
+#dailymotion-player iframe,
 #player iframe {
     width: 100% !important;
     height: 100% !important;
@@ -46,7 +49,7 @@ body, html {
     border: none;
 }
 
-/* CORREÇÃO: Container do Vimeo Player API */
+/* Container dos players */
 #player > div {
     width: 100%;
     height: 100%;
@@ -68,6 +71,18 @@ body, html {
     font-size: 1.2rem;
     margin: 0;
     flex-grow: 1;
+}
+
+/* NOVO: Estilos para links no título */
+#video-title a {
+    color: #4CAF50;
+    text-decoration: underline;
+    transition: color 0.3s;
+}
+
+#video-title a:hover {
+    color: #81C784;
+    text-decoration: none;
 }
 
 #status-text {
@@ -159,7 +174,7 @@ iframe {
     display: block;
 }
 
-/* v5 — controles discretos (não fixos) + responsivo para pop-up pequeno */
+/* v10 — controles discretos + suporte a HTML no título */
 #nav-controls {
   position: absolute;
   top: 12px;
