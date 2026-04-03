@@ -117,5 +117,10 @@ const schedule = [
     title: "Uma mente brilhante (2001)",
     url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",  // substitua pelo ID real
     type: "vimeo"
-  }
+  },
+    {
+    title: 'Viagem Insólita (1987) - Trailer | <a href="https://cdnst79.tokyvideo.com/videos/724/724085/mp4/621d98baf2aab8908d7c6f65937fabe341162650563caa38e1bed56411504b7e.mp4?secure=i-xLzbTXcQbGo843Ai83vQ%3D%3D%2C1775263624" target="_blank">🎬 Assistir Filme</a>',
+    url: "https://youtu.be/InWhsN3jMp8?si=hbYVl5xOxYYJIFd8&t=6",
+    type: "youtube"
+}
 ];
