@@ -1,7 +1,7 @@
-// script.js (v13) — Botões condicionais por dispositivo + Otimizado para Mobile + Modo Sem Propagandas
+// script.js (v14) — Modo Anti-Propaganda com Fallback Automático + UI/UX Intacta
 // DESKTOP: Botões aparecem apenas no hover
 // MOBILE/TABLET: Botões aparecem apenas ao tocar na tela
-// YOUTUBE: Modo anti-propaganda integrado via Invidious
+// YOUTUBE: Tenta Invidious/Piped (sem anúncios) → Se falhar, volta para YouTube oficial automaticamente
 
 let currentIndex = 0;
 let ytPlayer = null;
@@ -16,10 +16,17 @@ let isMobile = false;
 let isTouchDevice = false;
 let navVisible = false;
 let navTimeout = null;
+let ytFallbackTimer = null;
+let ytAdFreeAttempt = 0;
 
 // ====== CONFIGURAÇÃO ANTI-PROPAGANDA ======
-const YT_AD_FREE_ENABLED = true; // true = usa Invidious (sem anúncios) | false = usa YouTube oficial
-const YT_AD_FREE_INSTANCE = "https://invidious.fdn.fr"; // Instância estável. Troque se cair: https://instances.invidious.io
+const YT_AD_FREE_ENABLED = true; // true = tenta instâncias sem anúncios | false = YouTube oficial direto
+const YT_AD_FREE_INSTANCES = [
+  "https://invidious.fdn.fr",
+  "https://iv.ggtyler.dev",
+  "https://piped.video",
+  "https://invidious.lunar.icu"
+];
 
 // ====== DETECÇÃO DE DISPOSITIVO ======
 function detectDevice() {
@@ -308,6 +315,10 @@ function loadVideo(index, fromUser = false) {
 
 // ====== LIMPEZA DE PLAYERS ======
 function clearPlayerContainer() {
+  if (ytFallbackTimer) {
+    clearTimeout(ytFallbackTimer);
+    ytFallbackTimer = null;
+  }
   const container = document.getElementById('player');
   if (!container) return;
   if (ytPlayer) {
@@ -340,16 +351,55 @@ function extractYouTubeID(url) {
     const shortsIdx = parts.indexOf('shorts');
     if (shortsIdx >= 0 && parts[shortsIdx + 1]) return parts[shortsIdx + 1];
   } catch (_) {}
-  const m = u.match(/youtu.be\/([^/?&]+)/) ||
+  const m = u.match(/youtu\.be\/([^/?&]+)/) ||
             u.match(/[?&]v=([^/?&]+)/) ||
-            u.match(/youtube.com\/embed\/([^/?&]+)/) ||
-            u.match(/youtube.com\/shorts\/([^/?&]+)/);
+            u.match(/youtube\.com\/embed\/([^/?&]+)/) ||
+            u.match(/youtube\.com\/shorts\/([^/?&]+)/);
   return m ? m[1] : null;
 }
 
 function ensureYouTubeAPIReady(cb) {
   if (typeof YT !== 'undefined' && YT.Player) return cb();
   setTimeout(() => ensureYouTubeAPIReady(cb), 300);
+}
+
+function fallbackToOfficialYouTube(videoId, allowAutoplay) {
+  console.log("⚠️ Instância ad-free instável. Alternando para YouTube oficial...");
+  updateInfo(document.getElementById('video-title')?.innerText || "Vídeo", "Carregando via YouTube oficial...");
+  
+  ensureYouTubeAPIReady(() => {
+    if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+      try {
+        ytPlayer.loadVideoById(videoId);
+        applyVolumeToPlayer();
+        maybeUnmuteIfUserChangedVolume();
+        if (!allowAutoplay && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
+        return;
+      } catch (e) {
+        console.warn("Falha no loadVideoById; recriando player...", e);
+        clearPlayerContainer();
+      }
+    }
+    
+    ytPlayer = new YT.Player('player', {
+      height: '100%',
+      width: '100%',
+      videoId,
+      playerVars: { autoplay: allowAutoplay ? 1 : 0, controls: 1, rel: 0, modestbranding: 1, playsinline: 1 },
+      events: {
+        onReady: (ev) => {
+          try { ev.target.setVolume(currentVolume); } catch (_) {}
+          enforceMutedAutoplay();
+          if (allowAutoplay) try { ev.target.playVideo(); } catch (_) {}
+        },
+        onStateChange: (ev) => {
+          if (ev.data === YT.PlayerState.ENDED) {
+            setTimeout(() => { manualControl = false; playNext(true); }, 800);
+          }
+        }
+      }
+    });
+  });
 }
 
 function loadYouTube(url, allowAutoplay) {
@@ -360,30 +410,55 @@ function loadYouTube(url, allowAutoplay) {
     return;
   }
 
-  // ====== MODO SEM PROPAGANDA (INVIDIOUS) ======
+  // ====== MODO SEM PROPAGANDA (COM FALLBACK) ======
   if (YT_AD_FREE_ENABLED) {
     clearPlayerContainer();
     const container = document.getElementById('player');
-    const embedUrl = `${YT_AD_FREE_INSTANCE}/embed/${videoId}?autoplay=${allowAutoplay ? 1 : 0}&mute=1&controls=1&rel=0`;
+    const instance = YT_AD_FREE_INSTANCES[ytAdFreeAttempt % YT_AD_FREE_INSTANCES.length];
+    const embedUrl = `${instance}/embed/${videoId}?autoplay=${allowAutoplay ? 1 : 0}&mute=1&controls=1&local=true`;
     
-    container.innerHTML = `<iframe id="yt-adfree-player" src="${embedUrl}" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="position:absolute;top:0;left:0;border:none;"></iframe>`;
+    const iframe = document.createElement('iframe');
+    iframe.id = "yt-adfree-player";
+    iframe.src = embedUrl;
+    iframe.width = "100%";
+    iframe.height = "100%";
+    iframe.frameBorder = "0";
+    iframe.allow = "autoplay; fullscreen; picture-in-picture";
+    iframe.allowFullscreen = true;
+    iframe.style = "position:absolute;top:0;left:0;border:none;";
     
-    // Detecta fim do vídeo via postMessage
-    let ytEndedDetected = false;
+    let endedDetected = false;
+    let fallbackTriggered = false;
+
+    // Timeout de segurança: se não carregar em 3.5s, vai para o oficial
+    ytFallbackTimer = setTimeout(() => {
+      if (!endedDetected && !fallbackTriggered) {
+        fallbackTriggered = true;
+        ytAdFreeAttempt++;
+        fallbackToOfficialYouTube(videoId, allowAutoplay);
+      }
+    }, 3500);
+
     const handleInvidiousMessage = (e) => {
-      if (e.origin.includes('invidious') && e.data && e.data.event === 'ended' && !ytEndedDetected) {
-        ytEndedDetected = true;
+      if ((e.origin.includes('invidious') || e.origin.includes('piped')) && e.data && e.data.event === 'ended' && !endedDetected) {
+        endedDetected = true;
+        clearTimeout(ytFallbackTimer);
         window.removeEventListener('message', handleInvidiousMessage);
         setTimeout(() => { manualControl = false; playNext(true); }, 800);
       }
     };
     window.addEventListener('message', handleInvidiousMessage);
 
-    updateInfo(document.getElementById('video-title')?.innerText || "Vídeo", "Reproduzindo (modo sem propagandas)");
+    iframe.onload = () => {
+      clearTimeout(ytFallbackTimer);
+      updateInfo(document.getElementById('video-title')?.innerText || "Vídeo", "Reproduzindo (modo sem propagandas)");
+    };
+
+    container.appendChild(iframe);
     return;
   }
 
-  // ====== MODO OFICIAL YOUTUBE (FALLBACK) ======
+  // ====== MODO OFICIAL YOUTUBE (DIRETO) ======
   ensureYouTubeAPIReady(() => {
     if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
       try {
@@ -448,7 +523,7 @@ function loadVimeoAPI(callback) {
 function extractVimeoID(url) {
   if (!url) return null;
   const u = String(url).trim();
-  const patterns = [/vimeo.com\/(?:video\/)?(\d+)(?:[?/]|$)/, /vimeo.com\/channels\/[^/]+\/(\d+)/, /player.vimeo.com\/video\/(\d+)/];
+  const patterns = [/vimeo\.com\/(?:video\/)?(\d+)(?:[?/]|$)/, /vimeo\.com\/channels\/[^/]+\/(\d+)/, /player\.vimeo\.com\/video\/(\d+)/];
   for (const pattern of patterns) {
     const m = u.match(pattern);
     if (m) return m[1];
@@ -532,7 +607,7 @@ function loadVimeo(url, allowAutoplay) {
 function extractDailymotionID(url) {
   if (!url) return null;
   const u = String(url).trim();
-  const patterns = [/dailymotion.com\/video\/([a-zA-Z0-9]+)/, /dai.ly\/([a-zA-Z0-9]+)/, /geo.dailymotion.com\/player.html\?video=([a-zA-Z0-9]+)/];
+  const patterns = [/dailymotion\.com\/video\/([a-zA-Z0-9]+)/, /dai\.ly\/([a-zA-Z0-9]+)/, /geo\.dailymotion\.com\/player\.html\?video=([a-zA-Z0-9]+)/];
   for (const pattern of patterns) {
     const m = u.match(pattern);
     if (m) return m[1];
@@ -582,7 +657,7 @@ function loadGoogleDrive(url) {
   const container = document.getElementById('player');
   const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
   
-  container.innerHTML = `<video id="drive-video" width="100%" height="100%" playsinline ${autoplayEnabled ? `autoplay` : ""} muted controls style="background:#000; width:100%; height:100%; object-fit:contain;"><source src="${directUrl}" type="video/mp4">Seu navegador não suporta vídeo HTML5.</video>`;
+  container.innerHTML = `<video id="drive-video" width="100%" height="100%" playsinline ${autoplayEnabled ? `autoplay` : ``} muted controls style="background:#000; width:100%; height:100%; object-fit:contain;"><source src="${directUrl}" type="video/mp4">Seu navegador não suporta vídeo HTML5.</video>`;
   
   const vid = document.getElementById('drive-video');
   if (!vid) return;
