@@ -8,6 +8,11 @@ const schedule = [
         url: "https://youtu.be/4Dc2lEfnir4?si=PvVNwdAdSnRsU2Lh",
         type: "youtube"
     },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
         title: "5ª Aula - ECT1 - Revoluções Científicas e Ciência Normal na Sala de Aula",
         url: "https://youtu.be/EFMtk5qex80?si=9QkYezdtgF4Q1hLc",
@@ -28,16 +33,31 @@ const schedule = [
         url: "https://youtu.be/8t0QtyAXvWc?si=gt-1jWWUyal6Q3ws",
         type: "youtube"
     },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
         title: "Muito Além do Peso",
         url: "https://youtu.be/8UGe5GiHCT4?si=kVyf3WgdFVDKd056",
         type: "youtube"
     },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
         title: "A Queda - as últimas horas de Hitler",
         url: "https://youtu.be/kVzCBX2AToc?si=ACN9PX6LHL4BA0be",
         type: "youtube"
     },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
     title: "O Óleo de Lorenzo (1992)",
     url: "https://player.vimeo.com/video/646212903?h=17c25e1796",
@@ -47,7 +67,12 @@ const schedule = [
         title: "Mudança de Paradigma - Thomas Kuhn",
         url: "https://youtu.be/3i0jEzV_JC8",
         type: "youtube"
-    }, 
+    },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
         title: "Resumo PCN Ciências Naturais - Anos Iniciais",
         url: "https://youtu.be/sqp08D2J_K4?si=AZh_qcNo0czOn68O",
@@ -58,6 +83,11 @@ const schedule = [
         url: "https://youtu.be/978BUOV5Swc?si=CskLm-8fUX847Ueg",
         type: "youtube"
     },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
         title: "Novos Paradigmas na Ciência",
     url: "https://youtu.be/XG_O8gW-vCg?si=UnFPTT1AGeJbK6pc",
@@ -67,7 +97,12 @@ const schedule = [
         title: "Cosmos Carl Sagan Ep.2 - Uma Voz na Sinfonia Cósmica",
     url: "https://youtu.be/nEax6pI4nMc?si=Tv9PU_lR60J8GHtj",
     type: "youtube"
-    }, 
+    },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
         title: "Enigma, O Jogo da Imitação",
     url: "https://youtu.be/lRid96uWpqo?si=1YAC_vbGGxapG8Oq",
