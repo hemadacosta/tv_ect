@@ -1,6 +1,6 @@
-// script.js (v11) — Otimizado para Mobile/Smartphones
-// SUPORTA: YouTube, Vimeo, Dailymotion + Navegação Touch-Friendly
-// MELHORIAS: Botões sempre visíveis em mobile, swipe gestures, melhor detecção de eventos
+// script.js (v12) — Botões condicionais por dispositivo + Otimizado para Mobile
+// DESKTOP: Botões aparecem apenas no hover
+// MOBILE/TABLET: Botões aparecem apenas ao tocar na tela
 
 let currentIndex = 0;
 let ytPlayer = null;
@@ -12,12 +12,24 @@ let autoplayEnabled = true;
 let manualControl = false;
 let vimeoAPILoaded = false;
 let isMobile = false;
+let isTouchDevice = false;
+let navVisible = false;
+let navTimeout = null;
 
-// ====== DETECÇÃO DE MOBILE ======
-function detectMobile() {
-  isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-    || window.matchMedia("(pointer: coarse)").matches;
-  return isMobile;
+// ====== DETECÇÃO DE DISPOSITIVO ======
+function detectDevice() {
+  // Detecta touch (mobile/tablet)
+  isTouchDevice = window.matchMedia("(pointer: coarse)").matches || 
+                  /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+  // Detecta mobile específico (não tablet)
+  isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) &&
+             !/iPad/i.test(navigator.userAgent);
+
+  console.log("Device detectado:", isTouchDevice ? "Touch" : "Desktop", 
+              isMobile ? "(Mobile)" : "(Desktop/Tablet)");
+
+  return { isTouchDevice, isMobile };
 }
 
 // ====== Controles de volume ======
@@ -50,64 +62,105 @@ if (volumeSlider) {
   }, { passive: true });
 }
 
-// ====== UI: Controles de Navegação (Desktop + Mobile) ======
+// ====== CONTROLE DE VISIBILIDADE DOS BOTÕES ======
 const navControls = document.getElementById('nav-controls');
 const videoWrapper = document.getElementById('video-wrapper');
 
-let hideTimer = null;
-
-function showNav() {
+function showNav(duration = 3000) {
   if (!navControls) return;
+  navVisible = true;
   navControls.classList.add('show');
   navControls.style.opacity = '1';
   navControls.style.pointerEvents = 'auto';
+
+  // Auto-esconder após duração (exceto se for desktop com mouse sobre)
+  clearTimeout(navTimeout);
+  if (!isTouchDevice) {
+    navTimeout = setTimeout(hideNav, duration);
+  }
 }
 
 function hideNav() {
-  if (!navControls || isMobile) return; // Não esconde em mobile
+  if (!navControls || !navVisible) return;
+  navVisible = false;
   navControls.classList.remove('show');
   navControls.style.opacity = '0';
   navControls.style.pointerEvents = 'none';
 }
 
-function showNavTemporarily(ms = 3000) {
-  if (!navControls) return;
-  showNav();
-  if (hideTimer) clearTimeout(hideTimer);
-  if (!isMobile) {
-    hideTimer = setTimeout(hideNav, ms);
+function toggleNav() {
+  if (navVisible) {
+    hideNav();
+  } else {
+    showNav(5000); // 5 segundos em mobile
   }
 }
 
-// Eventos para Desktop (hover)
-if (videoWrapper && !detectMobile()) {
-  videoWrapper.addEventListener('mouseenter', () => showNav());
-  videoWrapper.addEventListener('mouseleave', () => hideNav());
-  videoWrapper.addEventListener('focusin', () => showNav());
+// ====== EVENTOS DESKTOP (HOVER) ======
+if (videoWrapper && !isTouchDevice) {
+  // Mouse entra: mostra
+  videoWrapper.addEventListener('mouseenter', () => {
+    showNav(3000);
+  });
+
+  // Mouse sai: esconde
+  videoWrapper.addEventListener('mouseleave', () => {
+    hideNav();
+  });
+
+  // Mouse move: reseta timer
+  videoWrapper.addEventListener('mousemove', () => {
+    if (!navVisible) {
+      showNav(3000);
+    } else {
+      // Reseta o timer
+      clearTimeout(navTimeout);
+      navTimeout = setTimeout(hideNav, 3000);
+    }
+  });
+
+  // Teclado (acessibilidade)
+  videoWrapper.addEventListener('focusin', () => showNav(5000));
 }
 
-// Eventos para Mobile (touch)
-if (videoWrapper && isMobile) {
-  // Sempre mostrar controles em mobile
-  showNav();
+// ====== EVENTOS MOBILE/TOUCH ======
+if (videoWrapper && isTouchDevice) {
+  let touchStartTime = 0;
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let isSwipe = false;
 
-  // Permitir esconder/mostrar com toque na área do vídeo
-  let lastTap = 0;
-  videoWrapper.addEventListener('touchend', (e) => {
-    const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTap;
-
-    // Double tap para mostrar/esconder controles
-    if (tapLength < 300 && tapLength > 0) {
-      if (navControls.classList.contains('show')) {
-        navControls.classList.remove('show');
-        navControls.style.opacity = '0.3'; // Semi-transparente em vez de escondido
-      } else {
-        showNav();
-      }
-    }
-    lastTap = currentTime;
+  videoWrapper.addEventListener('touchstart', (e) => {
+    touchStartTime = new Date().getTime();
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    isSwipe = false;
   }, { passive: true });
+
+  videoWrapper.addEventListener('touchmove', (e) => {
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    const deltaX = Math.abs(touchX - touchStartX);
+    const deltaY = Math.abs(touchY - touchStartY);
+
+    // Se moveu mais de 10px, considera swipe
+    if (deltaX > 10 || deltaY > 10) {
+      isSwipe = true;
+    }
+  }, { passive: true });
+
+  videoWrapper.addEventListener('touchend', (e) => {
+    const touchEndTime = new Date().getTime();
+    const touchDuration = touchEndTime - touchStartTime;
+
+    // Se foi um toque rápido (não swipe) e curto, toggle nav
+    if (!isSwipe && touchDuration < 300) {
+      toggleNav();
+    }
+  }, { passive: true });
+
+  // Também permite mostrar ao clicar nos botões (mesmo que invisíveis)
+  // Isso garante que se o usuário tocar onde os botões deveriam estar, funcionam
 }
 
 let autoplayMuted = true;
@@ -208,14 +261,13 @@ function bindNavButton(btn, fn) {
     ev.stopPropagation();
     fn();
 
-    // Feedback visual em mobile
-    if (isMobile) {
-      btn.style.transform = 'scale(0.95)';
-      setTimeout(() => btn.style.transform = '', 150);
+    // Em mobile, mantém visível por mais tempo após uso
+    if (isTouchDevice) {
+      showNav(5000);
     }
   };
 
-  // Touch events para mobile (mais responsivos)
+  // Múltiplos eventos para garantir compatibilidade
   btn.addEventListener('touchstart', handler, { passive: false, capture: true });
   btn.addEventListener('click', handler, { capture: true });
   btn.addEventListener('pointerdown', handler, { capture: true });
@@ -225,7 +277,7 @@ bindNavButton(btnPrev, playPrevious);
 bindNavButton(btnNext, playNextManual);
 
 // ====== GESTOS DE SWIPE PARA MOBILE ======
-if (videoWrapper && isMobile) {
+if (videoWrapper && isTouchDevice) {
   let touchStartX = 0;
   let touchEndX = 0;
   let touchStartY = 0;
@@ -246,16 +298,18 @@ if (videoWrapper && isMobile) {
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
 
-    // Só processa swipe horizontal se for mais horizontal que vertical
+    // Só processa se for swipe horizontal significativo
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
       if (deltaX < 0) {
         // Swipe esquerda = Próximo
         console.log("Swipe left - Próximo vídeo");
         playNextManual();
+        showNav(3000);
       } else {
         // Swipe direita = Anterior
         console.log("Swipe right - Vídeo anterior");
         playPrevious();
+        showNav(3000);
       }
     }
   }
@@ -398,7 +452,7 @@ function loadYouTube(url, allowAutoplay) {
         controls: 1,
         rel: 0,
         modestbranding: 1,
-        playsinline: 1  // Importante para mobile
+        playsinline: 1
       },
       events: {
         onReady: (ev) => {
@@ -421,7 +475,7 @@ function loadYouTube(url, allowAutoplay) {
   });
 }
 
-// ====== VIMEO (OTIMIZADO PARA MOBILE) ======
+// ====== VIMEO ======
 function loadVimeoAPI(callback) {
   if (typeof Vimeo !== 'undefined' && Vimeo.Player) {
     vimeoAPILoaded = true;
@@ -485,12 +539,11 @@ function loadVimeo(url, allowAutoplay) {
     vimeoDiv.id = 'vimeo-player';
     container.appendChild(vimeoDiv);
 
-    // Configuração otimizada para mobile
     const playerConfig = {
       id: Number(videoId),
       autoplay: !!allowAutoplay,
-      muted: true, // Sempre começa mutado para mobile (autoplay policy)
-      playsinline: 1, // Crucial para iOS
+      muted: true,
+      playsinline: 1,
       title: false,
       byline: false,
       portrait: false,
@@ -502,16 +555,14 @@ function loadVimeo(url, allowAutoplay) {
     vimeoPlayer.ready().then(() => {
       applyVolumeToPlayer();
 
-      // Em mobile, tentamos desmutar após interação do usuário
-      if (!isMobile && currentVolume > 0) {
+      if (!isTouchDevice && currentVolume > 0) {
         vimeoPlayer.setMuted(false);
       }
 
       if (allowAutoplay) {
         vimeoPlayer.play().catch((err) => {
           console.warn("Autoplay bloqueado no Vimeo:", err);
-          // Em mobile, mostramos mensagem para tocar
-          if (isMobile) {
+          if (isTouchDevice) {
             updateInfo(
               document.getElementById('video-title')?.innerText || "Vídeo",
               "Toque na tela para iniciar o vídeo"
@@ -521,7 +572,6 @@ function loadVimeo(url, allowAutoplay) {
       }
     });
 
-    // Evento ended com fallback para mobile
     vimeoPlayer.on('ended', () => {
       console.log("Vimeo: vídeo terminou");
       setTimeout(() => {
@@ -530,15 +580,14 @@ function loadVimeo(url, allowAutoplay) {
       }, 800);
     });
 
-    // Fallback para mobile: verificar tempo periodicamente
-    if (isMobile) {
+    // Fallback para mobile
+    if (isTouchDevice) {
       let lastTime = 0;
       let stuckCount = 0;
 
       const checkProgress = setInterval(() => {
         vimeoPlayer.getCurrentTime().then(time => {
           vimeoPlayer.getDuration().then(duration => {
-            // Se estiver próximo do fim (últimos 2 segundos)
             if (duration > 0 && time > 0 && (duration - time) < 2) {
               console.log("Vimeo: detectado fim do vídeo (mobile fallback)");
               clearInterval(checkProgress);
@@ -548,10 +597,9 @@ function loadVimeo(url, allowAutoplay) {
               }, 1000);
             }
 
-            // Detectar se travou (tempo não muda)
             if (time === lastTime && time > 0) {
               stuckCount++;
-              if (stuckCount > 3) { // 3 tentativas = provavelmente acabou
+              if (stuckCount > 3) {
                 console.log("Vimeo: vídeo possivelmente terminado (stuck)");
                 clearInterval(checkProgress);
               }
@@ -561,9 +609,8 @@ function loadVimeo(url, allowAutoplay) {
             lastTime = time;
           });
         }).catch(() => {});
-      }, 2000); // Verifica a cada 2 segundos
+      }, 2000);
 
-      // Limpar intervalo quando mudar de vídeo
       window._vimeoCheckInterval = checkProgress;
     }
 
@@ -608,7 +655,7 @@ function loadDailymotion(url, allowAutoplay) {
   const container = document.getElementById('player');
 
   const autoplayParam = allowAutoplay ? 'autoplay=1' : 'autoplay=0';
-  const muteParam = 'mute=1'; // Sempre mutado inicialmente para mobile
+  const muteParam = 'mute=1';
   const embedUrl = `https://www.dailymotion.com/embed/video/${videoId}?${autoplayParam}&${muteParam}&controls=1&ui-logo=0&sharing-enable=0`;
 
   container.innerHTML = `
@@ -628,7 +675,7 @@ function loadDailymotion(url, allowAutoplay) {
 
   updateInfo(
     document.getElementById('video-title')?.innerText || "Vídeo",
-    isMobile ? "Dailymotion: toque para iniciar" : "Dailymotion: reproduzindo"
+    isTouchDevice ? "Dailymotion: toque para iniciar" : "Dailymotion: reproduzindo"
   );
 }
 
@@ -707,7 +754,7 @@ function loadGoogleDrive(url) {
 
 // ====== Inicialização ======
 (function init() {
-  detectMobile();
+  detectDevice();
   setVolumeUI(currentVolume);
 
   const sch = safeSchedule();
@@ -717,15 +764,4 @@ function loadGoogleDrive(url) {
   }
   manualControl = false;
   loadVideo(0, false);
-
-  // Mostrar controles imediatamente em mobile
-  if (isMobile && navControls) {
-    showNav();
-    // Após 5 segundos, deixa semi-transparente mas não esconde completamente
-    setTimeout(() => {
-      if (navControls) {
-        navControls.style.opacity = '0.7';
-      }
-    }, 5000);
-  }
 })();
