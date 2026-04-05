@@ -4,8 +4,8 @@
 
 const schedule = [
     {
-        title: "4ª Aula - ECT1 - O ensino de ciências para os primeiros anos da Educação Básica",
-        url: "https://youtu.be/4Dc2lEfnir4?si=PvVNwdAdSnRsU2Lh",
+        title: "6ª Aula - O papel dos materiais curriculares no processo de ensino e aprendizagem de conhecimentos científicos – Bens culturais para o ensino de ciência e diretrizes para o trabalho final", //49:40
+        url: "https://youtu.be/mUINTFy7w7Y",
         type: "youtube"
     },
     {   
@@ -14,33 +14,23 @@ const schedule = [
         type: "youtube"
       },
     {
-        title: "5ª Aula - ECT1 - Revoluções Científicas e Ciência Normal na Sala de Aula",
-        url: "https://youtu.be/EFMtk5qex80?si=9QkYezdtgF4Q1hLc",
+        title: "7ª Aula - ECT1 - O Ensino de Ciências e a proposição de Sequências de Ensino Investigativo", //48:19
+        url: "https://youtu.be/AbXHq5WT3eY",
         type: "youtube"
     },
     {
-        title: "BNCC, Ciência da Natureza",
-        url: "https://youtu.be/7fp_-_bJWro",
-        type: "youtube"
+        title: "Currículo e Materiais Curriculares", //24:24
+      url: "https://youtu.be/dMeOepkonQ4?si=OayGXeKW7fkZHNLx"
+      type: "youtube"
     },
     {       
-        title: "Como a BNCC organizou o Ensino Fundamental",
-        url: "https://youtu.be/W4U4qd2JejQ?si=biZLZEu78H7O_ulQ",
-        type: "youtube"
+    title: "Sequência de Ensino Investigativo (SEI)", //15:19
+    url: "https://youtu.be/Eglil-b5D4o?si=QgEVN0eF_eZHEVn4",
+    type: "youtube"
     },
     {
-        title: "BNCC, Competências e Habilidades, Educação Infantil e Ensino Fundamental",
-        url: "https://youtu.be/8t0QtyAXvWc?si=gt-1jWWUyal6Q3ws",
-        type: "youtube"
-    },
-    {   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
-      },
-    {
-        title: "Muito Além do Peso",
-        url: "https://youtu.be/8UGe5GiHCT4?si=kVyf3WgdFVDKd056",
+        title: "Saiba como promover o letramento científico", //7:27
+        url: "https://youtu.be/BfZOktW6CvE?si=BXflKrKhan-9A41Y",
         type: "youtube"
     },
     {   
@@ -49,23 +39,18 @@ const schedule = [
         type: "youtube"
       },
     {
-        title: "A Queda - as últimas horas de Hitler",
-        url: "https://youtu.be/kVzCBX2AToc?si=ACN9PX6LHL4BA0be",
-        type: "youtube"
-    },
-    {   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
-      },
-    {
-    title: "O Óleo de Lorenzo (1992)",
-    url: "https://player.vimeo.com/video/646212903?h=17c25e1796",
+    title: "Escritores da Liberdade (2007)" //2:02:57
+    url: "https://player.vimeo.com/video/1102925342?h=f0f14ace87",
     type: "vimeo"
     },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
     {
-        title: "Mudança de Paradigma - Thomas Kuhn",
-        url: "https://youtu.be/3i0jEzV_JC8",
+        title: "Formação de professores de Ciências - Ana Maria Pessoa de Carvalho", //16:47
+        url: "https://youtu.be/IMyfqxACezE?si=0CH3_ojQ4C0eNhq4",
         type: "youtube"
     },
     {   
@@ -74,13 +59,28 @@ const schedule = [
         type: "youtube"
       },
     {
-        title: "Resumo PCN Ciências Naturais - Anos Iniciais",
-        url: "https://youtu.be/sqp08D2J_K4?si=AZh_qcNo0czOn68O",
+       title: "Uma mente brilhante (2001)", //2:14:58
+        url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",
+        type: "vimeo" 
+    },
+    {
+        title: "Planejamento para o Ensino de Biologia - Por que Ensino de Ciências por Investigação?", //19:19
+        url: "https://youtu.be/kM6WgTzkN1A?si=S4t7fyzgHrugPVYY",
+        type: "youtube"
+    },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+    {
+        title: "Fundamentos e Práticas no Ensino de Ciências da Natureza - O Ensino por investigação: leitura", //17:51
+        url: "https://youtu.be/7B_PuKM-Oig?si=D8pESwebVwoe3KoA",
         type: "youtube"
     },  
     {
-        title: "O Matemático - Adventures of a Mathematician (2020)",
-        url: "https://youtu.be/978BUOV5Swc?si=CskLm-8fUX847Ueg",
+        title: "Como funciona a produção científica", //8:08
+        url: "https://youtu.be/EbhNfd3tQtY?si=S7hv-k4_K2HfeDRG",
         type: "youtube"
     },
     {   
@@ -88,14 +88,9 @@ const schedule = [
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
       },
-    {
-        title: "Novos Paradigmas na Ciência",
-    url: "https://youtu.be/XG_O8gW-vCg?si=UnFPTT1AGeJbK6pc",
-    type: "youtube"
-    },
-    {
-        title: "Cosmos Carl Sagan Ep.2 - Uma Voz na Sinfonia Cósmica",
-    url: "https://youtu.be/nEax6pI4nMc?si=Tv9PU_lR60J8GHtj",
+        {
+        title: 'Viagem Insólita (1987) - Trailer | <a href="https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview" target="_blank">🎬 Assistir Filme</a>', //1:54
+    url: "https://youtu.be/InWhsN3jMp8?si=hbYVl5xOxYYJIFd8&t=6",
     type: "youtube"
     },
     {   
@@ -104,18 +99,13 @@ const schedule = [
         type: "youtube"
       },
     {
-        title: "Enigma, O Jogo da Imitação",
+        title: "Enigma, O Jogo da Imitação", //2:23:28
     url: "https://youtu.be/lRid96uWpqo?si=1YAC_vbGGxapG8Oq",
     type: "youtube"
     },
     {
-        title: "Albert Einstein",
-    url: "https://youtu.be/UnSA27a00To?si=DBZtBKbVAmtOHVeF",
-    type: "youtube"
-    },
-    {
-    title: "Uma mente brilhante (2001)",
-    url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",  // substitua pelo ID real
-    type: "vimeo"
-  }
+    title: "Quando o pior acontece - catástrofes naturais e mudanças climáticas", //54:40
+    url: "https://geo.dailymotion.com/player.html?video=x8cl1cg",
+    type: "dailymotion"
+    }
 ];
