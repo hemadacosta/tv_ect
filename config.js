@@ -89,7 +89,7 @@ const schedule = [
         type: "youtube"
       },
       {
-    title: "Viagem Insólita (1987) - Trailer <a href="https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview" target="_blank">🎬 Assistir Filme</a>",
+    title: 'Viagem Insólita (1987) - Trailer <a href="https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview" target="_blank">🎬 Assistir Filme</a>',
     url: "https://youtu.be/InWhsN3jMp8?si=hbYVl5xOxYYJIFd8&t=6",
     type: "youtube"
     },
