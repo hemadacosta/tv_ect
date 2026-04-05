@@ -104,8 +104,8 @@ const schedule = [
     type: "dailymotion"
     },
     {
-    title: "Cosmos - Episódio 04 - Céu e Inferno",
-    url: "https://youtu.be/Fw_DQL2w3bI?si=by0RXPR2C0AijZjR",
+    title: "Cosmos Carl Sagan Ep. 3 - A Harmonia dos Mundos",
+    url: "https://youtu.be/kgsz7AGNIyU?si=lXvjL84eu6Vv7pep",
     type: "youtube"
     }
 ];
