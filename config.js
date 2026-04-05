@@ -74,7 +74,7 @@ const schedule = [
         type: "youtube"
       },
     {
-        title: "Fundamentos e Práticas no Ensino de Ciências da Natureza - O Ensino por investigação: leitura",
+        title: "Fundamentos e Práticas no Ensino de Ciências da Natureza - O Ensino por investigação, leitura",
         url: "https://youtu.be/7B_PuKM-Oig?si=D8pESwebVwoe3KoA",
         type: "youtube"
     },  
@@ -107,5 +107,9 @@ const schedule = [
     title: "Quando o pior acontece - catástrofes naturais e mudanças climáticas",
     url: "https://geo.dailymotion.com/player.html?video=x8cl1cg",
     type: "dailymotion"
+    },
+    title: "Cosmos - Episódio 04 - Céu e Inferno",
+    url: "https://youtu.be/Fw_DQL2w3bI?si=by0RXPR2C0AijZjR",
+    type: "youtube"
     }
 ];
