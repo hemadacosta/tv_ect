@@ -4,7 +4,7 @@
 
 const schedule = [
     {
-        title: "6ª Aula - O papel dos materiais curriculares no processo de ensino e aprendizagem de conhecimentos científicos – Bens culturais para o ensino de ciência e diretrizes para o trabalho final",
+        title: "6ª Aula - O papel dos materiais curriculares no processo de ensino e aprendizagem de conhecimentos científicos",
         url: "https://youtu.be/mUINTFy7w7Y",
         type: "youtube"
     },
@@ -19,7 +19,7 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "Currículo e Materiais Curriculares",
+      title: "Currículo e Materiais Curriculares",
       url: "https://youtu.be/dMeOepkonQ4?si=OayGXeKW7fkZHNLx"
       type: "youtube"
     },
