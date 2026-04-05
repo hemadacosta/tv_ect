@@ -20,7 +20,7 @@ const schedule = [
     },
     {
       title: "Currículo e Materiais Curriculares",
-      url: "https://youtu.be/dMeOepkonQ4?si=OayGXeKW7fkZHNLx"
+      url: "https://youtu.be/dMeOepkonQ4?si=OayGXeKW7fkZHNLx",
       type: "youtube"
     },
     {       
