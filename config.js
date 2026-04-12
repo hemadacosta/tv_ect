@@ -4,8 +4,8 @@
 
 const schedule = [
     {
-        title: "6ª Aula - O papel dos materiais curriculares no processo de ensino e aprendizagem de conhecimentos científicos",
-        url: "https://youtu.be/mUINTFy7w7Y",
+        title: "8ª Aula - Contribuições de Gaston Bachelard ao Ensino de Ciências",
+        url: "https://youtu.be/q4zYWLfHKMU",
         type: "youtube"
     },
     {   
@@ -14,23 +14,23 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "7ª Aula - ECT1 - O Ensino de Ciências e a proposição de Sequências de Ensino Investigativo",
-        url: "https://youtu.be/AbXHq5WT3eY",
+        title: "Bachelard - pedagogia científica e ensino de química | Entrevista com Ettore Antunes",
+        url: "https://www.youtube.com/watch?v=Ar05A5Tsm88",
         type: "youtube"
     },
     {
-      title: "Currículo e Materiais Curriculares",
-      url: "https://youtu.be/dMeOepkonQ4?si=OayGXeKW7fkZHNLx",
-      type: "youtube"
+    title: 'Tempos Modernos (1936) - Trailer<a href="https://drive.google.com/file/d/1XGvqsZ8wKl8WtHwBEnxXjtOrU9lcF7z7/preview" target="_blank">🎬 Assistir ao Filme completo</a>', //4:10
+    url: "https://youtu.be/6n9ESFJTnHs?si=RrZ3q9HbJEgFa0Vy",
+    type: "youtube"
     },
     {       
-    title: "Sequência de Ensino Investigativo (SEI)",
-    url: "https://youtu.be/Eglil-b5D4o?si=QgEVN0eF_eZHEVn4",
+    title: "Viver Ciência - Robótica Educacional e Automação",
+    url: "https://www.youtube.com/watch?v=QbY6iWQlyMM",
     type: "youtube"
     },
     {
-        title: "Saiba como promover o letramento científico",
-        url: "https://youtu.be/BfZOktW6CvE?si=BXflKrKhan-9A41Y",
+        title: "A importância da robótica educacional na sociedade atual",
+        url: "https://www.youtube.com/watch?v=hCHwZdibQJY",
         type: "youtube"
     },
     {   
@@ -39,18 +39,8 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "Escritores da Liberdade (2007)",
-        url: "https://player.vimeo.com/video/1102925342?h=f0f14ace87",
-        type: "vimeo"
-    },
-    {   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
-    },
-    {
-        title: "Formação de professores de Ciências - Ana Maria Pessoa de Carvalho",
-        url: "https://youtu.be/IMyfqxACezE?si=0CH3_ojQ4C0eNhq4",
+        title: "Tentativa e Erro | Turma da Robótica",
+        url: "https://youtu.be/SoS7IXZ2Hn0?si=huAwso32v9NjcZDq",
         type: "youtube"
     },
     {   
@@ -59,13 +49,28 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "Uma mente brilhante (2001)",
-        url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",
-        type: "vimeo" 
+        title: "Meninas na robótica, projeto",
+        url: "https://geo.dailymotion.com/player.html?video=x9mjx30",
+        type: "dailymotion"
+    },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
     },
     {
-        title: "Planejamento para o Ensino de Biologia - Por que Ensino de Ciências por Investigação",
-        url: "https://youtu.be/kM6WgTzkN1A?si=S4t7fyzgHrugPVYY",
+        title: "Quase Deuses (2004)",
+        url: "https://youtu.be/2b4peUNL710?si=BzokINNMj_bSM8FG",
+        type: "youtube" 
+    },
+    {
+        title: "Cosmos - Episódio 04 - Céu e Inferno",
+    url: "https://youtu.be/Fw_DQL2w3bI?si=a7ta6YkcOw6LjFDm",
+    type: "youtube"
+    },
+    {
+        title: "Ensino de Ciências - métodos e técnicas",
+        url: "https://youtu.be/qynHlQkj93Y?si=82xQWf6fi9LTrt4h",
         type: "youtube"
     },
     {   
@@ -74,14 +79,14 @@ const schedule = [
         type: "youtube"
     },
     {
-        title: "Fundamentos e Práticas no Ensino de Ciências da Natureza - O Ensino por investigação, leitura",
-        url: "https://youtu.be/7B_PuKM-Oig?si=D8pESwebVwoe3KoA",
+        title: "Ensino de Ciências - história e situação atual",
+        url: "https://youtu.be/nh1ruCC0yA4?si=poUkwghlkHAI28dv",
         type: "youtube"
-    },  
+    },
     {
-        title: "Como funciona a produção científica",
-        url: "https://youtu.be/EbhNfd3tQtY?si=S7hv-k4_K2HfeDRG",
-        type: "youtube"
+        title: "6 erros científicos estúpidos em filmes",
+        url: "https://geo.dailymotion.com/player.html?video=x6j6xe2",
+        type: "dailymotion"
     },
     {   
         title: "TV ECT",
@@ -89,23 +94,8 @@ const schedule = [
         type: "youtube"
       },
       {
-    title: 'Viagem Insólita (1987) - Trailer | <a href="https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview" target="_blank">🎬 Assistir Filme</a>',
-    url: "https://youtu.be/InWhsN3jMp8?si=hbYVl5xOxYYJIFd8&t=6",
+   title: 'Interestelar (2014) - Trailer | <a href="https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview">🎬 Assistir ao Filme completo</a>',
+    url: "https://youtu.be/i6avfCqKcQo?si=u280tGMfBF62uFW9",
     type: "youtube"
-},
-    {
-    title: "Enigma, O Jogo da Imitação",
-    url: "https://youtu.be/lRid96uWpqo?si=1YAC_vbGGxapG8Oq",
-    type: "youtube"
-    },
-    {
-    title: "Quando o pior acontece - catástrofes naturais e mudanças climáticas",
-    url: "https://geo.dailymotion.com/player.html?video=x8cl1cg",
-    type: "dailymotion"
-    },
-    {
-    title: "Cosmos Carl Sagan Ep. 3 - A Harmonia dos Mundos",
-    url: "https://youtu.be/kgsz7AGNIyU?si=lXvjL84eu6Vv7pep",
-    type: "youtube"
-    }
+}
 ];
