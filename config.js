@@ -49,6 +49,11 @@ const schedule = [
         type: "youtube"
     },
     {
+    title: 'Estrelas Além do Tempo (2016) - Trailer | <a href="https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview">🎬 Assistir ao Filme completo</a>',
+    url: "https://youtu.be/Xpl7pyFfBlk?si=1lvP6WS8cOy0pCbu",
+    type: "youtube"
+},
+    {
         title: "Meninas na robótica, projeto",
         url: "https://geo.dailymotion.com/player.html?video=x9mjx30",
         type: "dailymotion"
