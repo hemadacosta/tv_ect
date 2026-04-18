@@ -44,20 +44,20 @@ const schedule = [
         type: "youtube"
     },
 {
-    title: 'Contato (1997) - Trailer| <a href="https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
-    url: "https://youtu.be/CVm-dewknqs?si=AmFTmJx8PZyTrN_",
-    type: "youtube"
-},
+        title: "Contato (1997)",
+        url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview",
+        type: "googledrive"
+      },
 {
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
       },
 {
-    title: 'Soylent Green (1973) - Trailer| <a href="https://drive.google.com/file/d/1X8PS-GS_SLmqlh79qE1xgGJVPmtyXz2O/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
-    url: "https://youtu.be/N_jGOKYHxaQ?si=QNao_la03-qzStoQ",
-    type: "youtube"
-},
+        title: "Soylent Green, no mundo de 2020 (1973)",
+        url: "https://drive.google.com/file/d/1X8PS-GS_SLmqlh79qE1xgGJVPmtyXz2O/preview",
+        type: "googledrive"
+      },
 {
         title: "4ª Aula - ECT1 - O ensino de ciências para os primeiros anos da Educação Básica",
         url: "https://youtu.be/4Dc2lEfnir4?si=PvVNwdAdSnRsU2Lh",
@@ -89,10 +89,10 @@ const schedule = [
         type: "youtube"
       },
     {
-    title: 'O Óleo de Lorenzo (1992) - Trailer |<a href="https://drive.google.com/file/d/10_ps5BlJZQN5VVpqgplOEAIc3t11XXp5/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
-    url: "https://youtu.be/GLcx7xMMBoM?si=_PYLdmDZ16RLwuYz",
-    type: "youtube"
-},
+        title: "O Óleo de Lorenzo (1992)",
+        url: "https://drive.google.com/file/d/10_ps5BlJZQN5VVpqgplOEAIc3t11XXp5/preview",
+        type: "googledrive"
+      },
 {
         title: "O Matemático - Adventures of a Mathematician (2020)",
         url: "https://youtu.be/978BUOV5Swc?si=CskLm-8fUX847Ueg",
@@ -139,10 +139,10 @@ const schedule = [
         type: "youtube"
 },
 {
-    title: 'Viagem Insólita (1987) - Trailer | <a href="https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview" target="_blank">🎬 Assistir Filme</a>',
-    url: "https://youtu.be/InWhsN3jMp8?si=hbYVl5xOxYYJIFd8&t=6",
-    type: "youtube"
-},
+        title: "Viagem Insólita (1987)",
+        url: "https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/previeww",
+        type: "googledrive"
+      },
 {
         title: "8ª Aula - Contribuições de Gaston Bachelard ao Ensino de Ciências",
         url: "https://youtu.be/q4zYWLfHKMU",
@@ -154,10 +154,10 @@ const schedule = [
         type: "youtube"
       },
       {
-    title: 'Estrelas Além do Tempo (2016) - Trailer | <a href="https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview">🎬 Assistir ao Filme completo</a>',
-    url: "https://youtu.be/Xpl7pyFfBlk?si=1lvP6WS8cOy0pCbu",
-    type: "youtube"
-},
+        title: "Estrelas Além do Tempo (2016)",
+        url: "https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview",
+        type: "googledrive"
+      },
 {
         title: "Quase Deuses (2004)",
         url: "https://youtu.be/2b4peUNL710?si=BzokINNMj_bSM8FG",
@@ -169,8 +169,8 @@ const schedule = [
         type: "youtube"
 },
 {
-    title: 'Interestelar (2014) - Trailer | <a href="https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview">🎬 Assistir ao Filme completo</a>',
-    url: "https://youtu.be/i6avfCqKcQo?si=u280tGMfBF62uFW9",
-    type: "youtube"
-}
+        title: "Interestelar (2014)",
+        url: "https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview",
+        type: "googledrive"
+      }
 ];
