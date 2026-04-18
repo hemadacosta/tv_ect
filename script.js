@@ -1,7 +1,7 @@
-
-// script.js (v12) — Botões condicionais por dispositivo + Otimizado para Mobile
+// script.js (v13) — Botões condicionais por dispositivo + Otimizado para Mobile
 // DESKTOP: Botões aparecem apenas no hover
 // MOBILE/TABLET: Botões aparecem apenas ao tocar na tela
+// GOOGLE DRIVE: Avanço automático via campo "duration" no config.js
 
 let currentIndex = 0;
 let ytPlayer = null;
@@ -16,24 +16,23 @@ let isMobile = false;
 let isTouchDevice = false;
 let navVisible = false;
 let navTimeout = null;
+let driveAutoAdvanceTimer = null; // Timer para avanço automático em vídeos do Drive
 
 // ====== DETECÇÃO DE DISPOSITIVO ======
 function detectDevice() {
-  // Detecta touch (mobile/tablet)
-  isTouchDevice = window.matchMedia("(pointer: coarse)").matches || 
+  isTouchDevice = window.matchMedia("(pointer: coarse)").matches ||
                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-  // Detecta mobile específico (não tablet)
   isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) &&
              !/iPad/i.test(navigator.userAgent);
 
-  console.log("Device detectado:", isTouchDevice ? "Touch" : "Desktop", 
+  console.log("Device detectado:", isTouchDevice ? "Touch" : "Desktop",
               isMobile ? "(Mobile)" : "(Desktop/Tablet)");
 
   return { isTouchDevice, isMobile };
 }
 
-// ====== Controles de volume ======
+// ====== CONTROLES DE VOLUME ======
 const volumeSlider = document.getElementById('volume-slider');
 const volumeValue  = document.getElementById('volume-value');
 
@@ -74,7 +73,6 @@ function showNav(duration = 3000) {
   navControls.style.opacity = '1';
   navControls.style.pointerEvents = 'auto';
 
-  // Auto-esconder após duração (exceto se for desktop com mouse sobre)
   clearTimeout(navTimeout);
   if (!isTouchDevice) {
     navTimeout = setTimeout(hideNav, duration);
@@ -93,34 +91,22 @@ function toggleNav() {
   if (navVisible) {
     hideNav();
   } else {
-    showNav(5000); // 5 segundos em mobile
+    showNav(5000);
   }
 }
 
 // ====== EVENTOS DESKTOP (HOVER) ======
 if (videoWrapper && !isTouchDevice) {
-  // Mouse entra: mostra
-  videoWrapper.addEventListener('mouseenter', () => {
-    showNav(3000);
-  });
-
-  // Mouse sai: esconde
-  videoWrapper.addEventListener('mouseleave', () => {
-    hideNav();
-  });
-
-  // Mouse move: reseta timer
+  videoWrapper.addEventListener('mouseenter', () => showNav(3000));
+  videoWrapper.addEventListener('mouseleave', () => hideNav());
   videoWrapper.addEventListener('mousemove', () => {
     if (!navVisible) {
       showNav(3000);
     } else {
-      // Reseta o timer
       clearTimeout(navTimeout);
       navTimeout = setTimeout(hideNav, 3000);
     }
   });
-
-  // Teclado (acessibilidade)
   videoWrapper.addEventListener('focusin', () => showNav(5000));
 }
 
@@ -139,29 +125,15 @@ if (videoWrapper && isTouchDevice) {
   }, { passive: true });
 
   videoWrapper.addEventListener('touchmove', (e) => {
-    const touchX = e.touches[0].clientX;
-    const touchY = e.touches[0].clientY;
-    const deltaX = Math.abs(touchX - touchStartX);
-    const deltaY = Math.abs(touchY - touchStartY);
-
-    // Se moveu mais de 10px, considera swipe
-    if (deltaX > 10 || deltaY > 10) {
-      isSwipe = true;
-    }
+    const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+    const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+    if (deltaX > 10 || deltaY > 10) isSwipe = true;
   }, { passive: true });
 
   videoWrapper.addEventListener('touchend', (e) => {
-    const touchEndTime = new Date().getTime();
-    const touchDuration = touchEndTime - touchStartTime;
-
-    // Se foi um toque rápido (não swipe) e curto, toggle nav
-    if (!isSwipe && touchDuration < 300) {
-      toggleNav();
-    }
+    const touchDuration = new Date().getTime() - touchStartTime;
+    if (!isSwipe && touchDuration < 300) toggleNav();
   }, { passive: true });
-
-  // Também permite mostrar ao clicar nos botões (mesmo que invisíveis)
-  // Isso garante que se o usuário tocar onde os botões deveriam estar, funcionam
 }
 
 let autoplayMuted = true;
@@ -183,7 +155,7 @@ function maybeUnmuteIfUserChangedVolume() {
   } catch (_) {}
 }
 
-// ====== Programação ======
+// ====== PROGRAMAÇÃO ======
 function safeSchedule() {
   if (typeof schedule === 'undefined' || !Array.isArray(schedule) || schedule.length === 0) return [];
   return schedule;
@@ -194,7 +166,7 @@ function updateInfo(title, status) {
   const s = document.getElementById('status-text');
 
   if (t) {
-    if (title && (title.includes('<') && title.includes('>'))) {
+    if (title && title.includes('<') && title.includes('>')) {
       t.innerHTML = title;
     } else {
       t.innerText = title || '';
@@ -204,7 +176,7 @@ function updateInfo(title, status) {
   if (s) s.innerText = status || '';
 }
 
-// ====== Navegação ======
+// ====== NAVEGAÇÃO ======
 let _advanceLock = false;
 
 function playNextManual() {
@@ -261,14 +233,9 @@ function bindNavButton(btn, fn) {
     ev.preventDefault();
     ev.stopPropagation();
     fn();
-
-    // Em mobile, mantém visível por mais tempo após uso
-    if (isTouchDevice) {
-      showNav(5000);
-    }
+    if (isTouchDevice) showNav(5000);
   };
 
-  // Múltiplos eventos para garantir compatibilidade
   btn.addEventListener('touchstart', handler, { passive: false, capture: true });
   btn.addEventListener('click', handler, { capture: true });
   btn.addEventListener('pointerdown', handler, { capture: true });
@@ -299,16 +266,13 @@ if (videoWrapper && isTouchDevice) {
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
 
-    // Só processa se for swipe horizontal significativo
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
       if (deltaX < 0) {
-        // Swipe esquerda = Próximo
-        console.log("Swipe left - Próximo vídeo");
+        console.log("Swipe left — Próximo vídeo");
         playNextManual();
         showNav(3000);
       } else {
-        // Swipe direita = Anterior
-        console.log("Swipe right - Vídeo anterior");
+        console.log("Swipe right — Vídeo anterior");
         playPrevious();
         showNav(3000);
       }
@@ -316,7 +280,7 @@ if (videoWrapper && isTouchDevice) {
   }
 }
 
-// ====== Carregamento do vídeo ======
+// ====== CARREGAMENTO DO VÍDEO ======
 function loadVideo(index, fromUser = false) {
   const sch = safeSchedule();
   if (sch.length === 0) {
@@ -333,14 +297,14 @@ function loadVideo(index, fromUser = false) {
   manualControl = !!fromUser;
   updateInfo(videoData.title || "Vídeo", `Vídeo ${index + 1} de ${sch.length}`);
 
-  // Detecta tipo automaticamente
+  // Detecta tipo automaticamente pela URL se não informado
   let type = videoData.type;
   if (!type) {
     const u = String(videoData.url).toLowerCase();
-    if (u.includes('youtube.com') || u.includes('youtu.be')) type = 'youtube';
-    else if (u.includes('vimeo.com')) type = 'vimeo';
+    if (u.includes('youtube.com') || u.includes('youtu.be'))        type = 'youtube';
+    else if (u.includes('vimeo.com'))                                type = 'vimeo';
     else if (u.includes('dailymotion.com') || u.includes('dai.ly')) type = 'dailymotion';
-    else if (u.includes('drive.google.com')) type = 'googledrive';
+    else if (u.includes('drive.google.com'))                         type = 'googledrive';
   }
   currentType = type;
 
@@ -350,8 +314,7 @@ function loadVideo(index, fromUser = false) {
     return;
   }
 
-  // Carrega conforme tipo
-  switch(type) {
+  switch (type) {
     case 'youtube':
       loadYouTube(videoData.url, autoplayEnabled);
       break;
@@ -362,7 +325,7 @@ function loadVideo(index, fromUser = false) {
       loadDailymotion(videoData.url, autoplayEnabled);
       break;
     case 'googledrive':
-      loadGoogleDrive(videoData.url);
+      loadGoogleDrive(videoData.url, videoData.duration);
       break;
     default:
       console.error("Tipo não suportado:", type, videoData);
@@ -386,6 +349,13 @@ function clearPlayerContainer() {
   }
 
   dailymotionPlayer = null;
+
+  // Cancela avanço automático agendado para Drive (evita conflito ao trocar vídeo)
+  if (driveAutoAdvanceTimer) {
+    clearTimeout(driveAutoAdvanceTimer);
+    driveAutoAdvanceTimer = null;
+  }
+
   container.innerHTML = '';
 }
 
@@ -408,8 +378,8 @@ function extractYouTubeID(url) {
     if (shortsIdx >= 0 && parts[shortsIdx + 1]) return parts[shortsIdx + 1];
   } catch (_) {}
 
-  const m = u.match(/youtu\.be\/([^\/\?\&]+)/) ||
-            u.match(/[?&]v=([^\/\?\&]+)/) ||
+  const m = u.match(/youtu\.be\/([^\/\?\&]+)/)       ||
+            u.match(/[?&]v=([^\/\?\&]+)/)             ||
             u.match(/youtube\.com\/embed\/([^\/\?\&]+)/) ||
             u.match(/youtube\.com\/shorts\/([^\/\?\&]+)/);
   return m ? m[1] : null;
@@ -581,7 +551,7 @@ function loadVimeo(url, allowAutoplay) {
       }, 800);
     });
 
-    // Fallback para mobile
+    // Fallback para mobile (detecção por progresso)
     if (isTouchDevice) {
       let lastTime = 0;
       let stuckCount = 0;
@@ -637,7 +607,6 @@ function extractDailymotionID(url) {
     const m = u.match(pattern);
     if (m) return m[1];
   }
-
   return null;
 }
 
@@ -654,18 +623,16 @@ function loadDailymotion(url, allowAutoplay) {
   clearPlayerContainer();
 
   const container = document.getElementById('player');
-
   const autoplayParam = allowAutoplay ? 'autoplay=1' : 'autoplay=0';
-  const muteParam = 'mute=1';
-  const embedUrl = `https://www.dailymotion.com/embed/video/${videoId}?${autoplayParam}&${muteParam}&controls=1&ui-logo=0&sharing-enable=0`;
+  const embedUrl = `https://www.dailymotion.com/embed/video/${videoId}?${autoplayParam}&mute=1&controls=1&ui-logo=0&sharing-enable=0`;
 
   container.innerHTML = `
-    <iframe 
+    <iframe
       id="dailymotion-player"
-      src="${embedUrl}" 
-      width="100%" 
+      src="${embedUrl}"
+      width="100%"
       height="100%"
-      frameborder="0" 
+      frameborder="0"
       allowfullscreen
       allow="autoplay; fullscreen; picture-in-picture"
       style="border: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0;"
@@ -681,6 +648,18 @@ function loadDailymotion(url, allowAutoplay) {
 }
 
 // ====== GOOGLE DRIVE ======
+// O Drive não permite detectar o fim do vídeo via JS (iframe cross-origin).
+// Solução: informe o campo "duration" (em segundos) no config.js para que
+// o player avance automaticamente ao próximo vídeo após esse tempo.
+//
+// Exemplo no config.js:
+// {
+//   title: "Contato (1997)",
+//   url: "https://drive.google.com/file/d/SEU_ID_AQUI/view",
+//   type: "googledrive",
+//   duration: 9360   // 2h36min = 2×3600 + 36×60
+// }
+
 function extractDriveFileId(url) {
   if (!url) return null;
   const u = String(url);
@@ -689,7 +668,7 @@ function extractDriveFileId(url) {
   const m1 = u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
   if (m1) return m1[1];
 
-  // Formato: ?id={fileId}  (links diretos antigos)
+  // Formato legado: ?id={fileId}
   try {
     const parsed = new URL(u, window.location.href);
     const id = parsed.searchParams.get('id');
@@ -699,7 +678,7 @@ function extractDriveFileId(url) {
   return null;
 }
 
-function loadGoogleDrive(url) {
+function loadGoogleDrive(url, duration) {
   const fileId = extractDriveFileId(url);
   if (!fileId) {
     console.error("ID Drive não encontrado:", url);
@@ -712,9 +691,7 @@ function loadGoogleDrive(url) {
   clearPlayerContainer();
   const container = document.getElementById('player');
 
-  // O Google Drive só suporta embed via iframe /preview.
-  // A abordagem com <video src="uc?export=download"> falha por CORS,
-  // redirecionamentos de aviso antivírus e ausência de suporte a range requests.
+  // Único método de embed suportado pelo Drive para sites externos
   const previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
 
   container.innerHTML = `
@@ -730,13 +707,37 @@ function loadGoogleDrive(url) {
     ></iframe>
   `;
 
-  // Nota: iframes cross-origin do Drive não disparam eventos 'ended'.
-  // O avanço automático não é possível via JS puro — o usuário pode
-  // avançar manualmente com o botão "próximo" ou swipe.
+  // ── Avanço automático por duração ──────────────────────────────────────────
+  // Se o config.js tiver o campo "duration" (número inteiro em segundos),
+  // um timer é agendado para avançar para o próximo vídeo automaticamente.
+  // Se o usuário clicar em → antes do tempo, clearPlayerContainer() cancela
+  // o timer sem efeitos colaterais.
+  // ──────────────────────────────────────────────────────────────────────────
+  const durationSec = Number(duration);
+  let statusMsg;
 
-  const statusMsg = isTouchDevice
-    ? "Drive: toque em ▶ no player para iniciar o vídeo."
-    : "Drive: clique em ▶ no player para iniciar. Use o botão → para avançar.";
+  if (durationSec > 0) {
+    const hh = String(Math.floor(durationSec / 3600)).padStart(2, '0');
+    const mm = String(Math.floor((durationSec % 3600) / 60)).padStart(2, '0');
+    const ss = String(durationSec % 60).padStart(2, '0');
+
+    console.log(`Drive: avanço automático agendado em ${hh}:${mm}:${ss}`);
+
+    driveAutoAdvanceTimer = setTimeout(() => {
+      console.log("Drive: duração atingida — avançando automaticamente.");
+      manualControl = false;
+      playNext(true);
+    }, durationSec * 1000);
+
+    statusMsg = isTouchDevice
+      ? `Drive: toque em ▶ para iniciar. Avança em ${hh}:${mm}:${ss}.`
+      : `Drive: clique em ▶ para iniciar. Avança automaticamente em ${hh}:${mm}:${ss}.`;
+  } else {
+    // Sem duração definida: avanço apenas manual
+    statusMsg = isTouchDevice
+      ? "Drive: toque em ▶ no player para iniciar o vídeo."
+      : "Drive: clique em ▶ no player para iniciar. Use o botão → para avançar.";
+  }
 
   updateInfo(
     document.getElementById('video-title')?.innerText || "Vídeo",
@@ -744,7 +745,7 @@ function loadGoogleDrive(url) {
   );
 }
 
-// ====== Inicialização ======
+// ====== INICIALIZAÇÃO ======
 (function init() {
   detectDevice();
   setVolumeUI(currentVolume);
