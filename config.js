@@ -124,7 +124,7 @@ const schedule = [
         type: "youtube"
       },
 {
-     title: "Escritores da Liberdade (2007)"
+     title: "Escritores da Liberdade (2007)",
      url: "https://player.vimeo.com/video/1102925342?h=f0f14ace87",
      type: "vimeo"
     },
@@ -155,7 +155,7 @@ const schedule = [
       },
       {
       title: "Bachelard - pedagogia científica e ensino de química | Entrevista com Ettore Antunes",
-      url: "https://www.youtube.com/watch?v=Ar05A5Tsm88"
+      url: "https://www.youtube.com/watch?v=Ar05A5Tsm88",
       type: "youtube"
 },
 {
