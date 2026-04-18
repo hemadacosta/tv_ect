@@ -14,7 +14,7 @@ const schedule = [
         type: "youtube"
       },
 {
-        title: "Inherit The Wind (1999) - O Vento Será Tua Herança",
+    title: "Inherit The Wind (1999) - O Vento Será Tua Herança",
     url: "https://youtu.be/NYCfo4hVolQ?si=YEwzO1uk_31NeTbx",
     type: "youtube"
     },
@@ -124,20 +124,20 @@ const schedule = [
         type: "youtube"
       },
 {
-        title: "Escritores da Liberdade (2007)"
-    url: "https://player.vimeo.com/video/1102925342?h=f0f14ace87",
-    type: "vimeo"
+     title: "Escritores da Liberdade (2007)"
+     url: "https://player.vimeo.com/video/1102925342?h=f0f14ace87",
+     type: "vimeo"
     },
 {
         title: "Uma mente brilhante (2001)",
         url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",
         type: "vimeo" 
-    },
+},
 {   
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
-      },
+},
 {
     title: 'Viagem Insólita (1987) - Trailer | <a href="https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview" target="_blank">🎬 Assistir Filme</a>',
     url: "https://youtu.be/InWhsN3jMp8?si=hbYVl5xOxYYJIFd8&t=6",
@@ -154,10 +154,10 @@ const schedule = [
         type: "youtube"
       },
       {
-        title: "Bachelard - pedagogia científica e ensino de química | Entrevista com Ettore Antunes",
+      title: "Bachelard - pedagogia científica e ensino de química | Entrevista com Ettore Antunes",
       url: "https://www.youtube.com/watch?v=Ar05A5Tsm88"
       type: "youtube"
-    },
+},
 {
     title: 'Estrelas Além do Tempo (2016) - Trailer | <a href="https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview">🎬 Assistir ao Filme completo</a>',
     url: "https://youtu.be/Xpl7pyFfBlk?si=1lvP6WS8cOy0pCbu",
@@ -167,12 +167,12 @@ const schedule = [
         title: "Quase Deuses (2004)",
         url: "https://youtu.be/2b4peUNL710?si=BzokINNMj_bSM8FG",
         type: "youtube" 
-    },
+},
 {   
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
-      },
+},
 {
     title: 'Interestelar (2014) - Trailer | <a href="https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview">🎬 Assistir ao Filme completo</a>',
     url: "https://youtu.be/i6avfCqKcQo?si=u280tGMfBF62uFW9",
