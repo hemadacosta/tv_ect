@@ -1,4 +1,5 @@
-// script.js (v13) — Com SponsorBlock integrado
+
+// script.js (v12) — Botões condicionais por dispositivo + Otimizado para Mobile
 // DESKTOP: Botões aparecem apenas no hover
 // MOBILE/TABLET: Botões aparecem apenas ao tocar na tela
 
@@ -16,18 +17,13 @@ let isTouchDevice = false;
 let navVisible = false;
 let navTimeout = null;
 
-// ====== SPONSORBLOCK VARIÁVEIS ======
-let sponsorBlockSegments = [];     // Segmentos a pular do vídeo atual
-let sponsorBlockInterval = null;   // Intervalo de verificação
-let sponsorBlockEnabled = true;    // Ligar/desligar (padrão: ligado)
-let lastSkippedSegment = null;     // Evita pular o mesmo segmento repetidamente
-let sponsorBlockStatusDiv = null;  // Elemento de status (criado dinamicamente)
-
 // ====== DETECÇÃO DE DISPOSITIVO ======
 function detectDevice() {
+  // Detecta touch (mobile/tablet)
   isTouchDevice = window.matchMedia("(pointer: coarse)").matches || 
                   /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+  // Detecta mobile específico (não tablet)
   isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) &&
              !/iPad/i.test(navigator.userAgent);
 
@@ -37,169 +33,7 @@ function detectDevice() {
   return { isTouchDevice, isMobile };
 }
 
-// ====== CRIA INDICADOR DO SPONSORBLOCK ======
-function createSponsorBlockIndicator() {
-  if (document.getElementById('sponsorblock-indicator')) return;
-  
-  const indicator = document.createElement('div');
-  indicator.id = 'sponsorblock-indicator';
-  indicator.innerHTML = '⏭️ SponsorBlock ativo';
-  indicator.style.cssText = `
-    position: absolute;
-    bottom: 60px;
-    right: 12px;
-    background: rgba(0,0,0,0.7);
-    color: #4CAF50;
-    padding: 6px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-family: monospace;
-    z-index: 1000;
-    opacity: 0;
-    transition: opacity 0.3s;
-    pointer-events: none;
-    backdrop-filter: blur(4px);
-  `;
-  document.getElementById('video-wrapper')?.appendChild(indicator);
-  sponsorBlockStatusDiv = indicator;
-}
-
-function showSponsorBlockMessage(message, isError = false) {
-  if (!sponsorBlockStatusDiv) createSponsorBlockIndicator();
-  if (sponsorBlockStatusDiv) {
-    sponsorBlockStatusDiv.style.opacity = '1';
-    sponsorBlockStatusDiv.style.color = isError ? '#ff6b6b' : '#4CAF50';
-    sponsorBlockStatusDiv.innerHTML = message;
-    setTimeout(() => {
-      if (sponsorBlockStatusDiv) sponsorBlockStatusDiv.style.opacity = '0';
-    }, 2000);
-  }
-}
-
-// ====== SPONSORBLOCK: BUSCA SEGMENTOS ======
-async function fetchSponsorBlockSegments(videoId, platform = 'youtube') {
-  if (!sponsorBlockEnabled) return;
-  if (platform !== 'youtube') {
-    console.log(`SponsorBlock: apenas YouTube suportado (plataforma: ${platform})`);
-    return;
-  }
-  
-  if (!videoId) {
-    console.log("SponsorBlock: sem videoId");
-    return;
-  }
-
-  // Categorias que queremos pular
-  const categories = ['sponsor', 'intro', 'outro', 'selfpromo', 'interaction', 'preview'];
-  const url = `https://sponsor.ajay.app/api/skipSegments?videoID=${videoId}&categories=[${categories.map(c => `"${c}"`).join(',')}]`;
-
-  try {
-    console.log(`SponsorBlock: consultando API para ${videoId}...`);
-    const response = await fetch(url);
-    
-    if (!response.ok) {
-      if (response.status === 404) {
-        console.log("SponsorBlock: nenhum segmento encontrado");
-        sponsorBlockSegments = [];
-      }
-      return;
-    }
-    
-    let segments = await response.json();
-    
-    // Garantir que é um array
-    if (!Array.isArray(segments)) {
-      segments = [segments];
-    }
-    
-    // Filtrar apenas segmentos válidos
-    sponsorBlockSegments = segments.filter(s => s && s.segment && Array.isArray(s.segment) && s.segment.length === 2);
-    
-    if (sponsorBlockSegments.length > 0) {
-      console.log(`SponsorBlock: ${sponsorBlockSegments.length} segmento(s) carregado(s):`, 
-        sponsorBlockSegments.map(s => `${s.category || 'unknown'}: ${s.segment[0].toFixed(1)}s-${s.segment[1].toFixed(1)}s`));
-      showSponsorBlockMessage(`⏭️ ${sponsorBlockSegments.length} segmento(s) para pular`);
-      startSponsorBlockMonitoring();
-    } else {
-      console.log("SponsorBlock: nenhum segmento válido encontrado");
-    }
-    
-  } catch (error) {
-    console.warn("SponsorBlock: erro ao consultar API:", error);
-    // Não mostrar erro para o usuário para não poluir
-  }
-}
-
-// ====== SPONSORBLOCK: MONITORAMENTO ======
-function startSponsorBlockMonitoring() {
-  // Para o monitoramento anterior se existir
-  if (sponsorBlockInterval) {
-    clearInterval(sponsorBlockInterval);
-    sponsorBlockInterval = null;
-  }
-  
-  if (!sponsorBlockEnabled || sponsorBlockSegments.length === 0) return;
-  
-  console.log("SponsorBlock: iniciando monitoramento");
-  
-  sponsorBlockInterval = setInterval(() => {
-    // Verifica se temos um player ativo
-    let currentTime = null;
-    
-    try {
-      if (currentType === 'youtube' && ytPlayer && typeof ytPlayer.getCurrentTime === 'function') {
-        currentTime = ytPlayer.getCurrentTime();
-      } else if (currentType === 'vimeo' && vimeoPlayer && typeof vimeoPlayer.getCurrentTime === 'function') {
-        vimeoPlayer.getCurrentTime().then(time => currentTime = time).catch(() => {});
-      }
-    } catch(e) {}
-    
-    if (currentTime === null || currentTime === undefined) return;
-    
-    // Procura um segmento para pular
-    for (const segment of sponsorBlockSegments) {
-      const start = segment.segment[0];
-      const end = segment.segment[1];
-      const category = segment.category || 'segmento';
-      
-      // Identificador único para este segmento (evita pular múltiplas vezes)
-      const segmentId = `${start}-${end}`;
-      
-      // Verifica se estamos dentro do segmento (com margem de 0.2s)
-      if (currentTime >= (start - 0.2) && currentTime < end && lastSkippedSegment !== segmentId) {
-        console.log(`⏩ SponsorBlock: pulando ${category} [${start.toFixed(1)}s → ${end.toFixed(1)}s] (atual: ${currentTime.toFixed(1)}s)`);
-        
-        // Executa o pulo
-        if (currentType === 'youtube' && ytPlayer && typeof ytPlayer.seekTo === 'function') {
-          ytPlayer.seekTo(end, true);
-        } else if (currentType === 'vimeo' && vimeoPlayer && typeof vimeoPlayer.setCurrentTime === 'function') {
-          vimeoPlayer.setCurrentTime(end).catch(() => {});
-        }
-        
-        lastSkippedSegment = segmentId;
-        showSponsorBlockMessage(`⏩ Pulando ${category === 'sponsor' ? 'patrocínio' : category}`);
-        
-        // Pequeno delay para não pular o mesmo segmento novamente no mesmo frame
-        setTimeout(() => {
-          if (lastSkippedSegment === segmentId) lastSkippedSegment = null;
-        }, 500);
-        
-        break; // Pula apenas um segmento por vez
-      }
-    }
-  }, 200); // Verifica a cada 200ms (responsivo)
-}
-
-function stopSponsorBlockMonitoring() {
-  if (sponsorBlockInterval) {
-    clearInterval(sponsorBlockInterval);
-    sponsorBlockInterval = null;
-  }
-  sponsorBlockSegments = [];
-  lastSkippedSegment = null;
-}
-
-// ====== CONTROLES DE VOLUME ======
+// ====== Controles de volume ======
 const volumeSlider = document.getElementById('volume-slider');
 const volumeValue  = document.getElementById('volume-value');
 
@@ -240,6 +74,7 @@ function showNav(duration = 3000) {
   navControls.style.opacity = '1';
   navControls.style.pointerEvents = 'auto';
 
+  // Auto-esconder após duração (exceto se for desktop com mouse sobre)
   clearTimeout(navTimeout);
   if (!isTouchDevice) {
     navTimeout = setTimeout(hideNav, duration);
@@ -258,29 +93,34 @@ function toggleNav() {
   if (navVisible) {
     hideNav();
   } else {
-    showNav(5000);
+    showNav(5000); // 5 segundos em mobile
   }
 }
 
 // ====== EVENTOS DESKTOP (HOVER) ======
 if (videoWrapper && !isTouchDevice) {
+  // Mouse entra: mostra
   videoWrapper.addEventListener('mouseenter', () => {
     showNav(3000);
   });
 
+  // Mouse sai: esconde
   videoWrapper.addEventListener('mouseleave', () => {
     hideNav();
   });
 
+  // Mouse move: reseta timer
   videoWrapper.addEventListener('mousemove', () => {
     if (!navVisible) {
       showNav(3000);
     } else {
+      // Reseta o timer
       clearTimeout(navTimeout);
       navTimeout = setTimeout(hideNav, 3000);
     }
   });
 
+  // Teclado (acessibilidade)
   videoWrapper.addEventListener('focusin', () => showNav(5000));
 }
 
@@ -304,6 +144,7 @@ if (videoWrapper && isTouchDevice) {
     const deltaX = Math.abs(touchX - touchStartX);
     const deltaY = Math.abs(touchY - touchStartY);
 
+    // Se moveu mais de 10px, considera swipe
     if (deltaX > 10 || deltaY > 10) {
       isSwipe = true;
     }
@@ -313,10 +154,14 @@ if (videoWrapper && isTouchDevice) {
     const touchEndTime = new Date().getTime();
     const touchDuration = touchEndTime - touchStartTime;
 
+    // Se foi um toque rápido (não swipe) e curto, toggle nav
     if (!isSwipe && touchDuration < 300) {
       toggleNav();
     }
   }, { passive: true });
+
+  // Também permite mostrar ao clicar nos botões (mesmo que invisíveis)
+  // Isso garante que se o usuário tocar onde os botões deveriam estar, funcionam
 }
 
 let autoplayMuted = true;
@@ -417,11 +262,13 @@ function bindNavButton(btn, fn) {
     ev.stopPropagation();
     fn();
 
+    // Em mobile, mantém visível por mais tempo após uso
     if (isTouchDevice) {
       showNav(5000);
     }
   };
 
+  // Múltiplos eventos para garantir compatibilidade
   btn.addEventListener('touchstart', handler, { passive: false, capture: true });
   btn.addEventListener('click', handler, { capture: true });
   btn.addEventListener('pointerdown', handler, { capture: true });
@@ -452,12 +299,15 @@ if (videoWrapper && isTouchDevice) {
     const deltaX = touchEndX - touchStartX;
     const deltaY = touchEndY - touchStartY;
 
+    // Só processa se for swipe horizontal significativo
     if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
       if (deltaX < 0) {
+        // Swipe esquerda = Próximo
         console.log("Swipe left - Próximo vídeo");
         playNextManual();
         showNav(3000);
       } else {
+        // Swipe direita = Anterior
         console.log("Swipe right - Vídeo anterior");
         playPrevious();
         showNav(3000);
@@ -480,12 +330,10 @@ function loadVideo(index, fromUser = false) {
     return;
   }
 
-  // Para o SponsorBlock ao trocar de vídeo
-  stopSponsorBlockMonitoring();
-
   manualControl = !!fromUser;
   updateInfo(videoData.title || "Vídeo", `Vídeo ${index + 1} de ${sch.length}`);
 
+  // Detecta tipo automaticamente
   let type = videoData.type;
   if (!type) {
     const u = String(videoData.url).toLowerCase();
@@ -502,6 +350,7 @@ function loadVideo(index, fromUser = false) {
     return;
   }
 
+  // Carrega conforme tipo
   switch(type) {
     case 'youtube':
       loadYouTube(videoData.url, autoplayEnabled);
@@ -525,8 +374,6 @@ function loadVideo(index, fromUser = false) {
 function clearPlayerContainer() {
   const container = document.getElementById('player');
   if (!container) return;
-
-  stopSponsorBlockMonitoring();
 
   if (ytPlayer) {
     try { ytPlayer.destroy(); } catch (e) { console.warn("Erro ao destruir YouTube:", e); }
@@ -588,11 +435,6 @@ function loadYouTube(url, allowAutoplay) {
         applyVolumeToPlayer();
         maybeUnmuteIfUserChangedVolume();
         if (!allowAutoplay && typeof ytPlayer.pauseVideo === 'function') ytPlayer.pauseVideo();
-        
-        // SponsorBlock: buscar segmentos para este vídeo
-        setTimeout(() => {
-          fetchSponsorBlockSegments(videoId, 'youtube');
-        }, 1000);
         return;
       } catch (e) {
         console.warn("Falha no loadVideoById; recriando player...", e);
@@ -620,8 +462,6 @@ function loadYouTube(url, allowAutoplay) {
           if (allowAutoplay) {
             try { ev.target.playVideo(); } catch (_) {}
           }
-          // SponsorBlock: buscar segmentos quando o player estiver pronto
-          fetchSponsorBlockSegments(videoId, 'youtube');
         },
         onStateChange: (ev) => {
           if (ev.data === YT.PlayerState.ENDED) {
@@ -629,10 +469,6 @@ function loadYouTube(url, allowAutoplay) {
               manualControl = false;
               playNext(true);
             }, 800);
-          }
-          // Se o vídeo começar a tocar, reinicia o monitoramento
-          if (ev.data === YT.PlayerState.PLAYING && sponsorBlockSegments.length > 0) {
-            startSponsorBlockMonitoring();
           }
         }
       }
@@ -735,9 +571,6 @@ function loadVimeo(url, allowAutoplay) {
           }
         });
       }
-      
-      // SponsorBlock: Vimeo não é suportado, mas não causa erro
-      console.log("SponsorBlock: Vimeo detectado - recurso disponível apenas para YouTube");
     });
 
     vimeoPlayer.on('ended', () => {
@@ -748,6 +581,7 @@ function loadVimeo(url, allowAutoplay) {
       }, 800);
     });
 
+    // Fallback para mobile
     if (isTouchDevice) {
       let lastTime = 0;
       let stuckCount = 0;
@@ -850,13 +684,18 @@ function loadDailymotion(url, allowAutoplay) {
 function extractDriveFileId(url) {
   if (!url) return null;
   const u = String(url);
-  const m1 = u.match(/\/file\/d\/([^\/]+)\//);
+
+  // Formato: /file/d/{fileId}/view  ou  /file/d/{fileId}/preview
+  const m1 = u.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
   if (m1) return m1[1];
+
+  // Formato: ?id={fileId}  (links diretos antigos)
   try {
     const parsed = new URL(u, window.location.href);
     const id = parsed.searchParams.get('id');
     if (id) return id;
   } catch (_) {}
+
   return null;
 }
 
@@ -864,58 +703,44 @@ function loadGoogleDrive(url) {
   const fileId = extractDriveFileId(url);
   if (!fileId) {
     console.error("ID Drive não encontrado:", url);
-    updateInfo("Erro no Drive", "Não encontrei o ID do arquivo.");
+    updateInfo("Erro no Drive", "Não encontrei o ID do arquivo. Verifique a URL.");
     return;
   }
 
+  console.log("Carregando vídeo Google Drive, fileId:", fileId);
+
   clearPlayerContainer();
   const container = document.getElementById('player');
-  const directUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
+
+  // O Google Drive só suporta embed via iframe /preview.
+  // A abordagem com <video src="uc?export=download"> falha por CORS,
+  // redirecionamentos de aviso antivírus e ausência de suporte a range requests.
+  const previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
 
   container.innerHTML = `
-    <video id="drive-video" width="100%" height="100%" playsinline
-      ${autoplayEnabled ? "autoplay" : ""} muted controls
-      style="background:#000; width:100%; height:100%; object-fit:contain;"
-    >
-      <source src="${directUrl}" type="video/mp4">
-      Seu navegador não suporta vídeo HTML5.
-    </video>
+    <iframe
+      id="drive-player"
+      src="${previewUrl}"
+      width="100%"
+      height="100%"
+      frameborder="0"
+      allow="autoplay; fullscreen"
+      allowfullscreen
+      style="border:0; width:100%; height:100%; position:absolute; top:0; left:0;"
+    ></iframe>
   `;
 
-  const vid = document.getElementById('drive-video');
-  if (!vid) return;
+  // Nota: iframes cross-origin do Drive não disparam eventos 'ended'.
+  // O avanço automático não é possível via JS puro — o usuário pode
+  // avançar manualmente com o botão "próximo" ou swipe.
 
-  try { vid.volume = Math.max(0, Math.min(1, currentVolume / 100)); } catch(_) {}
-  vid.muted = true;
-
-  vid.addEventListener('ended', () => {
-    setTimeout(() => {
-      manualControl = false;
-      playNext(true);
-    }, 800);
-  });
-
-  vid.addEventListener('error', () => {
-    container.innerHTML = `
-      <iframe
-        src="https://drive.google.com/file/d/${fileId}/preview"
-        width="100%" height="100%"
-        allow="autoplay"
-        allowfullscreen
-        style="border:0;"
-      ></iframe>
-    `;
-    updateInfo(
-      document.getElementById('video-title')?.innerText || "Vídeo",
-      "Drive: este vídeo pode exigir clique no play (limitação do Drive)."
-    );
-  });
+  const statusMsg = isTouchDevice
+    ? "Drive: toque em ▶ no player para iniciar o vídeo."
+    : "Drive: clique em ▶ no player para iniciar. Use o botão → para avançar.";
 
   updateInfo(
     document.getElementById('video-title')?.innerText || "Vídeo",
-    autoplayEnabled
-      ? "Drive: iniciando (silencioso). Ajuste o volume para ativar som."
-      : "Drive: pronto. Clique em play para iniciar."
+    statusMsg
   );
 }
 
@@ -923,7 +748,6 @@ function loadGoogleDrive(url) {
 (function init() {
   detectDevice();
   setVolumeUI(currentVolume);
-  createSponsorBlockIndicator(); // Cria o indicador visual
 
   const sch = safeSchedule();
   if (sch.length === 0) {
