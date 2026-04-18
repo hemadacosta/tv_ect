@@ -55,7 +55,7 @@ const schedule = [
       },
 {
     title: 'Soylent Green (1973) - Trailer| <a href="https://drive.google.com/file/d/1X8PS-GS_SLmqlh79qE1xgGJVPmtyXz2O/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
-    url: "https://youtu.be/CVm-dewknqs?si=AmFTmJx8PZyTrN_",
+    url: "https://youtu.be/N_jGOKYHxaQ?si=QNao_la03-qzStoQ",
     type: "youtube"
 },
 {
@@ -154,11 +154,6 @@ const schedule = [
         type: "youtube"
       },
       {
-      title: "Bachelard - pedagogia científica e ensino de química | Entrevista com Ettore Antunes",
-      url: "https://www.youtube.com/watch?v=Ar05A5Tsm88",
-      type: "youtube"
-},
-{
     title: 'Estrelas Além do Tempo (2016) - Trailer | <a href="https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview">🎬 Assistir ao Filme completo</a>',
     url: "https://youtu.be/Xpl7pyFfBlk?si=1lvP6WS8cOy0pCbu",
     type: "youtube"
