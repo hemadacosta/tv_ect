@@ -8,7 +8,7 @@ const schedule = [
         url: "https://youtu.be/T-FeG_CdTF0?si=sAPKRXS8Uc-6YToD",
         type: "youtube"
     },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -18,8 +18,8 @@ const schedule = [
     url: "https://youtu.be/NYCfo4hVolQ?si=YEwzO1uk_31NeTbx",
     type: "youtube"
     },
-{   
-        title: "TV ECT",
+{
+    title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
       },
@@ -33,10 +33,10 @@ const schedule = [
         url: "https://youtu.be/QT1hrrMcf4A?si=Ho7I41Gg7lM_2qw-",
         type: "youtube"
     },
-{   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
+{
+    title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
       },
 {
         title: "3ª Aula - ECT1 - Filosofia e História da Ciência",
@@ -48,7 +48,7 @@ const schedule = [
     url: "https://youtu.be/CVm-dewknqs?si=AmFTmJx8PZyTrN_",
     type: "youtube"
 },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -63,7 +63,7 @@ const schedule = [
         url: "https://youtu.be/4Dc2lEfnir4?si=PvVNwdAdSnRsU2Lh",
         type: "youtube"
     },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -73,7 +73,7 @@ const schedule = [
         url: "https://youtu.be/EFMtk5qex80?si=9QkYezdtgF4Q1hLc",
         type: "youtube"
     },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -83,7 +83,7 @@ const schedule = [
         url: "https://youtu.be/kVzCBX2AToc?si=ACN9PX6LHL4BA0be",
         type: "youtube"
     },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -98,7 +98,7 @@ const schedule = [
         url: "https://youtu.be/978BUOV5Swc?si=CskLm-8fUX847Ueg",
         type: "youtube"
     },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -108,7 +108,7 @@ const schedule = [
         url: "https://youtu.be/mUINTFy7w7Y",
         type: "youtube"
     },
-    {   
+    {
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -118,7 +118,7 @@ const schedule = [
         url: "https://youtu.be/AbXHq5WT3eY",
         type: "youtube"
     },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -131,9 +131,9 @@ const schedule = [
 {
         title: "Uma mente brilhante (2001)",
         url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",
-        type: "vimeo" 
+        type: "vimeo"
 },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -148,7 +148,7 @@ const schedule = [
         url: "https://youtu.be/q4zYWLfHKMU",
         type: "youtube"
     },
-    {   
+    {
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
@@ -166,9 +166,9 @@ const schedule = [
 {
         title: "Quase Deuses (2004)",
         url: "https://youtu.be/2b4peUNL710?si=BzokINNMj_bSM8FG",
-        type: "youtube" 
+        type: "youtube"
 },
-{   
+{
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
