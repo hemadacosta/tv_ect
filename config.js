@@ -153,11 +153,12 @@ const schedule = [
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
       },
-      {
-        title: "Estrelas Além do Tempo (2016)",
-        url: "https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview",
-        type: "googledrive"
-      },
+      { 
+  title: "Estrelas Além do Tempo (2016)",
+  url: "https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview",
+  type: "googledrive",
+  duration: 7603
+},
 {
         title: "Quase Deuses (2004)",
         url: "https://youtu.be/2b4peUNL710?si=BzokINNMj_bSM8FG",
