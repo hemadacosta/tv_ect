@@ -4,6 +4,146 @@
 
 const schedule = [
     {
+        title: "1ª Aula - ECT1 - Apresentação da disciplina",
+        url: "https://youtu.be/T-FeG_CdTF0?si=sAPKRXS8Uc-6YToD",
+        type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+        title: "Inherit The Wind (1999) - O Vento Será Tua Herança",
+    url: "https://youtu.be/NYCfo4hVolQ?si=YEwzO1uk_31NeTbx",
+    type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+        title: "Never Cry Wolf (1983)",
+    url: "https://youtu.be/6QubWEM7mKg?si=gZmk9FhGFrwxdKpl",
+    type: "youtube"
+    },
+ {
+        title: "2ª Aula - ECT1 - O que é Ciência?",
+        url: "https://youtu.be/QT1hrrMcf4A?si=Ho7I41Gg7lM_2qw-",
+        type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+        title: "3ª Aula - ECT1 - Filosofia e História da Ciência",
+        url: "https://youtu.be/dkpPr5myoqc?si=otqWRRumN5kIKjYT",
+        type: "youtube"
+    },
+{
+    title: 'Contato (1997) - Trailer| <a href="https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
+    url: "https://youtu.be/CVm-dewknqs?si=AmFTmJx8PZyTrN_",
+    type: "youtube"
+},
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+    title: 'Soylent Green (1973) - Trailer| <a href="https://drive.google.com/file/d/1X8PS-GS_SLmqlh79qE1xgGJVPmtyXz2O/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
+    url: "https://youtu.be/CVm-dewknqs?si=AmFTmJx8PZyTrN_",
+    type: "youtube"
+},
+{
+        title: "4ª Aula - ECT1 - O ensino de ciências para os primeiros anos da Educação Básica",
+        url: "https://youtu.be/4Dc2lEfnir4?si=PvVNwdAdSnRsU2Lh",
+        type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+    {
+        title: "5ª Aula - ECT1 - Revoluções Científicas e Ciência Normal na Sala de Aula",
+        url: "https://youtu.be/EFMtk5qex80?si=9QkYezdtgF4Q1hLc",
+        type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+        title: "A Queda - as últimas horas de Hitler",
+        url: "https://youtu.be/kVzCBX2AToc?si=ACN9PX6LHL4BA0be",
+        type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+    {
+    title: 'O Óleo de Lorenzo (1992) - Trailer |<a href="https://drive.google.com/file/d/10_ps5BlJZQN5VVpqgplOEAIc3t11XXp5/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
+    url: "https://youtu.be/GLcx7xMMBoM?si=_PYLdmDZ16RLwuYz",
+    type: "youtube"
+},
+{
+        title: "O Matemático - Adventures of a Mathematician (2020)",
+        url: "https://youtu.be/978BUOV5Swc?si=CskLm-8fUX847Ueg",
+        type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+        title: "6ª Aula - O papel dos materiais curriculares no processo de ensino e aprendizagem de conhecimentos científicos – Bens culturais para o ensino de ciência e diretrizes para o trabalho final",
+        url: "https://youtu.be/mUINTFy7w7Y",
+        type: "youtube"
+    },
+    {   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+    {
+        title: "7ª Aula - ECT1 - O Ensino de Ciências e a proposição de Sequências de Ensino Investigativo",
+        url: "https://youtu.be/AbXHq5WT3eY",
+        type: "youtube"
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+        title: "Escritores da Liberdade (2007)"
+    url: "https://player.vimeo.com/video/1102925342?h=f0f14ace87",
+    type: "vimeo"
+    },
+{
+        title: "Uma mente brilhante (2001)",
+        url: "https://player.vimeo.com/video/382446611?h=65d4fbb945",
+        type: "vimeo" 
+    },
+{   
+        title: "TV ECT",
+        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+        type: "youtube"
+      },
+{
+    title: 'Viagem Insólita (1987) - Trailer | <a href="https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview" target="_blank">🎬 Assistir Filme</a>',
+    url: "https://youtu.be/InWhsN3jMp8?si=hbYVl5xOxYYJIFd8&t=6",
+    type: "youtube"
+},
+{
         title: "8ª Aula - Contribuições de Gaston Bachelard ao Ensino de Ciências",
         url: "https://youtu.be/q4zYWLfHKMU",
         type: "youtube"
@@ -12,94 +152,29 @@ const schedule = [
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
-    },
-    {
+      },
+      {
         title: "Bachelard - pedagogia científica e ensino de química | Entrevista com Ettore Antunes",
-        url: "https://www.youtube.com/watch?v=Ar05A5Tsm88",
-        type: "youtube"
+      url: "https://www.youtube.com/watch?v=Ar05A5Tsm88"
+      type: "youtube"
     },
-    {
-    title: 'Tempos Modernos (1936) - Trailer<a href="https://drive.google.com/file/d/1XGvqsZ8wKl8WtHwBEnxXjtOrU9lcF7z7/preview" target="_blank">🎬 Assistir ao Filme completo</a>', //4:10
-    url: "https://youtu.be/6n9ESFJTnHs?si=RrZ3q9HbJEgFa0Vy",
-    type: "youtube"
-    },
-    {       
-    title: "Viver Ciência - Robótica Educacional e Automação",
-    url: "https://www.youtube.com/watch?v=QbY6iWQlyMM",
-    type: "youtube"
-    },
-    {
-        title: "A importância da robótica educacional na sociedade atual",
-        url: "https://www.youtube.com/watch?v=hCHwZdibQJY",
-        type: "youtube"
-    },
-    {   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
-    },
-    {
-        title: "Tentativa e Erro | Turma da Robótica",
-        url: "https://youtu.be/SoS7IXZ2Hn0?si=huAwso32v9NjcZDq",
-        type: "youtube"
-    },
-    {   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
-    },
-    {
+{
     title: 'Estrelas Além do Tempo (2016) - Trailer | <a href="https://drive.google.com/file/d/1KahcP2-bxQr1uzKAMg91bGGSgrYw2Bcp/preview">🎬 Assistir ao Filme completo</a>',
     url: "https://youtu.be/Xpl7pyFfBlk?si=1lvP6WS8cOy0pCbu",
     type: "youtube"
 },
-    {
-        title: "Meninas na robótica, projeto",
-        url: "https://geo.dailymotion.com/player.html?video=x9mjx30",
-        type: "dailymotion"
-    },
-    {   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
-    },
-    {
+{
         title: "Quase Deuses (2004)",
         url: "https://youtu.be/2b4peUNL710?si=BzokINNMj_bSM8FG",
         type: "youtube" 
     },
-    {
-        title: "Cosmos - Episódio 04 - Céu e Inferno",
-    url: "https://youtu.be/Fw_DQL2w3bI?si=a7ta6YkcOw6LjFDm",
-    type: "youtube"
-    },
-    {
-        title: "Ensino de Ciências - métodos e técnicas",
-        url: "https://youtu.be/qynHlQkj93Y?si=82xQWf6fi9LTrt4h",
-        type: "youtube"
-    },
-    {   
-        title: "TV ECT",
-        url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-        type: "youtube"
-    },
-    {
-        title: "Ensino de Ciências - história e situação atual",
-        url: "https://youtu.be/nh1ruCC0yA4?si=poUkwghlkHAI28dv",
-        type: "youtube"
-    },
-    {
-        title: "6 erros científicos estúpidos em filmes",
-        url: "https://geo.dailymotion.com/player.html?video=x6j6xe2",
-        type: "dailymotion"
-    },
-    {   
+{   
         title: "TV ECT",
         url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
         type: "youtube"
       },
-      {
-   title: 'Interestelar (2014) - Trailer | <a href="https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview">🎬 Assistir ao Filme completo</a>',
+{
+    title: 'Interestelar (2014) - Trailer | <a href="https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview">🎬 Assistir ao Filme completo</a>',
     url: "https://youtu.be/i6avfCqKcQo?si=u280tGMfBF62uFW9",
     type: "youtube"
 }
