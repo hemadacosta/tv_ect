@@ -1,7 +1,8 @@
-// script.js (v13) — Botões condicionais por dispositivo + Otimizado para Mobile
+
+// script.js (v14) — Botões condicionais por dispositivo + Otimizado para Mobile
 // DESKTOP: Botões aparecem apenas no hover
 // MOBILE/TABLET: Botões aparecem apenas ao tocar na tela
-// GOOGLE DRIVE: Avanço automático via campo "duration" no config.js
+// GOOGLE DRIVE: Overlay de início sincroniza o timer com o play real do usuário
 
 let currentIndex = 0;
 let ytPlayer = null;
@@ -16,7 +17,8 @@ let isMobile = false;
 let isTouchDevice = false;
 let navVisible = false;
 let navTimeout = null;
-let driveAutoAdvanceTimer = null; // Timer para avanço automático em vídeos do Drive
+let driveAutoAdvanceTimer = null; // Timer de avanço automático para vídeos do Drive
+let driveCountdownInterval = null; // Intervalo do contador regressivo do Drive
 
 // ====== DETECÇÃO DE DISPOSITIVO ======
 function detectDevice() {
@@ -350,10 +352,14 @@ function clearPlayerContainer() {
 
   dailymotionPlayer = null;
 
-  // Cancela avanço automático agendado para Drive (evita conflito ao trocar vídeo)
+  // Cancela timer e contador regressivo do Drive ao trocar de vídeo
   if (driveAutoAdvanceTimer) {
     clearTimeout(driveAutoAdvanceTimer);
     driveAutoAdvanceTimer = null;
+  }
+  if (driveCountdownInterval) {
+    clearInterval(driveCountdownInterval);
+    driveCountdownInterval = null;
   }
 
   container.innerHTML = '';
@@ -378,9 +384,9 @@ function extractYouTubeID(url) {
     if (shortsIdx >= 0 && parts[shortsIdx + 1]) return parts[shortsIdx + 1];
   } catch (_) {}
 
-  const m = u.match(/youtu\.be\/([^\/\?\&]+)/)       ||
-            u.match(/[?&]v=([^\/\?\&]+)/)             ||
-            u.match(/youtube\.com\/embed\/([^\/\?\&]+)/) ||
+  const m = u.match(/youtu\.be\/([^\/\?\&]+)/)           ||
+            u.match(/[?&]v=([^\/\?\&]+)/)                 ||
+            u.match(/youtube\.com\/embed\/([^\/\?\&]+)/)  ||
             u.match(/youtube\.com\/shorts\/([^\/\?\&]+)/);
   return m ? m[1] : null;
 }
@@ -648,17 +654,25 @@ function loadDailymotion(url, allowAutoplay) {
 }
 
 // ====== GOOGLE DRIVE ======
-// O Drive não permite detectar o fim do vídeo via JS (iframe cross-origin).
-// Solução: informe o campo "duration" (em segundos) no config.js para que
-// o player avance automaticamente ao próximo vídeo após esse tempo.
+// O Drive não detecta fim do vídeo via JS (iframe cross-origin).
+// Solução: informe "duration" (segundos) no config.js.
+// Um botão de sobreposição é exibido sobre o iframe — o timer SÓ inicia
+// quando o usuário clica nele, garantindo sincronismo com o play real.
 //
 // Exemplo no config.js:
 // {
 //   title: "Contato (1997)",
-//   url: "https://drive.google.com/file/d/SEU_ID_AQUI/view",
+//   url: "https://drive.google.com/file/d/SEU_ID/view",
 //   type: "googledrive",
-//   duration: 9360   // 2h36min = 2×3600 + 36×60
+//   duration: 9360    // 2h36min = 2×3600 + 36×60
 // }
+
+function secsToHHMMSS(s) {
+  const hh = String(Math.floor(s / 3600)).padStart(2, '0');
+  const mm = String(Math.floor((s % 3600) / 60)).padStart(2, '0');
+  const ss = String(s % 60).padStart(2, '0');
+  return `${hh}:${mm}:${ss}`;
+}
 
 function extractDriveFileId(url) {
   if (!url) return null;
@@ -690,59 +704,135 @@ function loadGoogleDrive(url, duration) {
 
   clearPlayerContainer();
   const container = document.getElementById('player');
-
-  // Único método de embed suportado pelo Drive para sites externos
   const previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-
-  container.innerHTML = `
-    <iframe
-      id="drive-player"
-      src="${previewUrl}"
-      width="100%"
-      height="100%"
-      frameborder="0"
-      allow="autoplay; fullscreen"
-      allowfullscreen
-      style="border:0; width:100%; height:100%; position:absolute; top:0; left:0;"
-    ></iframe>
-  `;
-
-  // ── Avanço automático por duração ──────────────────────────────────────────
-  // Se o config.js tiver o campo "duration" (número inteiro em segundos),
-  // um timer é agendado para avançar para o próximo vídeo automaticamente.
-  // Se o usuário clicar em → antes do tempo, clearPlayerContainer() cancela
-  // o timer sem efeitos colaterais.
-  // ──────────────────────────────────────────────────────────────────────────
-  const durationSec = Number(duration);
-  let statusMsg;
+  const durationSec = Math.round(Number(duration));
 
   if (durationSec > 0) {
-    const hh = String(Math.floor(durationSec / 3600)).padStart(2, '0');
-    const mm = String(Math.floor((durationSec % 3600) / 60)).padStart(2, '0');
-    const ss = String(durationSec % 60).padStart(2, '0');
+    // ── COM duração: exibe iframe + botão de sobreposição ───────────────────
+    // O botão fica sobre o iframe. Ao clicar, ele some e o timer começa.
+    // Assim o contador parte do momento em que o usuário realmente dá play.
+    // ────────────────────────────────────────────────────────────────────────
+    const btnLabel = isTouchDevice
+      ? `▶  Toque aqui para iniciar\nAvanço automático em ${secsToHHMMSS(durationSec)}`
+      : `▶  Clique aqui para iniciar\nAvanço automático em ${secsToHHMMSS(durationSec)}`;
 
-    console.log(`Drive: avanço automático agendado em ${hh}:${mm}:${ss}`);
+    container.innerHTML = `
+      <iframe
+        id="drive-player"
+        src="${previewUrl}"
+        width="100%" height="100%"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+        style="border:0; width:100%; height:100%; position:absolute; top:0; left:0;"
+      ></iframe>
+      <div id="drive-overlay" style="
+        position:absolute; inset:0; z-index:20;
+        display:flex; align-items:center; justify-content:center;
+        background:rgba(0,0,0,0.6); cursor:pointer;">
+        <button id="drive-start-btn" style="
+          background:rgba(20,20,20,0.93);
+          color:#fff;
+          border:2px solid rgba(255,255,255,0.3);
+          border-radius:14px;
+          padding:20px 36px;
+          font-size:clamp(14px,2.4vw,20px);
+          font-family:Arial,sans-serif;
+          white-space:pre-line;
+          text-align:center;
+          line-height:1.6;
+          cursor:pointer;
+          max-width:88%;
+          transition:background 0.2s, transform 0.15s;">
+          ${btnLabel}
+        </button>
+      </div>
+    `;
 
-    driveAutoAdvanceTimer = setTimeout(() => {
-      console.log("Drive: duração atingida — avançando automaticamente.");
-      manualControl = false;
-      playNext(true);
-    }, durationSec * 1000);
+    // Efeito visual no hover/focus do botão
+    const startBtn = document.getElementById('drive-start-btn');
+    startBtn.addEventListener('mouseenter', () => {
+      startBtn.style.background = 'rgba(60,60,60,0.97)';
+      startBtn.style.transform  = 'scale(1.03)';
+    });
+    startBtn.addEventListener('mouseleave', () => {
+      startBtn.style.background = 'rgba(20,20,20,0.93)';
+      startBtn.style.transform  = 'scale(1)';
+    });
+    startBtn.addEventListener('mousedown',  () => { startBtn.style.transform = 'scale(0.97)'; });
 
-    statusMsg = isTouchDevice
-      ? `Drive: toque em ▶ para iniciar. Avança em ${hh}:${mm}:${ss}.`
-      : `Drive: clique em ▶ para iniciar. Avança automaticamente em ${hh}:${mm}:${ss}.`;
+    // Função que inicia o timer — chamada uma única vez ao clicar/tocar
+    let timerStarted = false;
+    const startDriveTimer = (e) => {
+      if (timerStarted) return;
+      timerStarted = true;
+      if (e && e.stopPropagation) e.stopPropagation();
+
+      const overlay = document.getElementById('drive-overlay');
+      if (overlay) overlay.remove();
+
+      console.log(`Drive: timer iniciado — avança em ${secsToHHMMSS(durationSec)}`);
+
+      // Contador regressivo exibido na barra de status (atualiza a cada segundo)
+      let remaining = durationSec;
+      driveCountdownInterval = setInterval(() => {
+        remaining--;
+        const statusEl = document.getElementById('status-text');
+        if (statusEl) {
+          statusEl.innerText = `Drive: reproduzindo — próximo vídeo em ${secsToHHMMSS(remaining)}`;
+        }
+        if (remaining <= 0) {
+          clearInterval(driveCountdownInterval);
+          driveCountdownInterval = null;
+        }
+      }, 1000);
+
+      // Timer principal: avança para o próximo vídeo ao término
+      driveAutoAdvanceTimer = setTimeout(() => {
+        if (driveCountdownInterval) {
+          clearInterval(driveCountdownInterval);
+          driveCountdownInterval = null;
+        }
+        console.log("Drive: duração atingida — avançando automaticamente.");
+        manualControl = false;
+        playNext(true);
+      }, durationSec * 1000);
+
+      updateInfo(
+        document.getElementById('video-title')?.innerText || "Vídeo",
+        `Drive: reproduzindo — próximo vídeo em ${secsToHHMMSS(durationSec)}`
+      );
+    };
+
+    startBtn.addEventListener('click',    startDriveTimer, { capture: true });
+    startBtn.addEventListener('touchend', startDriveTimer, { passive: true });
+
+    updateInfo(
+      document.getElementById('video-title')?.innerText || "Vídeo",
+      `Drive: clique no botão para iniciar (duração: ${secsToHHMMSS(durationSec)})`
+    );
+
   } else {
-    // Sem duração definida: avanço apenas manual
-    statusMsg = isTouchDevice
-      ? "Drive: toque em ▶ no player para iniciar o vídeo."
-      : "Drive: clique em ▶ no player para iniciar. Use o botão → para avançar.";
-  }
+    // ── SEM duração: apenas iframe, avanço manual ───────────────────────────
+    container.innerHTML = `
+      <iframe
+        id="drive-player"
+        src="${previewUrl}"
+        width="100%" height="100%"
+        frameborder="0"
+        allow="autoplay; fullscreen"
+        allowfullscreen
+        style="border:0; width:100%; height:100%; position:absolute; top:0; left:0;"
+      ></iframe>
+    `;
 
-  updateInfo(
-    document.getElementById('video-title')?.innerText || "Vídeo",
-    statusMsg
-  );
+    updateInfo(
+      document.getElementById('video-title')?.innerText || "Vídeo",
+      isTouchDevice
+        ? "Drive: toque em ▶ no player para iniciar. Use o botão → para avançar."
+        : "Drive: clique em ▶ no player para iniciar. Use o botão → para avançar."
+    );
+  }
 }
 
 // ====== INICIALIZAÇÃO ======
