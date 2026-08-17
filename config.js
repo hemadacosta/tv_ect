@@ -124,7 +124,6 @@ type: "youtube"
         type: "youtube"
       },
     {
-{
 title: "Isaac Newton Gênios da Ciência",
     url: "https://youtu.be/uac7S7Nyae8?si=kYbqJ9EHT9zyQe9z",
     type: "youtube"
