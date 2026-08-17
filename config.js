@@ -33,6 +33,11 @@ type: "youtube"
         url: "https://youtu.be/CVm-dewknqs?si=AmFTmJx8PZyTrN_-",
         type: "youtube"
     },
+    {     
+    title: "Contato (1997)",
+    url: "https://drive.google.com/file/d/1xVY5eC8ZbVUgwmwKZp8jZaRHvSU8tCBS/preview",
+    type: "googledrive"
+    },
     {
         title: "Soylent Green (1973)  - Trailer (Obs.: Assista o filme completo na apresentação da aula)",
         url: "https://youtu.be/N_jGOKYHxaQ?si=QNao_la03-qzStoQ",
