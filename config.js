@@ -43,6 +43,11 @@ type: "youtube"
         url: "https://youtu.be/N_jGOKYHxaQ?si=QNao_la03-qzStoQ",
         type: "youtube"
     },
+    {     
+    title: "Soylent Green, no Mundo de 2020 (1973) ",
+    url: "https://drive.google.com/file/d/1X8PS-GS_SLmqlh79qE1xgGJVPmtyXz2O/preview",
+    type: "googledrive"
+    },
     {
         title: "Discovery Science As 100 Maiores Descobertas da História - Biologia",
         url: "https://youtu.be/UB6I6SBLEBc?si=YwJyiigwUdzjhNg4",
