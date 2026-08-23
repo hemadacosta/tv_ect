@@ -40,7 +40,7 @@ const schedule = [
     },
     {
         title: "A Queda - as últimas horas de Hitler",
-        url: "https://youtu.be/kVzCBX2AToc?si=ACN9PX6LHL4BA0be",
+        url: "https://youtu.be/RL5ezvshiDM?si=2rq2FUraqFHu4Ve9",
         type: "youtube"
     },
     {     
