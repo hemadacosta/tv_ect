@@ -20,7 +20,7 @@ const schedule = [
     },
     {
         title: "BNCC, Ciência da Natureza",
-      url: "https://youtu.be/7fp_-_bJWro"
+      url: "https://youtu.be/7fp_-_bJWro",
       type: "youtube"
     },
     {
