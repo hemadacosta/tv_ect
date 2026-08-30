@@ -4,7 +4,7 @@
 
 const schedule = [
     {
-       title: "6ª Aula - O papel dos materiais curriculares no processo de ensino e aprendizagem de conhecimentos científicos – Bens culturais para o ensino de ciência e diretrizes para o trabalho final"
+       title: "6ª Aula - O papel dos materiais curriculares no processo de ensino e aprendizagem de conhecimentos científicos – Bens culturais para o ensino de ciência e diretrizes para o trabalho final",
         url: "https://youtu.be/mUINTFy7w7Y",
         type: "youtube"
     },
@@ -34,7 +34,7 @@ const schedule = [
         type: "youtube"
       },
     {
-       title: "Escritores da Liberdade (2007)"
+       title: "Escritores da Liberdade (2007)",
     url: "https://player.vimeo.com/video/1102925342?h=f0f14ace87",
     type: "vimeo"
     },
@@ -69,7 +69,7 @@ const schedule = [
         type: "youtube"
       },
     {
-        title: "Como funciona a produção científica", //8:08
+        title: "Como funciona a produção científica",
         url: "https://youtu.be/EbhNfd3tQtY?si=S7hv-k4_K2HfeDRG",
         type: "youtube"
     },
@@ -94,7 +94,7 @@ const schedule = [
         type: "youtube"
       },
 {
-        title: "Quando o pior acontece - catástrofes naturais e mudanças climáticas", //54:40
+        title: "Quando o pior acontece - catástrofes naturais e mudanças climáticas",
     url: "https://geo.dailymotion.com/player.html?video=x8cl1cg",
     type: "dailymotion"
     },
