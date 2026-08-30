@@ -84,7 +84,7 @@ const schedule = [
     type: "googledrive"
     },
     {
-    title: "Enigma: O Jogo da Imitação (2014)",
+    title: "Enigma - O Jogo da Imitação (2014)",
     url: "https://www.youtube.com/embed/lRid96uWpqo",
     type: "youtube"
     },
