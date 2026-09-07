@@ -14,12 +14,12 @@ const schedule = [
     type: "youtube"
     },
     {
-    title: "Bachelard - pedagogia científica e ensino de química | Entrevista com Ettore Antunes",
+    title: "Bachelard - pedagogia científica e ensino de química - Entrevista com Ettore Antunes",
     url: "https://www.youtube.com/watch?v=Ar05A5Tsm88",
     type: "youtube"
     },
     {
-    title: 'Tempos Modernos (1936) - Trailer<a href="https://drive.google.com/file/d/1XGvqsZ8wKl8WtHwBEnxXjtOrU9lcF7z7/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
+    title: 'Tempos Modernos (1936) - Trailer | <a href="https://drive.google.com/file/d/1XGvqsZ8wKl8WtHwBEnxXjtOrU9lcF7z7/preview" target="_blank">🎬 Assistir ao Filme completo</a>',
     url: "https://youtu.be/6n9ESFJTnHs?si=RrZ3q9HbJEgFa0Vy",
     type: "youtube"
     },
@@ -54,7 +54,7 @@ const schedule = [
     type: "youtube"
     },
     {
-    title: "Tentativa e Erro | Turma da Robótica",
+    title: "Tentativa e Erro - Turma da Robótica",
     url: "https://youtu.be/SoS7IXZ2Hn0?si=huAwso32v9NjcZDq",
     type: "youtube"
     },
