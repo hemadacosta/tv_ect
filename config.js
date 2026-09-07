@@ -125,7 +125,7 @@ const schedule = [
     },
     {
     title: "Interestelar (2014)",
-    url: "href="https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview",
+    url: "https://drive.google.com/file/d/1oimF3SLY4fBCoc9exvIyglUACgv4t5-Q/preview",
     type: "googledrive"
     },
     {
