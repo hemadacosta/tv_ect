@@ -1,6 +1,6 @@
 // config.js
 // Lista de vídeos da programação
-// Tipos suportados: 'youtube', 'vimeo', 'googledrive'
+// Tipos suportados: 'youtube', 'vimeo', 'googledrive', 'dailymotion'
 
 const schedule = [
     {
