@@ -83,6 +83,11 @@ const schedule = [
     url: "https://youtu.be/tILQ9sb6e4Q?si=-4ju0h6u0pxG1q72",
     type: "youtube"
     },
+    {
+    title: "Cobaias (1997)",
+    url: "https://youtu.be/WSzbN4-uWaY?si=LQxNb5OFiDjzXOoz",
+    type: "youtube"
+    },
     {   
     title: "TV ECT",
     url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
@@ -96,6 +101,11 @@ const schedule = [
     {   
     title: "TV ECT",
     url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+    },
+    {
+    title: "Experimento Ilegal - Mistério",
+    url: "https://youtu.be/LnewLcXn5c8?si=RiRb6GLSKk8vEUhI",
     type: "youtube"
     },
     {
