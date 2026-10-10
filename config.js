@@ -4,7 +4,7 @@
 
 const schedule = [
 {
-title: "14ª Aula - ECT1 - O que é tecnologia", // 55min07s
+title: "14ª Aula - ECT1 - O que é tecnologia", '🎬 <a href="https://drive.google.com/file/d/19FvOrFzrXYpQfBrjtw6aU29IvdvY523W/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a>', // 55min07s
 url: "https://youtu.be/_KB29GpGq_w",
 type: "youtube"
 },
