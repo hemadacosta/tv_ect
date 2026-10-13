@@ -15,7 +15,7 @@ title: "TV ECT",
 },
 {
 title: "Como usar as metodologias ativas nas aulas de Ciências da Natureza", // 19min10s
-url: "https://youtu.be/T0by8bmidxY?si=IufQZ6PN-BJoQ5xd",
+url: "https://youtu.be/T0by8bmidxY?si=TgRUS3W8x3UXZYJw",
 type: "toutube"
 },
 {
