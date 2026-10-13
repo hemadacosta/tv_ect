@@ -3,109 +3,124 @@
 // Tipos suportados: 'youtube', 'vimeo', 'googledrive', 'dailymotion'
 
 const schedule = [
+    {
+title: '🎬 <a href="https://drive.google.com/file/d/1Blksu7rAsM2b8ZGvmYWeOh-VYGJqHWAp/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |16ª Aula - ECT - Metodologias Ativas e Ensino de Ciências', // 1h06min16s
+url: "https://youtu.be/RIwlGmibYQo",
+type: "youtube"
+},
 {
-title: '🎬 <a href="https://drive.google.com/file/d/19FvOrFzrXYpQfBrjtw6aU29IvdvY523W/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> | 14ª Aula - ECT1 - O que é tecnologia', // 55min07s
-url: "https://youtu.be/_KB29GpGq_w",
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Como usar as metodologias ativas nas aulas de Ciências da Natureza", // 19min10s
+url: "https://youtu.be/T0by8bmidxY?si=IufQZ6PN-BJoQ5xd",
+type: "toutube"
+},
+{
+title: "Quais são os 9 tipos de METODOLOGIAS ATIVAS de ensino aprendizagem e o quais são seus objetivos", // 10min48s
+url: "https://youtu.be/4XnBpAvQF6Q?si=7roqhbC-Cn4CrEM4",
+type: "youtube"
+},
+{
+title: "Metodologias ativas - Lilian Bacich", // 18min41s
+url: "https://vimeo.com/429325683?fl=pl&fe=cm",
+type: "vimeo"
+},
+{
+title: "Tempestade Magnética (2009)", // 1h31min38s
+url: "https://youtu.be/Ql2xBHRrfLc",
 type: "youtube"
 },
 {
     title: "TV ECT",
     url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
     type: "youtube"
-    },
-    {
-title: "O preço da bondade - George R. Price", // 14min26s
-url: "https://youtu.be/YZ4HWZZOeqA",
+},
+{
+title: "Magnetismo - Imãs, Campo Magnético e Magnetismo Terrestre", // 8min54s
+url: "https://youtu.be/7HD_ms3wEkE?si=s7eQ6lloSaBuT9NW",
 type: "youtube"
 },
 {
-title: "O Dilema das Redes", // 1h33min31s
-url: "https://drive.google.com/file/d/1swpX9aK_kM9xDeliA-7e8lnmLFde20Zo/preview", 
-type: "googledrive"
-},
-{
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-    },
-    {
-title: "2001, uma Odisséia no Espaço (1968)", // 2h28min53s 
-url: "https://drive.google.com/file/d/0BzuGKw7qoEweRkJEalUxcWQ5OVU/preview",
-type: "googledrive"
-},
-{
-    title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-    },
-    {
-title: "A Guerra do Fogo (1981)", // 1h40min27s
-url: "https://youtu.be/82HNKle5WFU",
-type: "youtube"
-},
-{
-title: "Ilha das Flores (1989)", // 13min08s
-url: "https://youtu.be/lSuDaeT5_9A",
+title: "Andrômeda (2022)", // 1h18min35s
+url: "https://youtu.be/6PHiBzRmqYw",
 type: "youtube"
 },
 {
 title: "TV ECT",
     url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
     type: "youtube"
-    },
-    {
-title: "A História das Coisas (2007)", // 21min17s
-url: "https://youtu.be/DfG6MFLZ-VQ",
-type: "youtube"
 },
 {
-title: "As descobertas acidentais em Ciências, a serendipidade", // 47min06s
-url: "https://youtu.be/ahxYW8Jd55U",
-type: "youtube"
-},
-{
-title: "Koyaanisqatsi (1983)", // 1h26min06s
-url: "https://youtu.be/OrptHs4BFl8",
+title: "A Escola da Vida (2005)", // 1h51min03s
+url: "https://youtu.be/yMPJzBFVbxc?si=vxQ3blaVnd1ywaEg",
 type: "youtube"
 },
 {
 title: "TV ECT",
     url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
     type: "youtube"
-    },
-    {
-title: "Decifrando o fungo - a história da penicilina (2009)", // 1h21min09s
-url: "https://youtu.be/II5QfkA9aQk",
-type: "youtube"
 },
 {
-title: "A vida imortal de Henrietta Lacks (2017)", // 1h32min35s
-url: "https://drive.google.com/file/d/1vqB8t5xYAHGIWRqztE2R0yv44Q-YBbak/preview",
-type: "googledrive"
-},
-{
-title: "Cosmos - Carl Sagan - Episódio 7 - A Espinha Dorsal da Noite", // 58min44s
-url: "https://youtu.be/YQl0IQ4A4Fs?list=PLWTsw1mh-VO-MONi88PiY6KstvIxw0Hcj",
-type: "youtube"
-},
-{
-title: "Radioactive (2019)", // 1h42min00s
-url: "https://youtu.be/y5FVCeyfns0",
-type: "youtube"
-},
-{
-title: "A Teoria de Tudo (The Theory of Everything) (2014)", // 2h03min18s
-url: "https://drive.google.com/file/d/1QLWbuPxWpRTCOwV9g78KOZ7LvMS1NYPk/preview",
-type: "googledrive"
-},
-{
-title: "Primer (2004)",
-url: "https://youtu.be/Mt0xq5LiHKE",
+title: "Gattaca (1997)", // 1h46min27s
+url: "https://youtu.be/5K-txk2y2z4",
 type: "youtube"
 },
 {
 title: "TV ECT",
-url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Viagem ao Centro da Terra (2008)", // 1h28min56s
+url: "https://youtu.be/goeB5yhzMf8",
 type: "youtube"
-}
-];
+},
+{
+title: "O Núcleo - Missão ao Centro da Terra (2003)", // 2h14min57s
+url: "https://drive.google.com/file/d/1Uc6l_yJd8myGcSZFRjOuoZ-t7yYXWQ4u/preview",
+type: "googledrive"
+},
+{
+title: "Cosmos Carl Sagan Ep. 8 - Viagens no Espaço e no Tempo", //1h01min41s
+url: "https://youtu.be/DJzEAt2AjHo?list=PLWTsw1mh-VO-MONi88PiY6KstvIxw0Hcj",
+type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "A Batalha das Correntes (2017)",  // 1h47min54s
+url: "https://drive.google.com/file/d/19uplnibWA25hhOw2cv-9gIB4_h7OoF56/preview",
+type: "googledrive"
+},
+{
+title: "Como Estrelas na Terra (Taare Zameen Par, 2007)", // 2h32min42s
+url: "https://youtu.be/6_EIrbhPhoE?si=1oydpuvklPNTibJE",
+type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Enigma, o Jogo da Imitação (The Imitation Game, 2014)", //2h23min28s
+url: "https://youtu.be/lRid96uWpqo?si=YRSQBrH-1ljE0pfx",
+type: "youtube"
+},
+{
+title: "Aprendizagem ativa - Pedagogia na era da IA", // 8min01s
+url: "https://youtu.be/_xR_lry4bBY?si=OWhKenLHfZM1JxBZ",
+type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+    }
+    ];
