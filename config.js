@@ -4,7 +4,7 @@
 
 const schedule = [
     {
-title: '🎬 <a href="https://drive.google.com/......." target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |18ª Aula - ECT1 - Teorias da aprendizagem e seus contributos para o Ensino de Ciências', // 1h00min54s
+title: '🎬 <a href="https://drive.google.com/file/d/1bmjgVuJ4tAHvLzEp8KebhCPhY55IqKEj/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |18ª Aula - ECT1 - Teorias da aprendizagem e seus contributos para o Ensino de Ciências', // 1h00min54s
 url: "https://youtu.be/d69qU9r-wDE?si=2LaCzNWjRJeAHZzJ",
 type: "youtube"
 },
