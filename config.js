@@ -4,33 +4,8 @@
 
 const schedule = [
     {
-title: '🎬 <a href="https://drive.google.com/file/d/1Blksu7rAsM2b8ZGvmYWeOh-VYGJqHWAp/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |16ª Aula - ECT - Metodologias Ativas e Ensino de Ciências', // 1h06min16s
-url: "https://youtu.be/RIwlGmibYQo",
-type: "youtube"
-},
-{
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Como usar as metodologias ativas nas aulas de Ciências da Natureza", // 19min10s
-url: "https://youtu.be/T0by8bmidxY?si=eqEQy4I7yC_LYdo-",
-type: "youtube"
-},
-{
-title: "Quais são os 9 tipos de METODOLOGIAS ATIVAS de ensino aprendizagem e o quais são seus objetivos", // 10min48s
-url: "https://youtu.be/4XnBpAvQF6Q?si=7roqhbC-Cn4CrEM4",
-type: "youtube"
-},
-{
-title: "Metodologias ativas - Lilian Bacich", // 18min41s
-url: "https://vimeo.com/429325683?fl=pl&fe=cm",
-type: "vimeo"
-},
-{
-title: "Tempestade Magnética (2009)", // 1h31min38s
-url: "https://youtu.be/Ql2xBHRrfLc",
+title: '🎬 <a href="https://drive.google.com/......." target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |18ª Aula - ECT1 - Teorias da aprendizagem e seus contributos para o Ensino de Ciências', // 1h00min54s
+url: "https://youtu.be/d69qU9r-wDE?si=2LaCzNWjRJeAHZzJ",
 type: "youtube"
 },
 {
@@ -39,13 +14,38 @@ type: "youtube"
     type: "youtube"
 },
 {
-title: "Magnetismo - Imãs, Campo Magnético e Magnetismo Terrestre", // 8min54s
-url: "https://youtu.be/7HD_ms3wEkE?si=s7eQ6lloSaBuT9NW",
+title: "Teoria do Desenvolvimento Cognitivo de Piaget", // 7min33s
+url: "https://youtu.be/pOMGhDp15So?si=_9I_TgWx1jlGP7zr",
 type: "youtube"
 },
 {
-title: "Andrômeda (2022)", // 1h18min35s
-url: "https://youtu.be/6PHiBzRmqYw",
+title: "O Desenvolvimento Cognitivo de Vygotsky por Meio das Relações Sociais", // 4min44s
+url: "https://youtu.be/vW0_xzXzfEU?si=GHl-J6dSXDqEGptg",
+type: "youtube"
+},
+{
+title: "Teorias da Aprendizagem - Paulo Freire: vida e obra", // 15min07s
+url: "https://youtu.be/xGVPwf_xEO8?si=mHzn0R5xpCyvJnGZ",
+type: "youtube"
+},
+{
+    title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Quando Sinto que Já Sei (2014)", // 1h18min29s
+url: "https://youtu.be/HX6P6P3x1Qg?si=1wSahc2SY2gTjiPK",
+type: "youtube"
+},
+{
+    title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Vermelho como o Céu (2006)", // 1h37min20s
+url: "https://youtu.be/ZVxztzOxM58?si=IEqFKKAd-0dctioZ",
 type: "youtube"
 },
 {
@@ -54,53 +54,23 @@ title: "TV ECT",
     type: "youtube"
 },
 {
-title: "A Escola da Vida (2005)", // 1h51min03s
-url: "https://youtu.be/yMPJzBFVbxc?si=vxQ3blaVnd1ywaEg",
-type: "youtube"
-},
-{
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Gattaca (1997)", // 1h46min27s
-url: "https://youtu.be/5K-txk2y2z4",
-type: "youtube"
-},
-{
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Viagem ao Centro da Terra (2008)", // 1h28min56s
-url: "https://youtu.be/goeB5yhzMf8",
-type: "youtube"
-},
-{
-title: "O Núcleo - Missão ao Centro da Terra (2003)", // 2h14min57s
-url: "https://drive.google.com/file/d/1Uc6l_yJd8myGcSZFRjOuoZ-t7yYXWQ4u/preview",
+title: "Extraordinário (2017)", // 1h53min10s
+url: "https://drive.google.com/file/d/1hu8XZDDy34MK3RWC91Zay3Udpqjq319R/preview",
 type: "googledrive"
 },
 {
-title: "Cosmos Carl Sagan Ep. 8 - Viagens no Espaço e no Tempo", //1h01min41s
-url: "https://youtu.be/DJzEAt2AjHo?list=PLWTsw1mh-VO-MONi88PiY6KstvIxw0Hcj",
-type: "youtube"
-},
-{
-title: "TV ECT",
+    title: "TV ECT",
     url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
     type: "youtube"
 },
 {
-title: "A Batalha das Correntes (2017)",  // 1h47min54s
-url: "https://drive.google.com/file/d/19uplnibWA25hhOw2cv-9gIB4_h7OoF56/preview",
+title: "Nunca me Sonharam (2017)", // 1h24min16s
+url: "https://drive.google.com/file/d/1Syc9ymLCUonxnQCJq0XU9gGtu5gx-i1I/preview",
 type: "googledrive"
 },
 {
-title: "Como Estrelas na Terra (Taare Zameen Par, 2007)", // 2h32min42s
-url: "https://youtu.be/6_EIrbhPhoE?si=1oydpuvklPNTibJE",
+title: "Capitão Fantástico (2016)", //1h59min29s
+url: "https://youtu.be/XqHD9Oqa4Qk?si=_2OMQJMbCaOIJUmK",
 type: "youtube"
 },
 {
@@ -109,13 +79,53 @@ title: "TV ECT",
     type: "youtube"
 },
 {
-title: "Enigma, o Jogo da Imitação (The Imitation Game, 2014)", //2h23min28s
-url: "https://youtu.be/lRid96uWpqo?si=YRSQBrH-1ljE0pfx",
+title: "Conrack (1974)",
+url: "https://drive.google.com/file/d/1Q7GngEKKSc1Na_xINwu9q16iAYLRnAKz/preview",
+type: "googledrive"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Uma Professora Muito Especial - Dangerous Minds (1995)", // 1h38min53s
+url: "https://drive.google.com/file/d/1Ec5jJc3fbB_NbeBmBJiWzgxBqF701lqM/preview",
+type: "googledrive"
+},
+{
+title: "Cosmos Carl Sagan Ep. 9 - As vidas das Estrelas", // 59min40s
+url: "https://youtu.be/4izcJIXmDck?si=d7-g7klrgniGT4bZ",
 type: "youtube"
 },
 {
-title: "Aprendizagem ativa - Pedagogia na era da IA", // 8min01s
-url: "https://youtu.be/_xR_lry4bBY?si=OWhKenLHfZM1JxBZ",
+title: "Nell (1994)", // 1h48min03s
+url: "https://drive.google.com/file/d/1oj3-K5wLbhPY2v3uEgipsLNZNZu0--Ag/preview",
+type: "googledrive"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Ammonite (2020)", // 1h57min53s
+url: "https://drive.google.com/file/d/183LNcxdKMiNBUridsum0JK_ME9Y5GtLi/preview",
+type: "googledrive"
+},
+{
+title: "Anjos e Insetos (Angels and Insects - 1995)", // 1h52min08s
+url: "https://youtu.be/9qalOTA_3w4?si=4m08tPP1MkY3blC3",
+type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Coleta vegetal - Herbário", // 11min19s
+url: "https://youtu.be/LV9CKP4RtdM?si=wPI9Qe1eMqWYN23p",
 type: "youtube"
 },
 {
