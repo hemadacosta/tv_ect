@@ -4,48 +4,8 @@
 
 const schedule = [
     {
-title: '🎬 <a href="https://drive.google.com/file/d/1bmjgVuJ4tAHvLzEp8KebhCPhY55IqKEj/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |18ª Aula - ECT1 - Teorias da aprendizagem e seus contributos para o Ensino de Ciências', // 1h00min54s
-url: "https://youtu.be/d69qU9r-wDE?si=2LaCzNWjRJeAHZzJ",
-type: "youtube"
-},
-{
-    title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Teoria do Desenvolvimento Cognitivo de Piaget", // 7min33s
-url: "https://youtu.be/pOMGhDp15So?si=_9I_TgWx1jlGP7zr",
-type: "youtube"
-},
-{
-title: "O Desenvolvimento Cognitivo de Vygotsky por Meio das Relações Sociais", // 4min44s
-url: "https://youtu.be/vW0_xzXzfEU?si=GHl-J6dSXDqEGptg",
-type: "youtube"
-},
-{
-title: "Teorias da Aprendizagem - Paulo Freire: vida e obra", // 15min07s
-url: "https://youtu.be/xGVPwf_xEO8?si=mHzn0R5xpCyvJnGZ",
-type: "youtube"
-},
-{
-    title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Quando Sinto que Já Sei (2014)", // 1h18min29s
-url: "https://youtu.be/HX6P6P3x1Qg?si=1wSahc2SY2gTjiPK",
-type: "youtube"
-},
-{
-    title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Vermelho como o Céu (2006)", // 1h37min20s
-url: "https://youtu.be/ZVxztzOxM58?si=IEqFKKAd-0dctioZ",
+title: '🎬 <a href="https://drive.google.com/file/d/1o4tiRrowxkGfJ7v7QwOrJ1ywj3D4uWzh/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |20ª Aula - ECT1 - O método científico, o ensino de ciências e outras reflexões', // 55min56s
+url: "https://youtu.be/Oxhh28pMuF4?si=ZS233q2BRgAdkm0k",
 type: "youtube"
 },
 {
@@ -54,23 +14,23 @@ title: "TV ECT",
     type: "youtube"
 },
 {
-title: "Extraordinário (2017)", // 1h53min10s
-url: "https://drive.google.com/file/d/1hu8XZDDy34MK3RWC91Zay3Udpqjq319R/preview",
-type: "googledrive"
+title: "O Mundo de Beakman - O Método Científico", // 9min23s
+url: "https://youtu.be/GbjlO6IfGA0", 
+type: "youtube"
 },
 {
-    title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
+title: "21ª Aula - ECT1 - Ensino Recíproco como estratégia pedagógica ao ensino de ciências", // 38min15s
+url: "https://youtu.be/s-VHWYqN8y0?si=4xyyQ95sXwt3vfkd",
+type: "youtube"
 },
 {
-title: "Nunca me Sonharam (2017)", // 1h24min16s
-url: "https://drive.google.com/file/d/1Syc9ymLCUonxnQCJq0XU9gGtu5gx-i1I/preview",
-type: "googledrive"
+title: "Ensino Recíproco - Parte 1", // 7min22s
+url: "https://youtu.be/8oXskcnb4RA",
+type: "youtube"
 },
 {
-title: "Capitão Fantástico (2016)", //1h59min29s
-url: "https://youtu.be/XqHD9Oqa4Qk?si=_2OMQJMbCaOIJUmK",
+title: "Ensino Recíproco - Parte 2", // 7min42s
+url: "https://youtu.be/e8gSIcSyypk",
 type: "youtube"
 },
 {
@@ -79,8 +39,13 @@ title: "TV ECT",
     type: "youtube"
 },
 {
-title: "Conrack (1974)",
-url: "https://drive.google.com/file/d/1Q7GngEKKSc1Na_xINwu9q16iAYLRnAKz/preview",
+title: "A Invenção da Infância (Liliana Sulzbach, 2000)", // 26min33s
+url: "https://youtu.be/sRnSLQIgS3g?si=4DepdvJhoX8VGFxt",
+type: "youtube"
+},
+{
+title: "Escola de Rock (2003)", // 1h49min15s
+url: "https://drive.google.com/file/d/10cTJjHsXxoO5KfUW1CGJMyPiKEhDBA-I/preview",
 type: "googledrive"
 },
 {
@@ -89,44 +54,64 @@ title: "TV ECT",
     type: "youtube"
 },
 {
-title: "Uma Professora Muito Especial - Dangerous Minds (1995)", // 1h38min53s
-url: "https://drive.google.com/file/d/1Ec5jJc3fbB_NbeBmBJiWzgxBqF701lqM/preview",
+title: "Fundamentos e Práticas no Ensino de Ciências da Natureza - O método científico e o ensino de Ciência por investigação", // 21min06s
+url: "https://youtu.be/BlR0ANkVvX0",
+type: "youtube"
+},
+{
+title: "Não Olhe para Cima (2021)", // 2h23min11s
+url: "https://drive.google.com/file/d/1H_sorObvPBBnJ17AYFbjrASm--Tgp9lC/preview",
 type: "googledrive"
 },
 {
-title: "Cosmos Carl Sagan Ep. 9 - As vidas das Estrelas", // 59min40s
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Cosmos Carl Sagan Ep.10 - O Limiar da Eternidade", // 1h03min08s
 url: "https://youtu.be/4izcJIXmDck?si=d7-g7klrgniGT4bZ",
 type: "youtube"
 },
 {
-title: "Nell (1994)", // 1h48min03s
-url: "https://drive.google.com/file/d/1oj3-K5wLbhPY2v3uEgipsLNZNZu0--Ag/preview",
-type: "googledrive"
-},
-{
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Ammonite (2020)", // 1h57min53s
-url: "https://drive.google.com/file/d/183LNcxdKMiNBUridsum0JK_ME9Y5GtLi/preview",
-type: "googledrive"
-},
-{
-title: "Pavlov (Minstério Dicovery)", // 14min39s
-url: "https://vimeo.com/1179050149?fl=pl&fe=cm",
-type: "vimeo"
-},
-{
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Coleta vegetal - Herbário", // 11min19s
-url: "https://youtu.be/LV9CKP4RtdM?si=wPI9Qe1eMqWYN23p",
+title: "O Ponto De Mutação (1990)", // 1h51min08s
+url: "https://youtu.be/Q-c5_xnRsTI", 
 type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "O Homem que Viu o Infinito (2015)", // 1h48min35s
+url: "https://youtu.be/8mlJpbMVfpo",
+type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Contágio (2011)", // 1h40min44s
+url: "https://youtu.be/Hlj-PhAJksE",
+type: "youtube"
+},
+{
+title: "Os Meninos do Brazil (1978)", // 2h04min57s
+url: "https://youtu.be/_v9TAhKOmD4",
+type: "youtube"
+},
+{
+title: "Tipos de microscópios, conheça na prática", // 07min35s
+url: "https://youtu.be/9aN1uoA694w",
+type: "youtube"
+},
+{
+title: "Viagem Insólita (1987)", // 1h59min49s
+url: "https://drive.google.com/file/d/1atqH1JreRBJNOrbT9E1kSzDkbiBLcv3H/preview",
+type: "googledrive"
 },
 {
 title: "TV ECT",
