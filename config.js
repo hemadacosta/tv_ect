@@ -90,7 +90,7 @@ type: "youtube"
 },
 {
 title: "Amazônia Selvagem", // 34min34s
-url: "https://www.dailymotion.com/video/xbdb0he",
+url: "https://dai.ly/xbdb0he",
 type: "dailymotion"
 },
 {
