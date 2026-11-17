@@ -90,7 +90,7 @@ type: "youtube"
 },
 {
 title: "Pasteur e Koch - Medicina e revolução", // 1h35min33s
-url: "https://drive.google.com/file/d/1aOMgODOmuKUza1j2QaiMc7PSndWFQKpI/preview",
+url: "https://drive.google.com/file/d/1pDN8ia-fwLKCyHxUgDqzAtnh7-mPS63R/preview",
 type: "googledrive"
 },
 {
