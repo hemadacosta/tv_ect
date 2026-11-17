@@ -36,7 +36,7 @@ type: "youtube"
 {
 title: "Rochas & Minerais", // 44min41s
 url: "https://youtu.be/ofyEoqVmqmo?t=38",
-type: "googledrive"
+type: "youtube"
 },
 {
 title: "Documentário em Destaque, Congo – Minerais de Guerra", // 43min54s
