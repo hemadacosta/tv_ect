@@ -19,7 +19,7 @@ url: "https://youtu.be/TllIe60F9Vg",
 type: "youtube"
 },
 {
-title: "Louis Pasteur: como os microrganismos mudaram a medicina?", // 24min31s
+title: "Louis Pasteur - como os microrganismos mudaram a medicina", // 24min31s
 url: "https://youtu.be/u8OwQqPQmEU",
 type: "youtube"
 },
@@ -41,7 +41,7 @@ type: "googledrive"
 {
 title: "Documentário em Destaque, Congo – Minerais de Guerra", // 43min54s
 url: "https://drive.google.com/file/d/1mY4LAJy-G73XhPld-BDKxve6XaU4qpvt/preview",
-type:
+type: "googledrive"
 },
 {
 title: "TV ECT",
