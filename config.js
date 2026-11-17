@@ -4,8 +4,8 @@
 
 const schedule = [
     {
-title: '🎬 <a href="https://drive.google.com/file/d/1X7IyNvAfHWwNN6BQPSQayXwYR47saZy9/view?usp=drive_link" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |23ª Aula - ECT1 - Temáticas de Ciências para o ensino fundamental - Zoologia', // 52min19s
-url: "https://youtu.be/meMPW2bh33Q",
+title: '🎬 <a href="https://drive.google.com/file/d/1JNT-uba7yGoJcP29lZ0DEgA6g0LVLM3c/view?usp=sharing" target="_blank" style="color: #4CAF50; font-weight: bold;">Programação da semana</a> |25ª Aula - ECT1 - História da Ciência - Análise do Vídeo 3 Pasteur e a Raiva', // 13min12s
+url: "https://youtu.be/6QhGyD87MOs",
 type: "youtube"
 },
 {
@@ -14,13 +14,13 @@ title: "TV ECT",
     type: "youtube"
 },
 {
-title: "24ª Aula - ECT1 - Temáticas de Ciências para o ensino fundamental - Botânica", // 52min48s
-url: "https://youtu.be/-o3abbH2iWQ",
+title: "26ª Aula - ECT1 - Temáticas de Ciências para o ensino fundamental - Rochas, Minerais e Solo", // 1h01min17s
+url: "https://youtu.be/TllIe60F9Vg",
 type: "youtube"
 },
 {
-title: "O Microcosmo - Discovery", // 43min25s
-url: "https://youtu.be/Do48dMipb4c",
+title: "Louis Pasteur: como os microrganismos mudaram a medicina?", // 24min31s
+url: "https://youtu.be/u8OwQqPQmEU",
 type: "youtube"
 },
 {
@@ -29,74 +29,84 @@ title: "TV ECT",
     type: "youtube"
 },
 {
-title: "Microcosmos: A Fantástica Aventura da Natureza (1996)", // 1h12min50s
-url: "https://drive.google.com/file/d/113cLijRKRIoz8aQZfr-8LgHC2YQkdQwN/preview",
+title: "Viagem ao centro da Terra (2018)", // 1h29min56s
+url: "https://youtu.be/jqU7zumuop0",
+type: "youtube"
+},
+{
+title: "Rochas & Minerais", // 44min41s
+url: "https://youtu.be/ofyEoqVmqmo?t=38",
 type: "googledrive"
 },
 {
-title: "Professor Polvo (2020)", // 1h25min36s
-url: "https://drive.google.com/file/d/1D7xqtI_fZa9GDJzHNgcpIJIvOo78MQ-p/preview",
+title: "Documentário em Destaque, Congo – Minerais de Guerra", // 43min54s
+url: "https://drive.google.com/file/d/1mY4LAJy-G73XhPld-BDKxve6XaU4qpvt/preview",
+type:
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Por baixo da superfície", // 28min11s
+url: "https://youtu.be/C_lsbLZP9N4",
+type: "youtube"
+},
+{
+title: "Forjada a fogo - Rochas Ígneas", // 28min04s
+url: "https://youtu.be/YKRya0MsZ2w",
+type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "Dirt! The Movie (2009)", // 1h20min24s
+url: "https://youtu.be/l-3uDm9O0PA",
+type: "youtube"
+},
+{
+title: "Serra Pelada: A Lenda da Montanha de Ouro (2013)", // 1h40min55s
+url: "https://youtu.be/mSDh86t2nG0",
+type: "youtube"
+},
+{
+title: "TV ECT",
+    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
+    type: "youtube"
+},
+{
+title: "A História de Louis Pasteur (1936)", // 1h25min58s
+url: "https://youtu.be/4EcEGD3A3jM",
+type: "youtube"
+},
+{
+title: "Na Trilha dos Cientistas - Louis Pasteur", // 31min17s
+url: "https://youtu.be/JftGiZOHcw0",
+type: "youtube"
+},
+{
+title: "Pasteur e Koch - Medicina e revolução", // 1h35min33s
+url: "https://drive.google.com/file/d/1aOMgODOmuKUza1j2QaiMc7PSndWFQKpI/preview",
 type: "googledrive"
 },
 {
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "A Marcha dos Pinguins (2005)", // 1h22min16s
-url: "https://youtu.be/UN-OFPxcvOs",
+title: "Cosmos Carl Sagan Ep. 12 - Enciclopédia Galáctica", // 1h00min50s
+url: "https://youtu.be/1mAiQlWc1eI?list=PLWTsw1mh-VO-MONi88PiY6KstvIxw0Hcj",
 type: "youtube"
 },
 {
-title: "Vida de Inseto (1998)", // 1h34min29s
-url: "https://youtu.be/vlk7hdikvDk",
+title: "As 100 maiores descobertas - Ciências da Terra", // 46min37s
+url: "https://youtu.be/2Ex2LYeZPFk",
 type: "youtube"
 },
 {
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "A Vida Secreta das Plantas", // 40min38s
-url: "https://youtu.be/o0CSQ4PIbqA",
-type: "youtube"
-},
-{
-title: "Margaret Mee e a Flor Da Lua (2012)", // 1h22min11s
-url: "https://youtu.be/Mr70PGqAgSw",
-type: "youtube"
-},
-{
-title: "TV ECT",
-    url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
-    type: "youtube"
-},
-{
-title: "Selva Amazônica, segredos das Criaturas mais impressionantes do Planeta", // 34min39s
-url: "https://youtu.be/u203mqAaeW0",
-type: "youtube"
-},
-{
-title: "Savana Africana - a luta pela sobrevivência", // 1h01min44s
-url: "https://youtu.be/VDi520elXV4",
-type: "youtube"
-},
-{
-title: "Cosmos Carl Sagan Ep.11 - A persistência da Memória", // 58h24s
-url: "https://youtu.be/QIPj2_nK4vo",
-type: "youtube"
-},
-{
-title: "Amazônia Selvagem", // 34min34s
-url: "https://dai.ly/xbdb0he",
+title: "O Brasil da Pré-História - O mistério do Poço Azul", // 52min32s
+url: "https://dai.ly/x6zkuqw",
 type: "dailymotion"
-},
-{
-title: "A Guerra Silenciosa dos Insetos Mais Perigosos", // 1h21min59s
-url: "https://youtu.be/2Uj-87ACUHE",
-type: "youtube"
 },
 {
 title: "TV ECT",
