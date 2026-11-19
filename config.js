@@ -105,7 +105,7 @@ type: "youtube"
 },
 {
 title: "O Brasil da Pré-História - O mistério do Poço Azul", // 52min32s
-url: "https://www.dailymotion.com/video/x6zkuqw",
+url: "https://www.dailymotion.com/video/x2oomer",
 type: "dailymotion"
 },
 {
