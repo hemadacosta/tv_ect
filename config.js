@@ -104,11 +104,6 @@ url: "https://youtu.be/2Ex2LYeZPFk",
 type: "youtube"
 },
 {
-title: "O Brasil da Pré-História - O mistério do Poço Azul", // 52min32s
-url: "https://www.dailymotion.com/video/x2oomer",
-type: "dailymotion"
-},
-{
 title: "TV ECT",
     url: "https://youtu.be/7t_vyWPGD2s?si=Zn70raI1AmqbZHxP",
     type: "youtube"
